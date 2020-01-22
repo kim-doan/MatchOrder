@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.jwt.JwtTokenProvider;
 import com.ordermatch.main.mapper.UserMapper;
 import com.ordermatch.main.user.model.AuthenticationRequest;
@@ -45,10 +46,10 @@ public class UserService {
 	}
 	
 	public String login(AuthenticationRequest user) {
-		Optional<User> dbUser = userMapper.findByUsername(user.getUsername());
+		User dbUser = userMapper.findByUsername(user.getUsername()).orElseThrow(CUserNotFoundException::new);
 		
-		if(passwordEncoder.matches(user.getPassword(), dbUser.get().getPassword())) {
-			String token = jwtTokenProvider.createToken(String.valueOf(dbUser.get().getId()), dbUser.get().getRoles());
+		if(passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+			String token = jwtTokenProvider.createToken(String.valueOf(dbUser.getId()), dbUser.getRoles());
 			return token;
 		} else {
 			return null;
@@ -56,8 +57,10 @@ public class UserService {
 	}
 	
 	public boolean insertUser(User user) {
+		Optional<User> dbUser = userMapper.findByUsername(user.getUsername());
+		
 		//아이디 중복체크
-		if(this.findByUsername(user.getUsername()) == null) { // 유저 아이디 검색 후 관련 아이디가 없을 경우
+		if(dbUser.isPresent() == false) { // 유저 아이디 검색 후 관련 아이디가 없을 경우 // null이면 false null이아니면 true임
 			//비밀번호 암호화
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			//회원가입
