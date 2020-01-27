@@ -58,7 +58,6 @@ class App extends React.Component {
       axios.defaults.headers.common['USERNAME'] = localStorage.username;
     } 
     enhanceAccessToken(); // 새로고침시 토큰 재설정
-
     if (navigator.platform.indexOf("Win") > -1) {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
@@ -76,14 +75,19 @@ class App extends React.Component {
     let loginData = getCookie('key');
 
     // 쿠키 데이터 null 체크
-    if(typeof loginData === "undefined") return;
+    if(typeof loginData === "undefined") { 
+      this.props.history.push('/login');
+      return;
+    }
 
     //쿠키 데이터 base64로 디코딩
     loginData = JSON.parse(atob(loginData));
 
     // 로그인 되어있는지 확인
-    if(!loginData.isLoggedIn) return;
-
+    if(!loginData.isLoggedIn) {
+      this.props.history.push('/login');
+      return;
+    }
     /* 로그인체크 전부완료 (로그인을 한적 없지 않거나, 로그아웃하지 않거나/세션에 문제가 없을 경우) */
     this.props.getStatusRequest().then(
       () => {
@@ -97,6 +101,7 @@ class App extends React.Component {
           document.cookie='key= ' + btoa(JSON.stringify(loginData));
 
           alert("세션이 만료되어 종료됩니다. 다시 로그인해주세요.")
+          this.props.history.push('/login');
         }
       }
     )
@@ -108,6 +113,13 @@ class App extends React.Component {
         this.setState({ mobileOpen: false });
       }
     }
+    
+    let re = /(login|register)/; // login or register 정규 표현식
+    let isAuth = re.test(this.props.location.pathname); // 주소가 만약 login이나 register일 경우 isAuth는 true / 아닐경우 false
+
+    if(this.props.status.isLoggedIn === false && isAuth === false) {
+      this.props.history.push('/login');
+    }
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeFunction);
@@ -117,6 +129,7 @@ class App extends React.Component {
     const { classes, ...rest } = this.props;
     let re = /(login|register)/; // login or register 정규 표현식
     let isAuth = re.test(this.props.location.pathname); // 주소가 만약 login이나 register일 경우 isAuth는 true / 아닐경우 false
+
       return (
         <div className={classes.wrapper}>
           {isAuth ? undefined :

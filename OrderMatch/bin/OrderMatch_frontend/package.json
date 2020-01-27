@@ -1,0 +1,60 @@
+{
+  "name": "scm_frontend",
+  "version": "1.0.0",
+  "description": "Webpack SCM Frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "babel-node ./node_modules/webpack/bin/webpack",
+    "start": "babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server --open"
+  },
+  "keywords": [
+    "react",
+    "webpack",
+    "babel",
+    "creative-tim",
+    "material-design"
+  ],
+  "author": "Doan Kim (doan0105@e3view.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.0",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.13.0",
+    "path": "^0.12.7",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/icons": "^4.0.1",
+    "@types/googlemaps": "^3.30.11",
+    "@types/markerclustererplus": "^2.1.33",
+    "axios": "^0.19.0",
+    "chartist": "^0.10.1",
+    "classnames": "^2.2.6",
+    "material-table": "^1.54.2",
+    "moment": "^2.24.0",
+    "perfect-scrollbar": "^1.4.0",
+    "react": "^16.12.0",
+    "react-chartist": "^0.13.1",
+    "react-dom": "^16.12.0",
+    "react-google-maps": "^9.4.5",
+    "react-redux": "^7.1.3",
+    "react-router-dom": "^5.1.2",
+    "react-swipeable-views": "^0.12.15",
+    "react-timeago": "^4.4.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  }
+}
