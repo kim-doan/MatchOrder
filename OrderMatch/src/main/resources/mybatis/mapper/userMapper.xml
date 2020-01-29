@@ -13,6 +13,22 @@
 		<result property="password" column="password"></result>
 		<result property="createAt" column="createat"></result>
 		<result property="modifyAt" column="modifyat"></result>
+		<result property="company_type" column="company_type"></result>
+		<result property="company_name" column="company_name"></result>
+		<result property="repressntative" column="repressntative"></result>
+		<result property="officeNo" column="officeNo"></result>
+		<result property="business" column="business"></result>
+		<result property="businessType" column="businessType"></result>
+		<result property="tel" column="tel"></result>
+		<result property="fax" column="fax"></result>
+		<result property="addr_num" column="addr_num"></result>
+		<result property="addr" column="addr"></result>
+		<result property="detail_addr" column="detail_addr"></result>
+		<result property="charge_name" column="charge_name"></result>
+		<result property="charge_tel" column="charge_tel"></result>
+		<result property="charge_email" column="charge_email"></result>
+		<result property="approval" column="approval"></result>
+		<result property="approval_dt" column="approval_dt"></result>
 		<collection property="roles" resultMap="rolesResult"></collection>
 	</resultMap>
 
@@ -46,9 +62,11 @@
 	<insert id="insertUser"
 		parameterType="com.ordermatch.main.user.model.User"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into TB_USER(username,
-		password, createat)
-		values (#{username}, #{password}, sysdate())
+		INSERT INTO
+		TB_USER
+		(USERNAME, PASSWORD, COMPANY_TYPE, COMPANY_NAME, REPRESSNTATIVE, OFFICENO, BUSINESS, BUSINESS_TYPE, TEL, FAX, ADDR_NUM, ADDR, DETAIL_ADDR, CHARGE_NAME, CHARGE_TEL, CHARGE_EMAIL, CREATEAT) 
+		VALUES
+		(#{username}, #{password}, #{company_type} ,#{company_name},#{repressntative},#{officeNo},#{business},#{businessType},#{tel},#{fax},#{addr_num},#{addr},#{detail_addr},#{charge_name},#{charge_tel},#{charge_email}, sysdate())
 	</insert>
 
 	<insert id="insertRole" parameterType="hashmap">
