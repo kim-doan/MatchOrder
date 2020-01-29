@@ -77,12 +77,33 @@
 	<update id="updateUser"
 		parameterType="com.ordermatch.main.user.model.User"
 		useGeneratedKeys="true" keyProperty="id">
-		update TB_USER a inner join ROLES
-		b
-		on a.id = b.user_id
-		set username = #{username}, password =
-		#{password}, modifyat = sysdate()
-		where a.id = #{id}
+		UPDATE 
+		TB_USER A 
+		INNER JOIN ROLES B
+		ON A.id = B.user_id
+		
+		SET
+		  USERNAME = #{username}
+		, PASSWORD = #{password}
+		, COMPANY_TYPE = #{company_type}
+		, COMPANY_NAME = #{company_name}
+		, REPRESSNTATIVE = #{repressntative}
+		, OFFICENO = #{officeNo}
+		, BUSINESS = #{business}
+		, BUSINESS_TYPE = #{businessType}
+		, TEL = #{tel}
+		, FAX = #{fax}
+		, ADDR_NUM = #{addr_num}
+		, ADDR = #{addr}
+		, DETAIL_ADDR = #{detail_addr}
+		, CHARGE_NAME = #{charge_name}
+		, CHARGE_TEL = #{charge_tel}
+		, CHARGE_EMAIL = #{charge_email}
+		, MODIFYAT = sysdate()
+		, APPROVAL = #{approval}
+		, APPROVAL_DT = sysdate()
+		
+		WHERE A.id = #{id}
 	</update>
 
 	<delete id="deleteUser" parameterType="int">
