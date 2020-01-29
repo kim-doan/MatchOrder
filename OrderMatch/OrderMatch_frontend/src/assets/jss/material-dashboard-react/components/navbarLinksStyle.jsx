@@ -6,7 +6,7 @@ import {
 
 import dropdownStyle from "assets/jss/material-dashboard-react/dropdownStyle.jsx";
 
-const headerLinksStyle = theme => ({
+const navbarLinksStyle = theme => ({
   ...dropdownStyle(theme),
   search: {
     "& > div": {
@@ -110,4 +110,4 @@ const headerLinksStyle = theme => ({
   }
 });
 
-export default headerLinksStyle;
+export default navbarLinksStyle;

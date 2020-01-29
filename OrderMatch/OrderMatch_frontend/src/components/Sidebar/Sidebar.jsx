@@ -21,6 +21,7 @@ const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
+  
   const { classes, color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
@@ -46,6 +47,7 @@ const Sidebar = ({ ...props }) => {
             activeClassName="active"
             key={key}
           >
+            {/* 사이드 메뉴 */}
             <ListItem button className={classes.itemLink + listItemClasses}>
               <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
                 {typeof prop.icon === "string" ? (
@@ -69,7 +71,7 @@ const Sidebar = ({ ...props }) => {
     <div className={classes.logo}>
       <a href="https://www.creative-tim.com" className={classes.logoLink}>
         <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
+          {/* <img src={logo} alt="logo" className={classes.img} /> */}
         </div>
         {logoText}
       </a>
@@ -117,7 +119,7 @@ const Sidebar = ({ ...props }) => {
           {image !== undefined ? (
             <div
               className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
+              // style={{ backgroundImage: "url(" + image + ")" }}
             />
           ) : null}
         </Drawer>

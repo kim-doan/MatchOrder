@@ -1,6 +1,11 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
+//custom icons
+import Home from  "@material-ui/icons/Home"
+import Setting from "@material-ui/icons/Settings";
+import Store from "@material-ui/icons/Store";
+
 // import ContentPaste from "@material-ui/icons/ContentPaste";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
@@ -22,24 +27,56 @@ import LoginPage from "views/Login/Login.jsx";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    sidebarName: "대시보드",
-    navbarName: "대시보드",
-    icon: Dashboard,
-    component: DashboardPage
+    sidebarName: "HOME",
+    navbarName: "HOME",
+    icon: Home,
+    component: TableList
   },
   {
     path: "/user",
-    sidebarName: "회원관리",
-    navbarName: "회원관리",
-    icon: Person,
+    sidebarName: "환경설정",
+    navbarName: "환경설정",
+    icon: Setting,
     component: UserProfile
   },
   {
-    path: "/table",
-    sidebarName: "재고관리",
-    navbarName: "재고관리",
+    path: "/product",
+    sidebarName: "상품관리",
+    navbarName: "상품관리",
+    icon: "card_giftcard",
+    component: TableList
+    //component: MaterialTable
+  },
+  {
+    path: "/order",
+    sidebarName: "발주관리",
+    navbarName: "발주관리",
     icon: "content_paste",
     component: TableList
+    //component: MaterialTable
+  },
+  {
+    path: "/cs",
+    sidebarName: "C/S",
+    navbarName: "C/S",
+    icon: "library_books",
+    component: DashboardPage
+    //component: MaterialTable
+  },
+  {
+    path: "/calculate",
+    sidebarName: "정산",
+    navbarName: "정산",
+    icon: "attach_money",
+    component: TableList
+    //component: MaterialTable
+  },
+  {
+    path: "/sales",
+    sidebarName: "매출/통계",
+    navbarName: "매출/통계",
+    icon: "blur_off",
+    component: NotificationsPage
     //component: MaterialTable
   },
   {
@@ -49,20 +86,13 @@ const dashboardRoutes = [
     icon: BubbleChart,
     component: Icons
   },
-  {
-    path: "/maps",
-    sidebarName: "Maps",
-    navbarName: "Map",
-    icon: LocationOn,
-    component: Maps
-  },
-  {
-    path: "/notifications",
-    sidebarName: "이상현황관리",
-    navbarName: "이상현황관리",
-    icon: Notifications,
-    component: NotificationsPage
-  },
+  // {
+  //   path: "/maps",
+  //   sidebarName: "Maps",
+  //   navbarName: "Map",
+  //   icon: LocationOn,
+  //   component: Maps
+  // },
   {
     path: "/login",
     sidebarName: "로그인",

@@ -5,52 +5,61 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 // core components
-import footerStyle from "assets/jss/material-dashboard-react/components/footerStyle.jsx";
-
-function Footer({ ...props }) {
+import navbarStyle from "assets/jss/material-dashboard-react/components/navbarStyle.jsx";
+function Navbar({ ...props }) {
   const { classes } = props;
   return (
-    <footer className={classes.footer}>
+    <navbar className={classes.navbar}>
       <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href="#home" className={classes.block}>
+              <a href="#/dashboard" className={classes.block}>
                 Home
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="#company" className={classes.block}>
-                Company
+              <a href="#/user" className={classes.block}>
+                환경설정
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a href="#portfolio" className={classes.block}>
-                Portfolio
+                상품관리
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a href="#blog" className={classes.block}>
-                Blog
+                발주관리
+              </a>
+            </ListItem>
+            <ListItem className={classes.inlineBlock}>
+              <a href="#blog" className={classes.block}>
+                C/S
+              </a>
+            </ListItem>
+            <ListItem className={classes.inlineBlock}>
+              <a href="#blog" className={classes.block}>
+                정산
+              </a>
+            </ListItem>
+            <ListItem className={classes.inlineBlock}>
+              <a href="#blog" className={classes.block}>
+                매출통계
               </a>
             </ListItem>
           </List>
         </div>
         <p className={classes.right}>
-          <span>
-            &copy; {1900 + new Date().getYear()}{" "}
-            <a href="https://www.creative-tim.com" className={classes.a}>
-              Spring_ERP
-            </a>
-          </span>
+
         </p>
       </div>
-    </footer>
+    </navbar>
   );
 }
 
-Footer.propTypes = {
+Navbar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(footerStyle)(Footer);
+export default withStyles(navbarStyle)(Navbar);

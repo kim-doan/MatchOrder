@@ -10,17 +10,20 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
+import Navbar from "components/Navbar/Navbar.jsx";
+
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
 import dashboardRoutes from "routes/dashboard.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
-
+// import AuthNavbar from "components/Navbar/AuthNavbar.jsx";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { connect } from "react-redux";
 import { getStatusRequest } from 'actions/authentication';
 import axios from "axios";
+// import Navbar from "../../components/Navbar/Navbar";
 
 const switchRoutes = (
   <Switch>
@@ -132,10 +135,11 @@ class App extends React.Component {
 
       return (
         <div className={classes.wrapper}>
+       
           {isAuth ? undefined :
           <Sidebar
             routes={dashboardRoutes}
-            logoText={"Order Match"}
+            logoText={"Spring_ERP"}
             logo={logo}
             image={image}
             handleDrawerToggle={this.handleDrawerToggle}
@@ -145,13 +149,33 @@ class App extends React.Component {
           />
           }
           <div className={classes.mainPanel} ref="mainPanel">
+              {/* {this.getRoute() ? <Navbar /> : null} */}
+          {/* <Navbar
+            routes={routes}
+            handleDrawerToggle={this.handleDrawerToggle}
+            {...rest}
+          /> */}
+           {/* <Navbar
+              routes={dashboardRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            /> */}
           {isAuth ? undefined :
-            <Header
+            (<Navbar
               routes={dashboardRoutes}
               handleDrawerToggle={this.handleDrawerToggle}
               {...rest}
             />
+            ,
+            <Header
+              routes={dashboardRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            />)
           }
+          
+          {/* <AuthNavbar brandText={this.getActiveRoute(routes)} {...rest} /> */}
+          {/* {this.getRoute() ? <Navbar /> : null} */}
             {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
             {this.getRoute() ? (
               <div className={classes.content}>
