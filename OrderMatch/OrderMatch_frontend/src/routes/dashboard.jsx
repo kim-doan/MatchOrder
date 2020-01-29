@@ -49,13 +49,13 @@ const dashboardRoutes = [
     icon: BubbleChart,
     component: Icons
   },
-  // {
-  //   path: "/maps",
-  //   sidebarName: "Maps",
-  //   navbarName: "Map",
-  //   icon: LocationOn,
-  //   component: Maps
-  // },
+  {
+    path: "/maps",
+    sidebarName: "Maps",
+    navbarName: "Map",
+    icon: LocationOn,
+    component: Maps
+  },
   {
     path: "/notifications",
     sidebarName: "이상현황관리",
