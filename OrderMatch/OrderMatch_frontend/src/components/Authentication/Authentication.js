@@ -104,9 +104,7 @@ class Authentication extends Component {
         const registerView = (
             <div className="card-content">
                 <div className="row">
-                    {inputBoxes}
-                    <a className="waves-effect waves-light btn"
-                      onClick={this.handleRegister}>CREATE</a>
+                    <CheckOut/>
                 </div>
             </div>
         );
