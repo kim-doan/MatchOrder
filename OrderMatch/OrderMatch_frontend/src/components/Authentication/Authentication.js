@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
- 
+import CheckOut from './CheckOut';
 class Authentication extends Component {
     state = {
       username:"",
@@ -110,11 +110,7 @@ class Authentication extends Component {
         );
         return (
           <div className="container auth">
-              <Link className="logo" to="/">MEMOPAD</Link>
               <div className="card">
-                  <div className="header blue white-text center">
-                      <div className="card-content">{this.props.mode ? "LOGIN" : "REGISTER"}</div>
-                  </div>
                   {this.props.mode ? loginView : registerView }
               </div>
           </div>
