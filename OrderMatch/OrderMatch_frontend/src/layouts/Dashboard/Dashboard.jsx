@@ -19,7 +19,7 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import { connect } from "react-redux";
-import { getStatusRequest } from 'actions/authentication';
+import { getStatusRequest, logoutRequest } from 'actions/authentication';
 import axios from "axios";
 
 const switchRoutes = (
@@ -51,6 +51,20 @@ class App extends React.Component {
       this.setState({ mobileOpen: false });
     }
   }
+  handleLogout = () => {
+    this.props.logoutRequest().then(
+      () => {
+        //세션 로그아웃 상태
+        loginData = {
+          isLoggedIn: false,
+          username: ''
+        };
+
+        document.cookie='key= ' + btoa(JSON.stringify(loginData));
+        alert("서버와 연결이 종료되었습니다. 다시 로그인해주세요.")              
+      }
+    )
+  }
   componentDidMount() {
     const enhanceAccessToken = () => {
       if(!localStorage.accessToken) return
@@ -75,6 +89,37 @@ class App extends React.Component {
 
     let loginData = getCookie('key');
 
+    function removeCookie() {
+      loginData = {
+        isLoggedIn: false,
+        username: ''
+      };
+
+      document.cookie='key= ' + btoa(JSON.stringify(loginData));
+    }
+    
+    //5분마다 토큰 만료 확인
+    setInterval(function() {
+      if(localStorage.accessToken != null) {
+        axios.get('http://localhost:8080/api/user/validToken')
+          .then(response => {
+              var result = response && response.data;
+              if(result.success == false) { // 토큰이 만료됫을경우
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("username");
+                  removeCookie();
+                  window.location.reload();
+              }
+          })
+          .catch(response => { // 서버와 연결이 끊겼을경우
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("username");
+            removeCookie();
+            window.location.reload();
+          })
+      }
+    },300000);
+
     // 쿠키 데이터 null 체크
     if(typeof loginData === "undefined") { 
       this.props.history.push('/login');
@@ -94,12 +139,7 @@ class App extends React.Component {
       () => {
         if(!this.props.status.valid) {
           //세션 로그아웃 상태
-          loginData = {
-            isLoggedIn: false,
-            username: ''
-          };
-
-          document.cookie='key= ' + btoa(JSON.stringify(loginData));
+          removeCookie();
 
           alert("세션이 만료되어 종료됩니다. 다시 로그인해주세요.")
           this.props.history.push('/login');
@@ -121,6 +161,7 @@ class App extends React.Component {
     if(this.props.status.isLoggedIn === false && isAuth === false) {
       this.props.history.push('/login');
     }
+    
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeFunction);
@@ -193,6 +234,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getStatusRequest: () => {
       return dispatch(getStatusRequest());
+    },
+    logoutRequest: () => {
+      return dispatch(logoutRequest());
     }
   }
 }

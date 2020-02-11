@@ -2,6 +2,8 @@ spring:
   messages:
     basename: i18n/exception
     encoding: UTF-8
-    
+  redis:
+    host: 13.209.88.157
+    port: 6379
 server:
   port: 8080

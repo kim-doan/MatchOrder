@@ -8,8 +8,22 @@ import {
     AUTH_LOGIN_FAILURE,
     AUTH_GET_STATUS,
     AUTH_GET_STATUS_SUCCESS,
-    AUTH_GET_STATUS_FAILURE
+    AUTH_GET_STATUS_FAILURE,
+    AUTH_LOGOUT
 } from './ActionTypes';
+
+/* LOGOUT */
+export function logoutRequest() {
+    return (dispatch) => {
+        dispatch(logout());
+    };
+}
+ 
+export function logout() {
+    return {
+        type: AUTH_LOGOUT
+    };
+}
 
 /* GET STATUS */
 // 토큰 만료되었는지 확인하는 메소드

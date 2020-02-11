@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ordermatch.main.config.CacheKey;
 import com.ordermatch.main.exception.CUserDuplicateException;
 import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.jwt.JwtTokenProvider;
@@ -57,8 +59,9 @@ public class UserController {
 	@CrossOrigin
 	@GetMapping("/user/validToken")
 	public SingleResult<User> getLoginSession(@RequestHeader(value="X-AUTH-TOKEN") String token, @RequestHeader(value="username") String username) {
+		System.out.println("실행");
 		if(token != null && jwtTokenProvider.validateToken(token)) { // 토큰 만료 확인
-			User user = userService.findByUsername(username).orElseThrow(CUserNotFoundException::new);
+			User user = userService.findByTokenUsername(username).orElseThrow(CUserNotFoundException::new);
 			
 			return responseService.getSingleResult(user);
 		} else {

@@ -19,6 +19,16 @@ const initialState = {
  
 export default function authentication(state = initialState, action) {
   switch(action.type) {
+    /* LOGOUT */
+    case types.AUTH_LOGOUT:
+        return {
+          ...state,
+          status: {
+            ...state.status,
+            isLoggedIn: false,
+            currentUser: ''
+          }
+        }
     /* CHECK SESSION */
     case types.AUTH_GET_STATUS:
       return {
