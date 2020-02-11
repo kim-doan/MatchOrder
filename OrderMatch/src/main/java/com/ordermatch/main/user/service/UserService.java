@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ordermatch.main.config.CacheKey;
 import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.jwt.JwtTokenProvider;
 import com.ordermatch.main.mapper.UserMapper;
@@ -39,6 +41,11 @@ public class UserService {
 	
 	public Optional<User> findById(int id) {
 		return userMapper.findById(id);
+	}
+	
+	@Cacheable(value = CacheKey.USER, key ="#username", unless = "#result == null")
+	public Optional<User> findByTokenUsername(String username) {
+		return userMapper.findByUsername(username);
 	}
 	
 	public Optional<User> findByUsername(String username) {

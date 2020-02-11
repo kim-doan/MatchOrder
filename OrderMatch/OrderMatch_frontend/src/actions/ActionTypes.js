@@ -8,6 +8,9 @@ export const AUTH_LOGIN = "AUTH_LOGIN";
 export const AUTH_LOGIN_SUCCESS = "AUTH_LOGIN_SUCCESS";
 export const AUTH_LOGIN_FAILURE = "AUTH_LOGIN_FAILURE";
 
+//Logout
+export const AUTH_LOGOUT = "AUTH_LOGOUT";
+
 //Check Sessions
 export const AUTH_GET_STATUS = "AUTH_GET_STATUS";
 export const AUTH_GET_STATUS_SUCCESS = "AUTH_GET_STATUS_SUCCESS";
