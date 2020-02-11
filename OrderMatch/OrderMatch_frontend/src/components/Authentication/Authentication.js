@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CheckOut from './CheckOut';
+import Signin from './Signin';
+
 class Authentication extends Component {
     state = {
       username:"",
@@ -82,22 +84,7 @@ class Authentication extends Component {
  
         const loginView = (
             <div>
-                <div className="card-content">
-                    <div className="row">
-                        {inputBoxes}
-                        <a className="waves-effect waves-light btn" onClick={this.handleLogin}>SUBMIT</a>
-                    </div>
-                </div>
- 
- 
-                <div className="footer">
-                    <div className="card-content">
-                        <div className="right" >
-                        New Here? <Link to="/register">Create an account</Link>
-                        </div>
-                    </div>
-                </div>
- 
+                <Signin onLogin={this.props.onLogin}/>
             </div>
         );
  
