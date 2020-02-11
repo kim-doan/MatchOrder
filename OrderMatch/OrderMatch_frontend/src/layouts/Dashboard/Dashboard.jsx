@@ -58,6 +58,7 @@ class App extends React.Component {
       axios.defaults.headers.common['USERNAME'] = localStorage.username;
     } 
     enhanceAccessToken(); // 새로고침시 토큰 재설정
+    
     if (navigator.platform.indexOf("Win") > -1) {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
@@ -144,14 +145,9 @@ class App extends React.Component {
             {...rest}
           />
           }
-          <div className={classes.mainPanel} ref="mainPanel">
-          {isAuth ? undefined :
-            <Header
-              routes={dashboardRoutes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              {...rest}
-            />
-          }
+          
+          {isAuth ? (
+            <div className={classes.authPanel} ref="mainPanel">
             {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
             {this.getRoute() ? (
               <div className={classes.content}>
@@ -162,6 +158,26 @@ class App extends React.Component {
             )}
             {this.getRoute() ? <Footer /> : null}
           </div>
+          ) : (
+            <div className={classes.mainPanel} ref="mainPanel">
+            <Header
+              routes={dashboardRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            />
+          
+            {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
+            {this.getRoute() ? (
+              <div className={classes.content}>
+                <div className={classes.container}>{switchRoutes}</div>
+              </div>
+            ) : (
+              <div className={classes.map}>{switchRoutes}</div>
+            )}
+            {this.getRoute() ? <Footer /> : null}
+          </div>
+          )
+              }
         </div>
       );
   }
