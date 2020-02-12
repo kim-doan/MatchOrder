@@ -1,0 +1,8 @@
+server:
+  port: 8090
+spring:
+  rabbitmq:
+    host: 13.209.88.157
+    port: 5672
+    username: kimdoan
+    password: asdzxc852
