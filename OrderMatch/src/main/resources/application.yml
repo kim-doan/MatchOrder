@@ -2,6 +2,11 @@ spring:
   messages:
     basename: i18n/exception
     encoding: UTF-8
+  rabbitmq:
+    host: 13.209.88.157
+    port: 5672
+    username: kimdoan
+    password: asdzxc852
   redis:
     host: 13.209.88.157
     port: 6379

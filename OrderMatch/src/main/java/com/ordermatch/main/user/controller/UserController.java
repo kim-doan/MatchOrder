@@ -59,7 +59,7 @@ public class UserController {
 	@CrossOrigin
 	@GetMapping("/user/validToken")
 	public SingleResult<User> getLoginSession(@RequestHeader(value="X-AUTH-TOKEN") String token, @RequestHeader(value="username") String username) {
-		System.out.println("실행");
+		System.out.println(username + " / " + token);
 		if(token != null && jwtTokenProvider.validateToken(token)) { // 토큰 만료 확인
 			User user = userService.findByTokenUsername(username).orElseThrow(CUserNotFoundException::new);
 			

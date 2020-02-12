@@ -19,6 +19,7 @@ import NotificationsPage from "views/Notifications/Notifications.jsx";
 //Auth
 import RegisterPage from "views/Register/Register.jsx";
 import LoginPage from "views/Login/Login.jsx";
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
