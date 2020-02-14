@@ -16,6 +16,12 @@ import {
 export function logoutRequest() {
     return (dispatch) => {
         dispatch(logout());
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("username");
+        dispatch(getStatusFailure()); // 상태 redux 전부 초기화
+    
+        document.cookie='key= ' + btoa(JSON.stringify("")) +";path=/";
+        window.location.reload();
     };
 }
  
@@ -35,12 +41,17 @@ export function getStatusRequest() {
         .then(response => {
             var result = response && response.data;
             if(result.success == true) { // 토큰이 만료되지 않았을경우
-                dispatch(getStatusSuccess(response.data)); // 유저데이터 찾아서 redux에 넣기
+                dispatch(getStatusSuccess(response.data.data)); // 유저데이터 찾아서 redux에 넣기
             } else { // 토큰이 만료되었을경우
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("username");
                 dispatch(getStatusFailure()); // 상태 redux 전부 초기화
             }
+        })
+        .catch(response => {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("username");
+            dispatch(getStatusFailure()); // 상태 redux 전부 초기화
         })
     }
 }
