@@ -62,6 +62,11 @@ export default function SignIn(props) {
         }
     );
   }
+  const enterLogin = e => {
+    if(e.key == "Enter") {
+      handleLogin()
+    }
+  }
 
   function handleLogin() {
     let id = userid.value;
@@ -110,6 +115,7 @@ export default function SignIn(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onKeyPress={enterLogin}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

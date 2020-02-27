@@ -119,135 +119,121 @@ var dashRoutes = [
     state: "pageCollapse",
     views: [
       {
-        collapse: true,
+        path: "/order_add",
         name: "발주등록",
-        mini: "B",
-        state: "orderCollapse",
-        views: [
-          {
-            path: "/order_add",
-            name: "발주서등록",
-            mini: "OA",
-            component: OrderRegister,
-            layout: "/admin"
-          },
-          {
-            path: "/order_state",
-            name: "발주서등록현황",
-            mini: "OS",
-            component: OrderList,
-            layout: "/admin"
-          },
-          {
-            path: "/seller_match",
-            name: "판매사매칭",
-            mini: "SM",
-            component: SellerMatch,
-            layout: "/admin"
-          }
-        ]
+        mini: "■",
+        component: OrderRegister,
+        layout: "/admin"
       },
       {
-        collapse: true,
+        path: "/order_add",
+        name: "발주서등록",
+        component: OrderRegister,
+        layout: "/admin"
+      },
+      {
+        path: "/order_state",
+        name: "발주서등록현황",
+        component: OrderList,
+        layout: "/admin"
+      },
+      {
+        path: "/seller_match",
+        name: "판매사매칭",
+        component: SellerMatch,
+        layout: "/admin"
+      },
+      //빠른발주매칭
+      {
+        path: "/qm_unknow1",
         name: "빠른발주매칭",
-        mini: "QM",
-        state: "QMCollapse",
-        views: [
-          {
-            path: "/qm_unknow1",
-            name: "상품 미매칭건 조회/매칭",
-            mini: "PS",
-            component: UnProductSearch,
-            layout: "/admin"
-          },
-          {
-            path: "/qm_unknow2",
-            name: "매칭상품조회",
-            mini: "PL",
-            component: Productlist,
-            layout: "/admin"
-          },{
-            path: "/qm_unknow3",
-            name: "옵션 미매칭건 조회/매칭",
-            mini: "UO",
-            component: UnOption,
-            layout: "/admin"
-          },{
-            path: "/qm_unknow4",
-            name: "매칭한 옵션 조회",
-            mini: "OL",
-            component: OptionList,
-            layout: "/admin"
-          }
-        ]
+        mini: "■",
+        component: UnProductSearch,
+        layout: "/admin"
       },
       {
-        collapse: true,
+        path: "/qm_unknow1",
+        name: "상품 미매칭건 조회/매칭",
+        component: UnProductSearch,
+        layout: "/admin"
+      },
+      {
+        path: "/qm_unknow2",
+        name: "매칭상품조회",
+        component: Productlist,
+        layout: "/admin"
+      },
+      {
+        path: "/qm_unknow3",
+        name: "옵션 미매칭건 조회/매칭",
+        component: UnOption,
+        layout: "/admin"
+      },
+      {
+        path: "/qm_unknow4",
+        name: "매칭한 옵션 조회",
+        component: OptionList,
+        layout: "/admin"
+      },
+      //발주관리
+      {
+        path: "/om_unknow1",
         name: "발주관리",
-        mini: "OM",
-        state: "OMCollapse",
-        views: [
-          {
-            path: "/om_unknow1",
-            name: "발주처리(집계)",
-            mini: "TO",
-            component: TotalOrderpro,
-            layout: "/admin"
-          },
-          {
-            path: "/om_unknow2",
-            name: "발주처리(일반)",
-            mini: "NO",
-            component: NomalOrderpro,
-            layout: "/admin"
-          },{
-            path: "/om_unknow3",
-            name: "발주보류조회",
-            mini: "PO",
-            component: PendingOrder,
-            layout: "/admin"
-          }
-        ]
+        mini: "■",
+        component: TotalOrderpro,
+        layout: "/admin"
       },
       {
-        collapse: true,
+        path: "/om_unknow1",
+        name: "발주처리(집계)",
+        component: TotalOrderpro,
+        layout: "/admin"
+      },
+      {
+        path: "/om_unknow2",
+        name: "발주처리(일반)",
+        component: NomalOrderpro,
+        layout: "/admin"
+      },{
+        path: "/om_unknow3",
+        name: "발주보류조회",
+        component: PendingOrder,
+        layout: "/admin"
+      },
+      //발주현황
+      {
+        path: "/os_unknow1",
         name: "발주현황",
-        mini: "OS",
-        state: "OSCollapse",
-        views: [
-          {
-            path: "/os_unknow1",
-            name: "전체",
-            mini: "T",
-            component: TotalOrder,
-            layout: "/admin"
-          },
-          {
-            path: "/os_unkonw2",
-            name: "발주서 생성",
-            mini: "OC",
-            component: OrderCreate,
-            layout: "/admin"
-          },{
-            path: "/os_unkonw3",
-            name: "메일 발송 중",
-            mini: "MS",
-            component: MailSending,
-            layout: "/admin"
-          },{
-            path: "/os_unkonw4",
-            name: "수신확인",
-            mini: "MA",
-            component: MailApproved,
-            layout: "/admin"
-          },{
-            path: "/os_unkonw5",
-            name: "휴지통",
-            mini: "TR",
-            component: Trash,
-            layout: "/admin"
-          }
-        ]
+        mini: "■",
+        component: TotalOrder,
+        layout: "/admin"
+      },
+      {
+        path: "/os_unknow1",
+        name: "전체",
+        component: TotalOrder,
+        layout: "/admin"
+      },
+      {
+        path: "/os_unkonw2",
+        name: "발주서 생성",
+        component: OrderCreate,
+        layout: "/admin"
+      },{
+        path: "/os_unkonw3",
+        name: "메일 발송 중",
+        component: MailSending,
+        layout: "/admin"
+      },{
+        path: "/os_unkonw4",
+        name: "수신확인",
+        component: MailApproved,
+        layout: "/admin"
+      },{
+        path: "/os_unkonw5",
+        name: "휴지통",
+        component: Trash,
+        layout: "/admin"
       }
     ]
   },
