@@ -35,7 +35,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
       <Switch>
-        {/* <Route path="/rtl" component={RtlLayout} /> */}
+        <Route path="/rtl" component={RtlLayout} />
         <Route path="/auth" component={AuthLayout} />
         <Route path="/admin" component={MainLayout} />
         <Redirect from="/" to="/admin/dashboard" />

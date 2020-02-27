@@ -26,7 +26,7 @@ import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
 
-import avatar from "assets/img/faces/user.png";
+import avatar from "assets/img/faces/avatar.jpg";
 
 var ps;
 

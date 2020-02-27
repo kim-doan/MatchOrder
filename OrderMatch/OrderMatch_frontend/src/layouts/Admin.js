@@ -30,7 +30,7 @@ function Dashboard(props) {
   const [bgColor, setBgColor] = React.useState("black");
   // const [hasImage, setHasImage] = React.useState(true);
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
-  const [logo, setLogo] = React.useState(require("assets/img/logo.png"));
+  const [logo, setLogo] = React.useState(require("assets/img/logo-white.svg"));
   // styles
   const classes = useStyles();
   const mainPanelClasses =
@@ -73,10 +73,10 @@ function Dashboard(props) {
   const handleBgColorClick = bgColor => {
     switch (bgColor) {
       case "white":
-        setLogo(require("assets/img/logo-b.png"));
+        setLogo(require("assets/img/logo.svg"));
         break;
       default:
-        setLogo(require("assets/img/logo.png"));
+        setLogo(require("assets/img/logo-white.svg"));
         break;
     }
     setBgColor(bgColor);
