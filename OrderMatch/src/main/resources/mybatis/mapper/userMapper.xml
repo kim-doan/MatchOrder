@@ -5,68 +5,72 @@
 	<resultMap type="String" id="rolesResult">
 		<result property="roles" column="roles"></result>
 	</resultMap>
+	
+	<resultMap type="com.ordermatch.main.user.model.Company"
+		id="companyResult">
+		<result property="company_ein" column="COMPANY_EIN"></result>	
+		<result property="company_type" column="COMPANY_TYPE"></result>	
+		<result property="company_name" column="COMPANY_NAME"></result>	
+		<result property="company_category" column="COMPANY_CATEGORY"></result>	
+		<result property="company_tel" column="COMPANY_TEL"></result>	
+		<result property="company_fax" column="COMPANY_FAX"></result>	
+		<result property="company_address" column="COMPANY_ADDRESS"></result>	
+		<result property="company_img" column="COMPANY_IMG"></result>
+		<result property="ceo_name" column="CEO_NAME"></result>
+	</resultMap>
 
 	<resultMap type="com.ordermatch.main.user.model.User"
 		id="userResult">
-		<result property="id" column="id"></result>
-		<result property="username" column="username"></result>
-		<result property="password" column="password"></result>
-		<result property="createAt" column="createat"></result>
-		<result property="modifyAt" column="modifyat"></result>
-		<result property="company_type" column="company_type"></result>
-		<result property="company_name" column="company_name"></result>
-		<result property="repressntative" column="repressntative"></result>
-		<result property="officeNo" column="officeNo"></result>
-		<result property="business" column="business"></result>
-		<result property="businessType" column="businessType"></result>
-		<result property="tel" column="tel"></result>
-		<result property="fax" column="fax"></result>
-		<result property="addr_num" column="addr_num"></result>
-		<result property="addr" column="addr"></result>
-		<result property="detail_addr" column="detail_addr"></result>
-		<result property="charge_name" column="charge_name"></result>
-		<result property="charge_tel" column="charge_tel"></result>
-		<result property="charge_email" column="charge_email"></result>
-		<result property="approval" column="approval"></result>
-		<result property="approval_dt" column="approval_dt"></result>
+		<result property="user_id" column="USER_ID"></result>
+		<result property="username" column="USERNAME"></result>
+		<result property="password" column="PASSWORD"></result>
+		<result property="username" column="USERNAME"></result>
+		<result property="manager_tel" column="MANAGER_TEL"></result>
+		<result property="manager_email" column="MAGAER_EMAIL"></result>
+		<result property="cal_manager_name" column="CAL_MANAGER_NAME"></result>
+		<result property="cal_manager_tel" column="CAL_MANAGER_TEL"></result>
+		<result property="cal_manager_email" column="CAL_MANAGER_EMAIL"></result>
+		<result property="createAt" column="CREATEAT"></result>
+		<result property="modifyAt" column="MODIFYAT"></result>
+		<result property="disable_time" column="DISABLE_TIME"></result>
 		<collection property="roles" resultMap="rolesResult"></collection>
+		<collection property="company" resultMap="companyResult"></collection>
 	</resultMap>
 
 	<select id="selectAllUser" resultMap="userResult">
-		select a.*, b.roles
+		select a.*, b.roles, c.*
 		from
 		TB_USER a
-		left join ROLES b on a.id = b.user_id
-		order by a.id desc
+		left join ROLES b on a.user_id = b.user_id
+		left join TB_COMPANY c on a.user_id = c.user_id
+		order by a.user_id desc
 	</select>
 
 	<select id="findById" parameterType="int" resultMap="userResult">
-		select a.*,
-		b.roles
+		select a.*, b.roles, c.*
 		from TB_USER a
-		left join ROLES b on a.id = b.user_id
-		where a.id =
-		#{id}
+		left join ROLES b on a.user_id = b.user_id
+		left join TB_COMPANY c on a.user_id = c.user_id
+		where a.user_id = #{id}
 	</select>
 
-	<select id="findByUsername" parameterType="String"
-		resultMap="userResult">
-		select a.*, b.roles
+	<select id="findByUsername" parameterType="String" resultMap="userResult">
+		select a.*, b.roles, c.*
 		from TB_USER a
-		left join ROLES b on a.id =
-		b.user_id
+		left join ROLES b on a.user_id = b.user_id
+		left join TB_COMPANY c on a.user_id = c.user_id
 		where a.username = #{username}
 	</select>
 
 	<!-- useGeneratedKeys="true" keyProperty="id" insert 성공하면 id 값 반환하도록 설정 -->
 	<insert id="insertUser"
-		parameterType="com.ordermatch.main.user.model.User"
-		useGeneratedKeys="true" keyProperty="id">
+		parameterType="com.ordermatch.main.user.model.User" useGeneratedKeys="true" keyProperty="user_id">
 		INSERT INTO
 		TB_USER
-		(USERNAME, PASSWORD, COMPANY_TYPE, COMPANY_NAME, REPRESSNTATIVE, OFFICENO, BUSINESS, BUSINESS_TYPE, TEL, FAX, ADDR_NUM, ADDR, DETAIL_ADDR, CHARGE_NAME, CHARGE_TEL, CHARGE_EMAIL, CREATEAT) 
+		(USERNAME, PASSWORD, MANAGER_NAME, MANAGER_TEL, MANAGER_EMAIL,
+		CAL_MANAGER_NAME, CAL_MANAGER_TEL, CAL_MANAGER_EMAIL, CREATEAT, MODIFYAT, DISABLE_TIME) 
 		VALUES
-		(#{username}, #{password}, #{company_type} ,#{company_name},#{repressntative},#{officeNo},#{business},#{businessType},#{tel},#{fax},#{addr_num},#{addr},#{detail_addr},#{charge_name},#{charge_tel},#{charge_email}, sysdate())
+		(#{username}, #{password}, #{manager_name}, #{manager_tel}, #{manager_email}, #{cal_manager_name}, #{cal_manager_tel}, #{cal_manager_email}, sysdate(), null, null);
 	</insert>
 
 	<insert id="insertRole" parameterType="hashmap">
