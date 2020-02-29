@@ -138,7 +138,7 @@ export default function SignIn(props) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/auth/register-page" variant="body2">
+              <Link href="#/register" variant="body2">
                 회원가입
               </Link>
             </Grid>
