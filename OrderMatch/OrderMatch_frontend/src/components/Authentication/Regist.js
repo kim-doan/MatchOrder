@@ -20,6 +20,7 @@ import GridItem from "components/Grid/GridItem.js";
 import styles from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 const useStyles = makeStyles(styles);
 const useModalStyles = makeStyles(theme => ({
+
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -50,6 +51,7 @@ export default function AddressForm() {
     handleClose();
   }
   const classesModal = useModalStyles();
+
   const classes = useStyles();
   const handleOpen = () => {
     setOpen(true);
