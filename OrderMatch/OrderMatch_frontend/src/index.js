@@ -26,13 +26,11 @@ import thunk from 'redux-thunk';
 import AuthLayout from "layouts/Auth.js";
 import RtlLayout from "layouts/RTL.js";
 import MainLayout from "layouts/Main.js";
-import { composeWithDevTools } from 'redux-devtools-extension';
-
 
 import "assets/scss/material-dashboard-pro-react.scss?v=1.8.0";
 
 const hist = createBrowserHistory();
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
