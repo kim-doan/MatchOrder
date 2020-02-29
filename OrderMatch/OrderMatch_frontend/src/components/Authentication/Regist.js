@@ -20,48 +20,48 @@ import GridItem from "components/Grid/GridItem.js";
 import styles from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 const useStyles = makeStyles(styles);
 const useModalStyles = makeStyles(theme => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-        width: 800
-    }
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    width: 800
+  }
 }));
 export default function AddressForm() {
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState('female');
-    const [selectedEnabled, setSelectedEnabled] = React.useState("b");
-    const [addrInfo, setAddrInfo] =React.useState({ 
-      zonecode: ""
-      ,jibunAddress:""
-      ,roadAddress:""
-    });
-    const handleChangeEnabled = event => {
-      setSelectedEnabled(event.target.value);
-    };
-    const handleAddress = (data) => {
-      setAddrInfo(data);
-      handleClose();
-    }
-    const classesModal = useModalStyles();
-    const classes = useStyles();
-    const handleOpen = () => {
-        setOpen(true);
-      };
-      const handleClose = () => {
-        setOpen(false);
-      };
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState('female');
+  const [selectedEnabled, setSelectedEnabled] = React.useState("b");
+  const [addrInfo, setAddrInfo] = React.useState({
+    zonecode: ""
+    , jibunAddress: ""
+    , roadAddress: ""
+  });
+  const handleChangeEnabled = event => {
+    setSelectedEnabled(event.target.value);
+  };
+  const handleAddress = (data) => {
+    setAddrInfo(data);
+    handleClose();
+  }
+  const classesModal = useModalStyles();
+  const classes = useStyles();
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-      const radioChg = event => {
-        setValue(event.target.value);
-      };
-    return (
+  const radioChg = event => {
+    setValue(event.target.value);
+  };
+  return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         회원 정보
@@ -77,6 +77,73 @@ export default function AddressForm() {
             autoComplete="username"
           />
         </Grid>
+        <Grid item xs={6}>
+          <FormControl component="fieldset" fullWidth>
+            <form>
+              <GridContainer>
+                <GridItem xs={12} sm={4}>
+                  <FormLabel className={classes.registRadio}> 계정유형 </FormLabel>
+                </GridItem>
+                <GridItem xs={12} sm={4}>
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={selectedEnabled === "a"}
+                        onChange={handleChangeEnabled}
+                        value="a"
+                        name="radio button enabled"
+                        aria-label="A"
+                        icon={<FiberManualRecord className={classes.radioUnchecked} />}
+                        checkedIcon={<FiberManualRecord className={classes.radioChecked} />}
+                        classes={{
+                          checked: classes.radio,
+                          root: classes.radioRoot
+                        }}
+                      />
+                    }
+                    classes={{
+                      label: classes.label,
+                      root: classes.labelRoot
+                    }}
+                    label="유통"
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={4}>
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={selectedEnabled === "b"}
+                        onChange={handleChangeEnabled}
+                        value="b"
+                        name="radio button enabled"
+                        aria-label="B"
+                        icon={
+                          <FiberManualRecord
+                            className={classes.radioUnchecked}
+                          />
+                        }
+                        checkedIcon={
+                          <FiberManualRecord
+                            className={classes.radioChecked}
+                          />
+                        }
+                        classes={{
+                          checked: classes.radio,
+                          root: classes.radioRoot
+                        }}
+                      />
+                    }
+                    classes={{
+                      label: classes.label,
+                      root: classes.labelRoot
+                    }}
+                    label="판매"
+                  />
+                </GridItem>
+              </GridContainer>
+            </form>
+          </FormControl>
+        </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -86,83 +153,6 @@ export default function AddressForm() {
             fullWidth
             autoComplete="password"
           />
-        </Grid>
-        <Grid item xs={6}>
-        <FormControl component="fieldset" fullWidth>
-          <form>
-            <GridContainer>
-              <GridItem xs={12} sm={4}>
-                <FormLabel className={
-                          classes.registRadio 
-                        }> 계정유형 </FormLabel>
-              </GridItem>
-              <GridItem xs={12} sm={4}>
-              <FormControlLabel
-                control={
-                  <Radio
-                    checked={selectedEnabled === "a"}
-                    onChange={handleChangeEnabled}
-                    value="a"
-                    name="radio button enabled"
-                    aria-label="A"
-                    icon={
-                      <FiberManualRecord
-                        className={classes.radioUnchecked}
-                      />
-                    }
-                    checkedIcon={
-                      <FiberManualRecord
-                        className={classes.radioChecked}
-                      />
-                    }
-                    classes={{
-                      checked: classes.radio,
-                      root: classes.radioRoot
-                    }}
-                  />
-                }
-                classes={{
-                  label: classes.label,
-                  root: classes.labelRoot
-                }}
-                label="유통"
-              />
-              </GridItem>
-              <GridItem xs={12} sm={4}>
-              <FormControlLabel
-                control={
-                  <Radio
-                    checked={selectedEnabled === "b"}
-                    onChange={handleChangeEnabled}
-                    value="b"
-                    name="radio button enabled"
-                    aria-label="B"
-                    icon={
-                      <FiberManualRecord
-                        className={classes.radioUnchecked}
-                      />
-                    }
-                    checkedIcon={
-                      <FiberManualRecord
-                        className={classes.radioChecked}
-                      />
-                    }
-                    classes={{
-                      checked: classes.radio,
-                      root: classes.radioRoot
-                    }}
-                  />
-                }
-                classes={{
-                  label: classes.label,
-                  root: classes.labelRoot
-                }}
-                label="판매"
-              />
-            </GridItem>
-          </GridContainer>
-        </form>
-        </FormControl>
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -180,7 +170,7 @@ export default function AddressForm() {
         사업자 정보
       </Typography>
       <Grid container spacing={3}>
-      <Grid item xs={4}>
+        <Grid item xs={4}>
           <FormControlLabel
             control={<Checkbox color="secondary" name="circulation" value="Y" />}
             label="개인사업자"
@@ -351,6 +341,6 @@ export default function AddressForm() {
         </Fade>
       </Modal>
     </React.Fragment>
-    
+
   );
 }
