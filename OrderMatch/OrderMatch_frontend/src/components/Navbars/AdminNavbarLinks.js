@@ -117,6 +117,7 @@ export default function HeaderLinks(props) {
           </span>
         </Hidden>
       </Button>
+
       <div className={managerClasses}>
         <Button
           color="transparent"
