@@ -56,7 +56,7 @@ public class UserService {
 		User dbUser = userMapper.findByUsername(user.getUsername()).orElseThrow(CUserNotFoundException::new);
 		
 		if(passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-			String token = jwtTokenProvider.createToken(String.valueOf(dbUser.getUser_id()), dbUser.getRoles());
+			String token = jwtTokenProvider.createToken(String.valueOf(dbUser.getId()), dbUser.getRoles());
 			return token;
 		} else {
 			return null;
@@ -73,7 +73,7 @@ public class UserService {
 			//회원가입
 			userMapper.insertUser(user);
 			
-			String keyId = Integer.toString(user.getUser_id());
+			String keyId = Integer.toString(user.getId());
 			
 			//권한설정
 			HashMap<String, String> map = new HashMap<String, String>();
@@ -92,7 +92,7 @@ public class UserService {
 			user.setPassword(passwordEncoder.encode(user.getPassword())); // 비밀번호 인코딩 설정
 			
 			userMapper.updateUser(user);
-			int keyId = user.getUser_id();
+			int keyId = user.getId();
 			
 			return keyId;
 		} else { // 이미존재하는 아이디

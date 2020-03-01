@@ -19,38 +19,54 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
-@Alias("TB_USER")
+@Alias("USER")
 @RequiredArgsConstructor
 @JsonIgnoreProperties({"enabled", "credentialsNonExpired", "accountNonLocked", "accountNonExpired"})
 public class User implements UserDetails{
 	
-	private int user_id;
+	private int id; //DB cell id
 	
 	private String username;
 	
 	private String password;
 	
-	private String manager_name;
+	private String company_type;
 	
-	private String manager_tel;
+	private String company_name;
 	
-	private String manager_email;
+	private String repressntative;
 	
-	private String cal_manager_name;
+	private String officeNo;
 	
-	private String cal_manager_tel;
+	private String business;
 	
-	private String cal_manager_email;
+	private String businessType;
 	
-	private Date createAt;
+	private String tel;
 	
-	private Date modifyAt;
+	private String fax;
 	
-	private Date disable_time;
+	private String addr_num;
+	
+	private String addr;
+	
+	private String detail_addr;
+	
+	private String charge_name;
+	
+	private String charge_tel;
+	
+	private String charge_email;
+	
+	private Date createAt; // 생성일자
+	
+	private Date modifyAt; // 수정일자
+	
+	private int approval;
+	
+	private String approval_dt; // DATE 로 변환
 	
 	private List<String> roles = new ArrayList<>();
-	
-	private List<Company> company = new ArrayList<Company>();
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -80,5 +96,10 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roles=" + roles + "]";
 	}
 }
