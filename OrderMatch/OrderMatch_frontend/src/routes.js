@@ -121,7 +121,7 @@ var dashRoutes = [
       {
         path: "/order_add",
         name: "발주등록",
-        mini: "■",
+        mini: "■",
         component: OrderRegister,
         layout: "/admin"
       },

@@ -13,6 +13,7 @@ const initialState = {
         isLoggedIn: false,
         currentUser: '',
         user: {},
+        company: {},
         token: ''
     }
 };
@@ -46,6 +47,7 @@ export default function authentication(state = initialState, action) {
           valid: true,
           currentUser: action.userInfo.username,
           user: Object.assign({}, state.status.user, action.userInfo),
+          company: Object.assign({}, state.status.company, action.companyInfo)
         }
       }
     case types.AUTH_GET_STATUS_FAILURE:

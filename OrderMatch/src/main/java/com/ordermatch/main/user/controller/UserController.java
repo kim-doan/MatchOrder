@@ -59,7 +59,6 @@ public class UserController {
 	@CrossOrigin
 	@GetMapping("/user/validToken")
 	public SingleResult<User> getLoginSession(@RequestHeader(value="X-AUTH-TOKEN") String token, @RequestHeader(value="username") String username) {
-		System.out.println(username + " / " + token);
 		if(token != null && jwtTokenProvider.validateToken(token)) { // 토큰 만료 확인
 			User user = userService.findByTokenUsername(username).orElseThrow(CUserNotFoundException::new);
 			
@@ -125,6 +124,10 @@ public class UserController {
 	@PutMapping("/user")
 	public SingleResult<User> updateUser(@Valid @RequestBody User user) {
 		int state = userService.updateUser(user);
+		
+		if(state == 0) {
+			throw new CUserDuplicateException();
+		}
 		
 		return responseService.getSingleResult(userService.findById(state).orElseThrow(CUserDuplicateException::new));
 	}

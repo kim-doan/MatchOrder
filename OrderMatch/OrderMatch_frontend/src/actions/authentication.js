@@ -9,7 +9,7 @@ import {
     AUTH_GET_STATUS,
     AUTH_GET_STATUS_SUCCESS,
     AUTH_GET_STATUS_FAILURE,
-    AUTH_LOGOUT
+    AUTH_LOGOUT,
 } from './ActionTypes';
 
 /* LOGOUT */
@@ -41,7 +41,7 @@ export function getStatusRequest() {
         .then(response => {
             var result = response && response.data;
             if(result.success == true) { // 토큰이 만료되지 않았을경우
-                dispatch(getStatusSuccess(response.data.data)); // 유저데이터 찾아서 redux에 넣기
+                dispatch(getStatusSuccess(response.data.data, response.data.data.company)); // 유저데이터 찾아서 redux에 넣기
             } else { // 토큰이 만료되었을경우
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("username");
@@ -62,10 +62,11 @@ export function getStatus() {
     };
 }
 
-export function getStatusSuccess(userInfo) {
+export function getStatusSuccess(userInfo, companyInfo) {
     return {
         type: AUTH_GET_STATUS_SUCCESS,
-        userInfo
+        userInfo,
+        companyInfo
     };
 }
 

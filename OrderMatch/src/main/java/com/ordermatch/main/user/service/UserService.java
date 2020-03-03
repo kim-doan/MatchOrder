@@ -88,14 +88,15 @@ public class UserService {
 	
 	public int updateUser(User user) {
 		//아이디 변경시 중복체크
-		if(this.findByUsername(user.getUsername()) == null) {// 유저 아이디 검색 후 관련 아이디가 없을 경우
+		if(this.findByUsername(user.getUsername()) != null) {// 유저 아이디 검색 후 관련 아이디가 없을 경우
+			System.out.println("dd");
 			user.setPassword(passwordEncoder.encode(user.getPassword())); // 비밀번호 인코딩 설정
 			
 			userMapper.updateUser(user);
 			int keyId = user.getUser_id();
 			
 			return keyId;
-		} else { // 이미존재하는 아이디
+		} else { 
 			return 0;
 		}
 	}

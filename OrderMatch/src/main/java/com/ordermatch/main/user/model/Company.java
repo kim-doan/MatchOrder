@@ -1,5 +1,6 @@
 package com.ordermatch.main.user.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +16,8 @@ import lombok.Setter;
 @Getter @Setter
 @Alias("TB_COMPANY")
 @RequiredArgsConstructor
-public class Company {
-	//private int user_id;
+public class Company implements Serializable {
+	private int user_id;
 	
 	private String company_ein;
 	

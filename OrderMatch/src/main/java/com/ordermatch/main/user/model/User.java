@@ -50,7 +50,7 @@ public class User implements UserDetails{
 	
 	private List<String> roles = new ArrayList<>();
 	
-	private List<Company> company = new ArrayList<Company>();
+	private Company company = new Company();
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
