@@ -16,6 +16,8 @@ import Hidden from "@material-ui/core/Hidden";
 import Collapse from "@material-ui/core/Collapse";
 import Icon from "@material-ui/core/Icon";
 
+import avatar from "assets/img/faces/user.png";
+
 //redux
 import { connect } from "react-redux";
 
@@ -25,8 +27,6 @@ import { logoutRequest } from 'actions/authentication';
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
-
-import avatar from "assets/img/faces/user.png";
 
 var ps;
 
@@ -67,9 +67,11 @@ class Sidebar extends React.Component {
     this.state = {
       openAvatar: false,
       miniActive: true,
+      companyImg: '',
       ...this.getCollapseStates(props.routes)
     };
   }
+
   mainPanel = React.createRef();
   // this creates the intial state of this component based on the collapse routes
   // that it gets through this.props.routes
@@ -357,7 +359,7 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={avatar} className={classes.avatarImg} alt="..." />
+          <img src={this.props.status.company.company_img !== undefined ? "http://localhost:8080/api/photo/" + this.props.status.company.company_img : avatar} className={classes.avatarImg} alt="..." />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
@@ -367,7 +369,7 @@ class Sidebar extends React.Component {
               onClick={() => this.openCollapse("openAvatar")}
             >
               <ListItemText
-                primary={rtlActive ? "تانيا أندرو" : this.props.status.user.username + " 님"}
+                primary={rtlActive ? "تانيا أندرو" : this.props.status.company.company_name + " 님"}
                 secondary={
                   <b
                     className={
@@ -610,6 +612,7 @@ Sidebar.propTypes = {
 SidebarWrapper.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object,
+  company: PropTypes.object,
   headerLinks: PropTypes.object,
   links: PropTypes.object
 };

@@ -498,16 +498,17 @@ const sidebarStyle = theme => ({
     }
   },
   photo: {
+    backgroundColor: "hsla(0,0%,100%,.5)",
     transition: "all 300ms linear",
-    width: "34px",
+    width: "55px",
     height: "34px",
     overflow: "hidden",
     float: "left",
     zIndex: "5",
     marginRight: "11px",
-    borderRadius: "50%",
-    marginLeft: "23px",
-    ...boxShadow
+    borderRadius: "10%",
+    marginLeft: "12px",
+    //...boxShadow
   },
   photoRTL: {
     float: "right",

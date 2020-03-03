@@ -53,6 +53,11 @@
         	<version>8.0.15</version>
         </dependency>
         
+        <!-- MongoDB Connector -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
         <!-- Redis -->
 		<dependency>
 		  <groupId>org.springframework.boot</groupId>

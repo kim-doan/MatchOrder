@@ -78,36 +78,24 @@
 		roles) values(#{user_id}, #{roles})
 	</insert>
 
-	<update id="updateUser"
-		parameterType="com.ordermatch.main.user.model.User"
-		useGeneratedKeys="true" keyProperty="id">
+	<update id="updateUser" parameterType="com.ordermatch.main.user.model.User" useGeneratedKeys="true" keyProperty="user_id">
 		UPDATE 
 		TB_USER A 
 		INNER JOIN ROLES B
-		ON A.id = B.user_id
+		ON A.user_id = B.user_id
 		
 		SET
 		  USERNAME = #{username}
 		, PASSWORD = #{password}
-		, COMPANY_TYPE = #{company_type}
-		, COMPANY_NAME = #{company_name}
-		, REPRESSNTATIVE = #{repressntative}
-		, OFFICENO = #{officeNo}
-		, BUSINESS = #{business}
-		, BUSINESS_TYPE = #{businessType}
-		, TEL = #{tel}
-		, FAX = #{fax}
-		, ADDR_NUM = #{addr_num}
-		, ADDR = #{addr}
-		, DETAIL_ADDR = #{detail_addr}
-		, CHARGE_NAME = #{charge_name}
-		, CHARGE_TEL = #{charge_tel}
-		, CHARGE_EMAIL = #{charge_email}
+		, MANAGER_NAME = #{manager_name}
+		, MANAGER_TEL = #{manager_tel}
+		, MANAGER_EMAIL = #{manager_email}
+		, CAL_MANAGER_NAME = #{cal_manager_name}
+		, CAL_MANAGER_TEL = #{cal_manager_tel}
+		, CAL_MANAGER_EMAIL = #{cal_manager_email}
 		, MODIFYAT = sysdate()
-		, APPROVAL = #{approval}
-		, APPROVAL_DT = sysdate()
-		
-		WHERE A.id = #{id}
+		, DISABLE_TIME = #{disable_time}
+		WHERE A.user_id = #{user_id}
 	</update>
 
 	<delete id="deleteUser" parameterType="int">
