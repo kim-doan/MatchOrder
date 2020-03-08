@@ -20,7 +20,6 @@ import GridItem from "components/Grid/GridItem.js";
 import styles from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 const useStyles = makeStyles(styles);
 const useModalStyles = makeStyles(theme => ({
-
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -34,10 +33,12 @@ const useModalStyles = makeStyles(theme => ({
     width: 800
   }
 }));
+
 export default function AddressForm() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('female');
   const [selectedEnabled, setSelectedEnabled] = React.useState("b");
+  const [radioBiz, setRadioBiz] = React.useState("private");
   const [addrInfo, setAddrInfo] = React.useState({
     zonecode: ""
     , jibunAddress: ""
@@ -45,6 +46,9 @@ export default function AddressForm() {
   });
   const handleChangeEnabled = event => {
     setSelectedEnabled(event.target.value);
+  };
+  const radioBizHandleChangeEnabled = event => {
+    setRadioBiz(event.target.value);
   };
   const handleAddress = (data) => {
     setAddrInfo(data);
@@ -77,6 +81,7 @@ export default function AddressForm() {
             label="아이디"
             fullWidth
             autoComplete="username"
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={6}>
@@ -154,6 +159,7 @@ export default function AddressForm() {
             label="비밀번호"
             fullWidth
             autoComplete="password"
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={6}>
@@ -164,6 +170,7 @@ export default function AddressForm() {
             label="비밀번호 체크"
             fullWidth
             autoComplete="pwdChk"
+            variant="outlined"
           />
         </Grid>
       </Grid>
@@ -171,26 +178,104 @@ export default function AddressForm() {
       <Typography variant="h6" gutterBottom>
         사업자 정보
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="circulation" value="Y" />}
+            control={
+              <Radio
+                checked={radioBiz === "private"}
+                onChange={radioBizHandleChangeEnabled}
+                value="private"
+                name="radio button enabled"
+                aria-label="private"
+                icon={
+                  <FiberManualRecord
+                    className={classes.radioUnchecked}
+                  />
+                }
+                checkedIcon={
+                  <FiberManualRecord
+                    className={classes.radioChecked}
+                  />
+                }
+                classes={{
+                  checked: classes.radio,
+                  root: classes.radioRoot
+                }}
+              />
+            }
+            classes={{
+              label: classes.label,
+              root: classes.labelRoot
+            }}
             label="개인사업자"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="sale" value="Y" />}
-            label="법입사업자"
+            control={
+              <Radio
+                checked={radioBiz === "corporation"}
+                onChange={radioBizHandleChangeEnabled}
+                value="corporation"
+                name="radio button enabled"
+                aria-label="corporation"
+                icon={
+                  <FiberManualRecord
+                    className={classes.radioUnchecked}
+                  />
+                }
+                checkedIcon={
+                  <FiberManualRecord
+                    className={classes.radioChecked}
+                  />
+                }
+                classes={{
+                  checked: classes.radio,
+                  root: classes.radioRoot
+                }}
+              />
+            }
+            classes={{
+              label: classes.label,
+              root: classes.labelRoot
+            }}
+            label="법인사업자"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="circulation" value="Y" />}
+            control={
+              <Radio
+                checked={radioBiz === "individual"}
+                onChange={radioBizHandleChangeEnabled}
+                value="individual"
+                name="radio button enabled"
+                aria-label="individual"
+                icon={
+                  <FiberManualRecord
+                    className={classes.radioUnchecked}
+                  />
+                }
+                checkedIcon={
+                  <FiberManualRecord
+                    className={classes.radioChecked}
+                  />
+                }
+                classes={{
+                  checked: classes.radio,
+                  root: classes.radioRoot
+                }}
+              />
+            }
+            classes={{
+              label: classes.label,
+              root: classes.labelRoot
+            }}
             label="개인"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             required
             id="company_name"
@@ -198,9 +283,10 @@ export default function AddressForm() {
             label="회사명"
             fullWidth
             autoComplete="companyName"
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             required
             id="repressntative"
@@ -208,9 +294,10 @@ export default function AddressForm() {
             label="대표자성함"
             fullWidth
             autoComplete="repressntative"
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={4}>
           <TextField
             required
             id="officeno"
@@ -218,18 +305,20 @@ export default function AddressForm() {
             label="사업자등록번호"
             fullWidth
             autoComplete="officeno"
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={4}>
           <TextField
             id="business_type/business"
             name="business_type/business"
             label="업태/업종"
             fullWidth
             autoComplete="business_type/business"
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             required
             id="tel"
@@ -237,9 +326,10 @@ export default function AddressForm() {
             label="대표 전화번호"
             fullWidth
             autoComplete="tel"
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             required
             id="fax"
@@ -247,9 +337,10 @@ export default function AddressForm() {
             label="대표 팩스번호"
             fullWidth
             autoComplete="fax"
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="zonecode"
@@ -258,12 +349,13 @@ export default function AddressForm() {
             fullWidth
             autoComplete="zonecode"
             value={addrInfo.zonecode}
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <Button variant="contained" color="primary" onClick={handleOpen}>우편번호 찾기</Button>
+        <Grid item xs={12} sm={3}>
+          <Button variant="contained" color="primary" fullWidth onClick={handleOpen}>주소 검색</Button>
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="jibunAddress"
@@ -272,9 +364,10 @@ export default function AddressForm() {
             fullWidth
             autoComplete="jibunAddress"
             value={addrInfo.jibunAddress}
+            variant="outlined"
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="roadAddress"
@@ -283,8 +376,23 @@ export default function AddressForm() {
             fullWidth
             autoComplete="roadAddress"
             value={addrInfo.roadAddress}
+            variant="outlined"
           />
         </Grid>
+        <Grid item xs={12} sm={12}>
+          <TextField
+            required
+            id="detailAddress"
+            name="detailAddress"
+            label="상세 주소"
+            fullWidth
+            autoComplete="detailAddress"
+            value={addrInfo.detailAddress}
+            variant="outlined"
+          />
+        </Grid>
+
+
       </Grid>
       <br></br><br></br>
       <Typography variant="h6" gutterBottom>
@@ -299,6 +407,7 @@ export default function AddressForm() {
             label="담당자명"
             fullWidth
             autoComplete="charge_name"
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={6} sm={6}>
@@ -309,6 +418,7 @@ export default function AddressForm() {
             label="담당자 연락처"
             fullWidth
             autoComplete="charge_tel"
+            variant="outlined"
           />
         </Grid>
         <Grid item xs={12}>
@@ -319,6 +429,7 @@ export default function AddressForm() {
             label="담당자 이메일"
             fullWidth
             autoComplete="charge_tel"
+            variant="outlined"
           />
         </Grid>
       </Grid>
