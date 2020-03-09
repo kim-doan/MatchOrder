@@ -1,5 +1,6 @@
 package com.ordermatch.main.user.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -41,6 +42,14 @@ public class User implements UserDetails{
 	private String cal_manager_tel;
 	
 	private String cal_manager_email;
+	
+	private int zonecode;
+	
+	private String jibunAddress;
+	
+	private String roadAddress;
+	
+	private String detailAddress;
 	
 	private Date createAt;
 	

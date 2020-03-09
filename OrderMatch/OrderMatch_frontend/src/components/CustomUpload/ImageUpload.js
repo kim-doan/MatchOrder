@@ -13,6 +13,9 @@ export default function ImageUpload(props) {
   const [imagePreviewUrl, setImagePreviewUrl] = React.useState(
     props.avatar ? defaultAvatar : defaultImage
   );
+  const [nowImageYN, setNowImageYN] = React.useState(
+    false
+  )
   let fileInput = React.createRef();
   const handleImageChange = e => {
     e.preventDefault();
@@ -33,32 +36,35 @@ export default function ImageUpload(props) {
   };
   const handleClick = () => {
     fileInput.current.click();
+    setNowImageYN(true)
+    console.log(nowImage)
   };
   const handleRemove = () => {
     setFile(null);
     setImagePreviewUrl(props.avatar ? defaultAvatar : defaultImage);
+    setNowImageYN(false)
     fileInput.current.value = null;
   };
-  let { avatar, addButtonProps, changeButtonProps, removeButtonProps } = props;
+  let { avatar, addButtonProps, changeButtonProps, removeButtonProps, nowImage } = props;
   return (
     <div className="fileinput text-center">
       <input type="file" onChange={handleImageChange} ref={fileInput} />
       <div className={"thumbnail" + (avatar ? " img-circle" : "")}>
-        <img src={imagePreviewUrl} alt="..." />
+        <img src={nowImage === undefined || nowImageYN === true ? imagePreviewUrl : nowImage} alt="..." />
       </div>
       <div>
         {file === null ? (
           <Button {...addButtonProps} onClick={() => handleClick()}>
-            {avatar ? "Add Photo" : "Select image"}
+            {avatar ? "이미지 업로드" : "이미지 선택"}
           </Button>
         ) : (
           <span>
             <Button {...changeButtonProps} onClick={() => handleClick()}>
-              Change
+              수정
             </Button>
             {avatar ? <br /> : null}
             <Button {...removeButtonProps} onClick={() => handleRemove()}>
-              <i className="fas fa-times" /> Remove
+              <i className="fas fa-times" /> 취소
             </Button>
           </span>
         )}

@@ -91,6 +91,10 @@ import COptionSalesStatus from "views/Order/Order_list.js";
 import OSalesStatus from "views/Order/Order_list.js";
 import OProductSalesStatus from "views/Order/Order_list.js";
 import OOptionSalesStatus from "views/Order/Order_list.js";
+
+//환경설정
+import AccountSetting from "views/Pages/Setting/AccountSetting.js"
+
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -566,11 +570,102 @@ var dashRoutes = [
     ]
   },
   {
+    collapse: true,
     path: "/setting",
     name: "설정",
     icon: SettingIcon,
     component: Widgets,
-    layout: "/admin"
+    layout: "/admin",
+    views: [
+      {
+        path: "/osts_unknow1",
+        name: "기본 설정",
+        mini: "■",
+        // component: OSalesStatus,
+        // layout: "/admin"
+      },
+      {
+        path: "/accountSetting",
+        name: "계정 설정",
+        component: AccountSetting,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "기본 환경설정",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "발주서 양식 관리",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow2",
+        name: "배송비 설정",
+        mini: "■",
+        component: OProductSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "배송비 관리",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "추가 배송비 관리(도서/산간)",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow3",
+        name: "고객사 관리",
+        mini: "■",
+        component: OOptionSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "공급사 관리",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "판매사 관리",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "메일 양식관리",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow3",
+        name: "커스텀 양식 관리",
+        mini: "■",
+        component: OOptionSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "커스텀 템플릿 등록",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+      {
+        path: "/osts_unknow1",
+        name: "커스텀 템플릿 확인",
+        component: OSalesStatus,
+        layout: "/admin"
+      },
+    ]
   },
   {
     collapse: true,

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.ordermatch.main.user.model.User;
+import com.ordermatch.main.user.model.UserParam;
 
 public interface UserMapper {
 	//모든 유저 조회
@@ -21,7 +22,7 @@ public interface UserMapper {
 	//유저 권한 추가
 	int insertRole(HashMap<String, String> map);
 	//유저 정보 수정
-	int updateUser(User user);
+	boolean updateUser(UserParam userParam);
 	//유저 삭제
 	int deleteUser(int id);
 	

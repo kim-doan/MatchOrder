@@ -18,6 +18,7 @@ import com.ordermatch.main.jwt.JwtTokenProvider;
 import com.ordermatch.main.mapper.UserMapper;
 import com.ordermatch.main.user.model.AuthenticationRequest;
 import com.ordermatch.main.user.model.User;
+import com.ordermatch.main.user.model.UserParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -86,18 +87,22 @@ public class UserService {
 		}
 	}
 	
-	public int updateUser(User user) {
+	public boolean updateUser(UserParam userParam) {
+		boolean success = true;
+		
+		Optional<User> dbUser = userMapper.findByUsername(userParam.getUsername());
 		//아이디 변경시 중복체크
-		if(this.findByUsername(user.getUsername()) != null) {// 유저 아이디 검색 후 관련 아이디가 없을 경우
-			System.out.println("dd");
-			user.setPassword(passwordEncoder.encode(user.getPassword())); // 비밀번호 인코딩 설정
+		if(dbUser.isPresent() == true) {
+			if(userParam.getPassword() != null) {
+				userParam.setPassword(passwordEncoder.encode(userParam.getPassword())); // 비밀번호 인코딩 설정
+			}
 			
-			userMapper.updateUser(user);
-			int keyId = user.getUser_id();
+			success = userMapper.updateUser(userParam);
 			
-			return keyId;
+			return success;
 		} else { 
-			return 0;
+			success = false;
+			return success;
 		}
 	}
 	
