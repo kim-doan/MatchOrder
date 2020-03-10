@@ -21,6 +21,10 @@ import Face from "@material-ui/icons/Face";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import Domain from "@material-ui/icons/Domain";
 import Description from "@material-ui/icons/Description";
+import Print from "@material-ui/icons/Print";
+import Phone from "@material-ui/icons/Phone";
+import Done from "@material-ui/icons/Done";
+import Close from "@material-ui/icons/Close";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -33,6 +37,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import ImageUpload from "components/CustomUpload/ImageUpload.js";
+import Snackbar from "components/Snackbar/Snackbar.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/accountSettingStyle.js";
 
@@ -40,17 +45,18 @@ class AccountSetting extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            managerName: "",
+            username: localStorage.username,
+            manager_name: "",
             managerNameState: "",
-            managerTel: "",
+            manager_tel: "",
             managerTelState: "",
-            calManagerName: "",
+            cal_manager_name: "",
             calManagerNameState: "",
-            calManagerTel: "",
+            cal_manager_tel: "",
             calManagerTelState: "",
-            managerEmail: "",
+            manager_email: "",
             managerEmailState: "",
-            calManagerEmail: "",
+            cal_manager_email: "",
             calManagerEmailState: "",
             selectedEnabled: "",
             selectedValue: "0",
@@ -77,37 +83,77 @@ class AccountSetting extends Component {
             detailAddress: "",
             detailAddressState: "",
             modalOpen: false,
+            successAlert: false,
+            failAlert: false,
+            disableBtn: false
         };
     }
     componentDidMount() {
         axios.get("http://localhost:8080/api/user/username/" + localStorage.username)
-        .then(response => {
-            var result = response && response.data
-            this.setState({
-                managerName: result.data.manager_name,
-                managerTel: result.data.manager_tel,
-                managerEmail: result.data.manager_email,
-                calManagerName: result.data.cal_manager_name,
-                calManagerTel : result.data.cal_manager_tel,
-                calManagerEmail: result.data.cal_manager_email,
-                company_ein: result.data.company.company_ein,
-                company_name: result.data.company.company_name,
-                company_tel : result.data.company.company_tel,
-                company_fax : result.data.company.company_fax,
-                company_category: result.data.company.company_category,
-                company_type: String(result.data.company.company_type),
-                ceo_name: result.data.company.ceo_name,
-                company_img: result.data.company.company_img,
-                zonecode : result.data.zonecode,
-                jibunAddress : result.data.jibunAddress,
-                roadAddress : result.data.roadAddress,
-                detailAddress : result.data.detailAddress
-            });
-        })
-        .catch(response => {
-            console.log(response)
-        })
+            .then(response => {
+                var result = response && response.data
+                this.setState({
+                    manager_name: result.data.manager_name,
+                    manager_tel: result.data.manager_tel,
+                    manager_email: result.data.manager_email,
+                    cal_manager_name: result.data.cal_manager_name,
+                    cal_manager_tel: result.data.cal_manager_tel,
+                    cal_manager_email: result.data.cal_manager_email,
+                    company_ein: result.data.company.company_ein,
+                    company_name: result.data.company.company_name,
+                    company_tel: result.data.company.company_tel,
+                    company_fax: result.data.company.company_fax,
+                    company_category: result.data.company.company_category,
+                    company_type: String(result.data.company.company_type),
+                    ceo_name: result.data.company.ceo_name,
+                    company_img: result.data.company.company_img,
+                    zonecode: result.data.zonecode,
+                    jibunAddress: result.data.jibunAddress,
+                    roadAddress: result.data.roadAddress,
+                    detailAddress: result.data.detailAddress,
+                });
+            })
+            .catch(response => {
+                console.log(response)
+            })
     }
+
+    updateAccountSetting() {
+        axios.put("http://localhost:8080/api/user", this.state)
+            .then(response => {
+                var result = response && response.data;
+
+                if(result.success == true) {
+                    this.showNotification("successAlert");
+                } else {
+                    this.showNotification("failAlert");
+                }
+            })
+    }
+
+    showNotification = place => {
+        switch (place) {
+            case "successAlert":
+                if (!this.state.successAlert) {
+                    this.setState({ successAlert: true, disableBtn: true });
+                    setTimeout(function () {
+                        this.setState({ successAlert: false, disableBtn: false });
+                    }.bind(this), 5000);
+                }
+                break;
+            case "failAlert":
+                if (!this.state.failAlert) {
+                    this.setState({ failAlert: true, disableBtn: true });
+                    setTimeout(function () {
+                        this.setState({ failAlert: false, disableBtn: false });
+                    }.bind(this), 5000);
+                }
+                break;
+            default:
+                break;
+        }
+    };
+
     sendState() {
         return this.state;
     }
@@ -153,8 +199,8 @@ class AccountSetting extends Component {
             this.state.calManagerNameState === "success" &&
             this.state.calManagerEmailState === "success" &&
             this.state.managerEmailState === "success" &&
-            this.state.managerTel === "success" &&
-            this.state.calManagerTel === "success" &&
+            this.state.manager_tel === "success" &&
+            this.state.cal_manager_tel === "success" &&
             this.state.company_einState === "success" &&
             this.state.company_categoryState === "success" &&
             this.state.company_faxState === "success" &&
@@ -168,11 +214,11 @@ class AccountSetting extends Component {
         ) {
             return true;
         } else {
-            if (this.state.managerTel !== "success") {
-                this.setState({ managerTel: "error" });
+            if (this.state.manager_tel !== "success") {
+                this.setState({ manager_tel: "error" });
             }
-            if (this.state.calManagerTel !== "success") {
-                this.setState({ calManagerTel: "error" });
+            if (this.state.cal_manager_tel !== "success") {
+                this.setState({ cal_manager_tel: "error" });
             }
             if (this.state.managerNameState !== "success") {
                 this.setState({ managerNameState: "error" });
@@ -241,6 +287,9 @@ class AccountSetting extends Component {
     handleClose = () => {
         this.setState({ modalOpen: false })
     };
+    alertClose = () => {
+        this.setState({ successAlert: false, failAlert: false })
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -267,14 +316,14 @@ class AccountSetting extends Component {
                                                     담당자 이름 <small>(필수)</small>
                                                 </span>
                                             }
-                                            id="managerName"
-                                            value={this.state.managerName}
+                                            id="manager_name"
+                                            value={this.state.manager_name}
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
-                                            value={this.state.managerName}
+                                            value={this.state.manager_name}
                                             inputProps={{
-                                                onChange: event => this.change(event, "managerName", "length", 3),
+                                                onChange: event => this.change(event, "manager_name", "length", 3),
                                                 endAdornment: (
                                                     <InputAdornment
                                                         position="end"
@@ -297,13 +346,13 @@ class AccountSetting extends Component {
                                                     담당자 이메일 <small>(필수)</small>
                                                 </span>
                                             }
-                                            id="managerEmail"
-                                            value={this.state.managerEmail}
+                                            id="manager_email"
+                                            value={this.state.manager_email}
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                onChange: event => this.change(event, "managerEmail", "email"),
+                                                onChange: event => this.change(event, "manager_email", "email"),
                                                 endAdornment: (
                                                     <InputAdornment
                                                         position="end"
@@ -328,19 +377,19 @@ class AccountSetting extends Component {
                                                     담당자 연락처 <small>(필수)</small>
                                                 </span>
                                             }
-                                            id="managerTel"
+                                            id="manager_tel"
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
-                                            value={this.state.managerTel}
+                                            value={this.state.manager_tel}
                                             inputProps={{
-                                                onChange: event => this.change(event, "managerTel", "length", 10),
+                                                onChange: event => this.change(event, "manager_tel", "length", 10),
                                                 endAdornment: (
                                                     <InputAdornment
                                                         position="end"
                                                         className={classes.inputAdornment}
                                                     >
-                                                        <Face className={classes.inputAdornmentIcon} />
+                                                        <Phone className={classes.inputAdornmentIcon} />
                                                     </InputAdornment>
                                                 )
                                             }}
@@ -349,9 +398,27 @@ class AccountSetting extends Component {
                                     <GridItem xs={12} sm={12} md={4}>
                                     </GridItem>
                                 </GridContainer>
-                                <Button color="rose" className={classes.updateProfileButton}>
+                                <Button color="rose" className={classes.updateProfileButton} onClick={() => this.updateAccountSetting()} disabled={this.state.disableBtn}>
                                     담당자 정보 변경
                                  </Button>
+                                <Snackbar
+                                    place="br"
+                                    color="success"
+                                    icon={Done}
+                                    message="계정 정보 수정에 성공하였습니다."
+                                    open={this.state.successAlert}
+                                    closeNotification={() => this.alertClose()}
+                                    close
+                                />
+                                <Snackbar
+                                    place="br"
+                                    color="danger"
+                                    icon={Close}
+                                    message="계정 정보 수정에 실패하였습니다."
+                                    open={this.state.failAlert}
+                                    closeNotification={() => this.alertClose()}
+                                    close
+                                />
                                 <Clearfix />
                             </CardBody>
                         </Card>
@@ -377,13 +444,13 @@ class AccountSetting extends Component {
                                                     정산 담당자 이름 <small>(필수)</small>
                                                 </span>
                                             }
-                                            id="calManagerName"
-                                            value={this.state.calManagerName}
+                                            id="cal_manager_name"
+                                            value={this.state.cal_manager_name}
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                onChange: event => this.change(event, "calManagerName", "length", 3),
+                                                onChange: event => this.change(event, "cal_manager_name", "length", 3),
                                                 endAdornment: (
                                                     <InputAdornment
                                                         position="end"
@@ -406,13 +473,13 @@ class AccountSetting extends Component {
                                                     정산 담당자 이메일 <small>(필수)</small>
                                                 </span>
                                             }
-                                            id="calManagerEmail"
-                                            value={this.state.calManagerEmail}
+                                            id="cal_manager_email"
+                                            value={this.state.cal_manager_email}
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                onChange: event => this.change(event, "calManagerEmail", "email"),
+                                                onChange: event => this.change(event, "cal_manager_email", "email"),
                                                 endAdornment: (
                                                     <InputAdornment
                                                         position="end"
@@ -437,19 +504,19 @@ class AccountSetting extends Component {
                                                     정산 담당자 연락처 <small>(필수)</small>
                                                 </span>
                                             }
-                                            id="calManagerTel"
-                                            value={this.state.calManagerTel}
+                                            id="cal_manager_tel"
+                                            value={this.state.cal_manager_tel}
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                onChange: event => this.change(event, "calManagerTel", "length", 10),
+                                                onChange: event => this.change(event, "cal_manager_tel", "length", 10),
                                                 endAdornment: (
                                                     <InputAdornment
                                                         position="end"
                                                         className={classes.inputAdornment}
                                                     >
-                                                        <Face className={classes.inputAdornmentIcon} />
+                                                        <Phone className={classes.inputAdornmentIcon} />
                                                     </InputAdornment>
                                                 )
                                             }}
@@ -458,7 +525,7 @@ class AccountSetting extends Component {
                                     <GridItem xs={12} sm={12} md={4}>
                                     </GridItem>
                                 </GridContainer>
-                                <Button color="rose" className={classes.updateProfileButton}>
+                                <Button color="rose" className={classes.updateProfileButton} onClick={() => this.updateAccountSetting()} disabled={this.state.disableBtn}>
                                     정산 담당자 정보 변경
                                  </Button>
                                 <Clearfix />
@@ -469,7 +536,7 @@ class AccountSetting extends Component {
                         <Card>
                             <CardHeader color="rose" icon>
                                 <CardIcon color="rose">
-                                    <PermIdentity />
+                                    <Domain />
                                 </CardIcon>
                                 <h4 className={classes.cardIconTitle}>
                                     사업자 정보 - <small>우리 회사의 사업자 정보를 적어주세요.</small>
@@ -745,7 +812,7 @@ class AccountSetting extends Component {
                                                         position="end"
                                                         className={classes.inputAdornment}
                                                     >
-                                                        <Description className={classes.inputAdornmentIcon} />
+                                                        <Phone className={classes.inputAdornmentIcon} />
                                                     </InputAdornment>
                                                 )
                                             }}
@@ -772,7 +839,7 @@ class AccountSetting extends Component {
                                                         position="end"
                                                         className={classes.inputAdornment}
                                                     >
-                                                        <Description className={classes.inputAdornmentIcon} />
+                                                        <Print className={classes.inputAdornmentIcon} />
                                                     </InputAdornment>
                                                 )
                                             }}
@@ -866,7 +933,7 @@ class AccountSetting extends Component {
                                     <GridItem xs={12} sm={12} md={4}>
                                     </GridItem>
                                 </GridContainer>
-                                <Button color="rose" className={classes.updateProfileButton}>
+                                <Button color="rose" className={classes.updateProfileButton} onClick={() => this.updateAccountSetting()} disabled={this.state.disableBtn}>
                                     사업자 정보 변경
                                  </Button>
                                 <Clearfix />

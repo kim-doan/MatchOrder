@@ -7,6 +7,7 @@ import Button from "components/CustomButtons/Button.js";
 
 import defaultImage from "assets/img/image_placeholder.jpg";
 import defaultAvatar from "assets/img/placeholder.jpg";
+import axios from 'axios';
 
 export default function ImageUpload(props) {
   const [file, setFile] = React.useState(null);
@@ -29,15 +30,23 @@ export default function ImageUpload(props) {
   };
   // eslint-disable-next-line
   const handleSubmit = e => {
-    e.preventDefault();
-    // file is the file/image uploaded
-    // in this function you can save the image (file) on form submit
-    // you have to call it yourself
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('username', localStorage.username)
+    axios.post("http://localhost:8080/api/photo/logo/add", formData)
+    .then(response =>{
+      var result = response && response.data;
+
+      if(result.success == true) {
+        alert("업로드에 " + result.msg);
+      } else {
+        alert("업로드에 " + result.msg);
+      }
+    })
   };
   const handleClick = () => {
     fileInput.current.click();
     setNowImageYN(true)
-    console.log(nowImage)
   };
   const handleRemove = () => {
     setFile(null);
@@ -59,6 +68,9 @@ export default function ImageUpload(props) {
           </Button>
         ) : (
           <span>
+            <Button {...changeButtonProps} onClick={() => handleSubmit()}>
+              업로드
+            </Button>
             <Button {...changeButtonProps} onClick={() => handleClick()}>
               수정
             </Button>
