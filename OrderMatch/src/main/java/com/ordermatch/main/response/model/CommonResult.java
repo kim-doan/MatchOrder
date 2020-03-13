@@ -16,4 +16,7 @@ public class CommonResult {
 
     @ApiModelProperty(value = "응답 메시지")
     private String msg;
+    
+    @ApiModelProperty(value = "Cell ID")
+    private int id;
 }

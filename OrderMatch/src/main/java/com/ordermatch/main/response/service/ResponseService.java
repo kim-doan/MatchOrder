@@ -18,18 +18,29 @@ public class ResponseService {
 
         int code;
         String msg;
+        String id;
 
         CommonResponse(int code, String msg) {
             this.code = code;
             this.msg = msg;
         }
 
+        CommonResponse(int code, String msg, String id) {
+            this.code = code;
+            this.msg = msg;
+            this.id = id;
+        }
+        
         public int getCode() {
             return code;
         }
 
         public String getMsg() {
             return msg;
+        }
+        
+        public String getId() {
+        	return id;
         }
     }
     // 단일건 결과를 처리하는 메소드
@@ -49,6 +60,14 @@ public class ResponseService {
     // 성공 결과만 처리하는 메소드
     public CommonResult getSuccessResult() {
         CommonResult result = new CommonResult();
+        setSuccessResult(result);
+        return result;
+    }
+    
+    // 성공 결과 + cellId값 반환리는 메소드
+    public CommonResult getSuccessResult(int id) {
+        CommonResult result = new CommonResult();
+        result.setId(id);
         setSuccessResult(result);
         return result;
     }

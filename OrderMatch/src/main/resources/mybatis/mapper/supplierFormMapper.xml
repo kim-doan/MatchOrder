@@ -29,10 +29,42 @@
 		<parameter property="column_name"/>
 	</parameterMap>
 	
-	<select id="findAllSupplierForm" resultMap="supplierFormResult" parameterMap="supplierFormParam"">
+	<select id="findAllSupplierForm" resultMap="supplierFormResult" parameterMap="supplierFormParam">
 		SELECT a.*, b.*
 		FROM TB_SUPPLIER_FORM a
 		LEFT JOIN TB_SUPPLIER_FORM_COLUMN b on a.form_id = b.form_id
-		WHERE a.USER_ID = #{user_id}
+		WHERE a.user_id = #{user_id}
+		<if test="form_id != null and form_id !=''">AND a.form_id LIKE '%#{form_id}%'</if>
+		<if test="form_name != null and form_name !=''">AND a.form_name LIKE '%#{form_name}%'</if>
+		<if test="create_at != null">AND a.create_at LIKE '%#{create_at}%'</if>
+		<if test="modify_at != null">AND a.modify_at LIKE '%#{modify_at}%'</if>
+		<if test="disable_time != null">AND a.disable_time = #{disable_time}</if>
 	</select>
+	
+	<insert id="insertSupplierForm" parameterMap="supplierFormParam" useGeneratedKeys="true" keyProperty="form_id">
+		INSERT INTO TB_SUPPLIER_FORM (USER_ID, FORM_NAME, CREATE_AT)
+		VALUES (#{user_id}, #{form_name}, sysdate())
+	</insert>
+	
+	<update id="updateSupplierForm" parameterMap="supplierFormParam" useGeneratedKeys="true" keyProperty="form_id">
+		UPDATE TB_SUPPLIER_FORM
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="form_name != null and form_name != ''">FORM_NAME = #{form_name},</if>
+		<if test="disable_time != null">DISABLE_TIME = #{disable_time},</if>		
+		MODIFY_AT = sysdate()
+		WHERE FORM_ID = #{form_id}
+		</trim>
+	</update>
+	
+	<insert id="insertSupplierFormColumn" parameterMap="supplierFormParam">
+		INSERT INTO TB_SUPPLIER_FORM_COLUMN 
+		SELECT #{form_id}, #{column_name}
+		FROM DUAL
+		WHERE NOT EXISTS(SELECT COLUMN_NAME FROM TB_SUPPLIER_FORM_COLUMN WHERE COLUMN_NAME = #{column_name})
+	</insert>
+	
+	<delete id="deleteSupplierFormColumn" parameterType="int">
+		DELETE FROM TB_SUPPLIER_FORM_COLUMN
+		WHERE FORM_ID = #{form_id}
+	</delete>
 </mapper>
