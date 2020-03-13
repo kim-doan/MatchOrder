@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ordermatch.main.mapper.SupplierFormMapper">
+	
+	<resultMap type="com.ordermatch.main.supplierform.model.SupplierForm"
+		id="supplierFormResult">
+		<result property="user_id" column="USER_ID"></result>	
+		<result property="form_id" column="FORM_ID"></result>	
+		<result property="form_name" column="FORM_NAME"></result>	
+		<result property="create_at" column="CREATE_AT"></result>	
+		<result property="modify_at" column="MODIFY_AT"></result>	
+		<result property="disable_time" column="DISABLE_TIME"></result>
+		<collection property="supplierFormColumn" resultMap="supplierFormColumnResult"></collection>
+	</resultMap>
+
+	<resultMap type="com.ordermatch.main.supplierform.model.SupplierFormColumn"
+		id="supplierFormColumnResult">
+		<result property="form_id" column="FORM_ID"></result>
+		<result property="column_name" column="COLUMN_NAME"></result>
+	</resultMap>
+	
+	<parameterMap type="com.ordermatch.main.supplierform.model.SupplierFormParam" id="supplierFormParam">
+		<parameter property="user_id"/>
+		<parameter property="form_id"/>
+		<parameter property="form_name"/>
+		<parameter property="create_at"/>
+		<parameter property="modify_at"/>
+		<parameter property="disable_time"/>
+		<parameter property="column_name"/>
+	</parameterMap>
+	
+	<select id="findAllSupplierForm" resultMap="supplierFormResult" parameterMap="supplierFormParam"">
+		SELECT a.*, b.*
+		FROM TB_SUPPLIER_FORM a
+		LEFT JOIN TB_SUPPLIER_FORM_COLUMN b on a.form_id = b.form_id
+		WHERE a.USER_ID = #{user_id}
+	</select>
+</mapper>
