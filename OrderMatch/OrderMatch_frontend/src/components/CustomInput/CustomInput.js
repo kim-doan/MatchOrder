@@ -26,7 +26,8 @@ export default function CustomInput(props) {
     white,
     inputRootCustomClasses,
     success,
-    helperText
+    helperText,
+    value
   } = props;
 
   const labelClasses = classNames({
@@ -78,6 +79,7 @@ export default function CustomInput(props) {
           underline: underlineClasses
         }}
         id={id}
+        value={value}
         {...inputProps}
       />
       {helperText !== undefined ? (

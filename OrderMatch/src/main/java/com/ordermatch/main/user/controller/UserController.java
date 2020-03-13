@@ -37,6 +37,7 @@ import com.ordermatch.main.response.model.SingleResult;
 import com.ordermatch.main.response.service.ResponseService;
 import com.ordermatch.main.user.model.AuthenticationRequest;
 import com.ordermatch.main.user.model.User;
+import com.ordermatch.main.user.model.UserParam;
 import com.ordermatch.main.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -85,7 +86,7 @@ public class UserController {
 	
 	//회원 단건 조회 (아이디)
 	@CrossOrigin
-	@GetMapping("/username/{username}")
+	@GetMapping("/user/username/{username}")
 	public SingleResult<User> findByUsername(@PathVariable(value = "username") String username) {
 		return responseService.getSingleResult(userService.findByUsername(username).orElseThrow(CUserNotFoundException::new));
 	}
@@ -122,14 +123,14 @@ public class UserController {
 	//회원 수정
 	@CrossOrigin
 	@PutMapping("/user")
-	public SingleResult<User> updateUser(@Valid @RequestBody User user) {
-		int state = userService.updateUser(user);
+	public CommonResult updateUser(@Valid @RequestBody UserParam userParam) {
+		boolean state = userService.updateUser(userParam);
 		
-		if(state == 0) {
+		if(state == false) {
 			throw new CUserDuplicateException();
 		}
 		
-		return responseService.getSingleResult(userService.findById(state).orElseThrow(CUserDuplicateException::new));
+		return responseService.getSuccessResult();
 	}
 	
 	//회원 탈퇴
