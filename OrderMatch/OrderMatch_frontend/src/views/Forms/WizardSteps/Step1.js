@@ -126,7 +126,7 @@ class Step1 extends React.Component {
               fullWidth: true
             }}
             inputProps={{
-              onChange: event => this.change(event, "firstname", "length", 3),
+              onChange: event => this.change(event, "firstname", "length", 1),
               endAdornment: (
                 <InputAdornment
                   position="end"

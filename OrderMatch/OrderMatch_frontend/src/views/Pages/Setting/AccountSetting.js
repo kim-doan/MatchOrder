@@ -123,7 +123,7 @@ class AccountSetting extends Component {
             .then(response => {
                 var result = response && response.data;
 
-                if(result.success == true) {
+                if (result.success == true) {
                     this.showNotification("successAlert");
                 } else {
                     this.showNotification("failAlert");

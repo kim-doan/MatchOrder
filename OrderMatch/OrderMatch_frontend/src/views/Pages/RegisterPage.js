@@ -47,35 +47,33 @@ export default function RegisterPage() {
   const classes = useStyles();
 
   const handleRegister = (id, pw) => {
-        return this.props.registerRequest(id, pw)
-        .then(() => {
-            if(this.props.status === "SUCCESS") {
-                alert("회원가입 성공");
-                this.props.history.push('/login');
-                return true;
-            } else {
-                var errorIndex = 0;
-                switch(this.props.errorCode) {
-                    case -1005: // 중복된 아이디 일경우 서버에서 반환되는 코드
-                        errorIndex = 0;
-                }
-                let errorMessage = [
-                    '중복된 아이디입니다.',
-                    'Password is too short',
-                    'Username already exists'
-                ];
+    return this.props.registerRequest(id, pw)
+      .then(() => {
+        if (this.props.status === "SUCCESS") {
+          alert("회원가입 성공");
+          this.props.history.push('/login');
+          return true;
+        } else {
+          var errorIndex = 0;
+          switch (this.props.errorCode) {
+            case -1005: // 중복된 아이디 일경우 서버에서 반환되는 코드
+              errorIndex = 0;
+          }
+          let errorMessage = [
+            '중복된 아이디입니다.',
+            'Password is too short',
+            'Username already exists'
+          ];
 
-                alert(errorMessage[errorIndex]);
-                return false;
-            }
-        })
-    }
+          alert(errorMessage[errorIndex]);
+          return false;
+        }
+      })
+  }
 
   return (
     <div className={classes.container}>
-      <GridContainer justify="center">
-        <Authentication mode={false} onRegister={handleRegister}/>
-      </GridContainer>
+      <Authentication mode={false} onRegister={handleRegister} />
     </div>
   );
 }

@@ -30,9 +30,27 @@ const customCheckboxRadioSwitch = {
     marginTop: "10px",
     marginBottom: "10px"
   },
+  checkboxAndRadioInline: {
+    position: "relative",
+    display: "Inline",
+    marginTop: "10px",
+    marginBottom: "10px"
+  },
   checkboxAndRadioHorizontal: {
     position: "relative",
     display: "block",
+    "&:first-child": {
+      marginTop: "10px"
+    },
+    "&:not(:first-child)": {
+      marginTop: "-14px"
+    },
+    marginTop: "0",
+    marginBottom: "0"
+  },
+  checkboxAndRadioHorizontalInline: {
+    position: "relative",
+    display: "Inline",
     "&:first-child": {
       marginTop: "10px"
     },
@@ -183,6 +201,9 @@ const customCheckboxRadioSwitch = {
     "& $switchIcon": {
       borderColor: primaryColor[0]
     }
+  },
+  alignCenter: {
+    textAlign: "-webkit-center"
   }
 };
 

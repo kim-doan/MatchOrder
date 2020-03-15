@@ -64,7 +64,7 @@ export default function ExtendedForms() {
         range: { min: 0, max: 100 }
       });
     }
-    return function cleanup() {};
+    return function cleanup() { };
   });
   const handleSimple = event => {
     setSimpleSelect(event.target.value);
