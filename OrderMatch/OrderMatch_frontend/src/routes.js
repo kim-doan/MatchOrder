@@ -94,6 +94,7 @@ import OOptionSalesStatus from "views/Order/Order_list.js";
 
 //환경설정
 import AccountSetting from "views/Pages/Setting/AccountSetting.js"
+import SupplierOrderForm from "views/Pages/Setting/SupplierOrderForm.js"
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -597,9 +598,9 @@ var dashRoutes = [
         layout: "/admin"
       },
       {
-        path: "/osts_unknow1",
+        path: "/supplierOrderForm",
         name: "발주서 양식 관리",
-        component: OSalesStatus,
+        component: SupplierOrderForm,
         layout: "/admin"
       },
       {

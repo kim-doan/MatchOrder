@@ -47,7 +47,7 @@ class AccountSetting extends Component {
         this.state = {
             username: localStorage.username,
             manager_name: "",
-            managerNameState: "",
+            manager_nameState: "",
             manager_tel: "",
             managerTelState: "",
             cal_manager_name: "",
@@ -195,7 +195,7 @@ class AccountSetting extends Component {
     }
     isValidated() {
         if (
-            this.state.managerNameState === "success" &&
+            this.state.manager_nameState === "success" &&
             this.state.calManagerNameState === "success" &&
             this.state.calManagerEmailState === "success" &&
             this.state.managerEmailState === "success" &&
@@ -220,8 +220,8 @@ class AccountSetting extends Component {
             if (this.state.cal_manager_tel !== "success") {
                 this.setState({ cal_manager_tel: "error" });
             }
-            if (this.state.managerNameState !== "success") {
-                this.setState({ managerNameState: "error" });
+            if (this.state.manager_nameState !== "success") {
+                this.setState({ manager_nameState: "error" });
             }
             if (this.state.calManagerNameState !== "success") {
                 this.setState({ calManagerNameState: "error" });
@@ -309,8 +309,8 @@ class AccountSetting extends Component {
                                 <GridContainer>
                                     <GridItem xs={12} sm={12} md={8}>
                                         <CustomInput
-                                            success={this.state.managerNameState === "success"}
-                                            error={this.state.managerNameState === "error"}
+                                            success={this.state.manager_nameState === "success"}
+                                            error={this.state.manager_nameState === "error"}
                                             labelText={
                                                 <span>
                                                     담당자 이름 <small>(필수)</small>
