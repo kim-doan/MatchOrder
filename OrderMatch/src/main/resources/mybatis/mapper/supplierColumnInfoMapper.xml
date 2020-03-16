@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ordermatch.main.mapper.SupplierColumnInfoMapper">
+	
+	<resultMap type="com.ordermatch.main.master.model.SupplierColumnInfo"
+		id="supplierColumnInfoResult">
+		<result property="supplier_column_name" column="SUPPLIER_COLUMN_NAME"></result>	
+		<result property="create_at" column="CREATE_AT"></result>	
+		<result property="disable_time" column="DISABLE_TIME"></result>	
+	</resultMap>
+	
+	<parameterMap type="com.ordermatch.main.master.model.SupplierColumnInfo" id="supplierColumnInfoParam">
+		<parameter property="supplier_column_name"/>
+		<parameter property="disable_time"/>
+	</parameterMap>
+	
+	<select id="findAllSupplierColumnInfo" resultMap="supplierColumnInfoResult">
+		SELECT *
+		FROM TB_SUPPLIER_COLUMN_INFO
+	</select>
+	
+	<insert id="insertSupplierColumnInfo" parameterMap="supplierColumnInfoParam">
+		INSERT INTO TB_SUPPLIER_COLUMN_INFO (SUPPLIER_COLUMN_NAME, CREATE_AT)
+		VALUES (#{supplier_column_name}, sysdate())
+	</insert>
+	
+	<update id="updateSupplierColumnInfo" parameterMap="supplierColumnInfoParam">
+		UPDATE TB_SUPPLIER_COLUMN_INFO
+		<trim prefix="SET" suffixOverrides=",">
+		<if test="supplier_column_name != null and supplier_column_name != ''">SUPPLIER_COLUMN_NAME = #{supplier_column_name},</if>
+		<if test="disable_time != null">DISABLE_TIME = #{disable_time}</if>		
+		WHERE SUPPLIER_COLUMN_NAME = #{supplier_column_name}
+		</trim>
+	</update>
+</mapper>
