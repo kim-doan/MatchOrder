@@ -6,6 +6,7 @@ import MaterialTable from 'material-table';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles"
 import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button"
 
 // material-ui icons
 import Assignment from "@material-ui/icons/Assignment";
@@ -34,7 +35,8 @@ class SupplierOrderForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: []
+            checked: [],
+            form_list: [],
         }
     }
     handleToggle = value => {
@@ -50,15 +52,16 @@ class SupplierOrderForm extends Component {
         console.log(this.state.checked)
     };
     componentDidMount() {
-        // axios.post("http://localhost:8080/api/supplierForm", {})
-        // .then(response => {
-        //     var result = response && response.data;
-            
-        //     console.log(result);
-        // })
         this.props.supplierFormRequest().then(
              () => {
-            console.log(this.props.status.list)
+            for(var i =0; i<this.props.status.list.length;i++) {
+                if(this.props.status.list[i].disable_time == null) {
+                    this.props.status.list[i].disable_time = "✔"
+                } else {
+                    this.props.status.list[i].disable_time = "✕"
+                }
+            }
+            this.setState({form_list: this.props.status.list});
         })
     }
     render() {
@@ -69,14 +72,23 @@ class SupplierOrderForm extends Component {
                     <MaterialTable
                         title="발주 주문서 양식 리스트"
                         columns={[
-                            { title: '양식명', field: 'form_name' },
-                            { title: '생성일', field: 'create_at' },
-                            { title: '사용여부', field: 'disable_time', type: 'numeric' },
+                            { title: '양식명', field: 'form_name', width: 900},
+                            { title: '생성일', field: 'create_at'},
+                            { title: '사용여부', field: 'disable_time'},
                         ]}
-                        data={this.props.status.list}
+                        data={this.state.form_list}
                         options={{
+                            actionsColumnIndex: -1,                        
                             selection: true
                         }}
+                        actions={[
+                            {
+                              icon: () => <Button>hi</Button>,
+                              position: 'row',
+                              tooltip: 'Save User',
+                              onClick: (event, rowData) => alert("You saved " + rowData.name)
+                            }
+                          ]}
                     />
                 </GridItem>
             </GridContainer>

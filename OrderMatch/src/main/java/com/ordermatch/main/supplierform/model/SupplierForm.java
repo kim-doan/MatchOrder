@@ -3,6 +3,10 @@ package com.ordermatch.main.supplierform.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +24,7 @@ public class SupplierForm {
 	
 	private String form_name;
 	
+	@JsonFormat(pattern="yyyy-MM-dd", timezone = "Aisa/Seoul")
 	private Date create_at;
 	
 	private Date modify_at;
