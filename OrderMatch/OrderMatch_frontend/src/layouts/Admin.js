@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getStatusRequest} from 'actions/authentication';
 import cx from "classnames";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
@@ -198,5 +200,22 @@ function Dashboard(props) {
 }
 
 
+const mapStateToProps = (state) => {
+  return {
+    status: state.authentication.status
+  };
+}
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getStatusRequest: () => {
+      return dispatch(getStatusRequest());
+    },
+    logoutRequest: () => {
+      return dispatch(logoutRequest());
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+// export default Dashboard;

@@ -13,7 +13,6 @@ class Main extends Component {
             axios.defaults.headers.common['USERNAME'] = localStorage.username;
           } 
           enhanceAccessToken(); // 새로고침시 토큰 재설정
-
         //get cookie by name
         function getCookie(name) {
             var value = "; " + document.cookie;

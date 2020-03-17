@@ -3,6 +3,7 @@ package com.ordermatch.main.supplierform.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.response.model.CommonResult;
 import com.ordermatch.main.response.model.ListResult;
 import com.ordermatch.main.response.service.ResponseService;
 import com.ordermatch.main.supplierform.model.SupplierForm;
 import com.ordermatch.main.supplierform.model.SupplierFormParam;
 import com.ordermatch.main.supplierform.service.SupplierFormService;
+import com.ordermatch.main.user.model.User;
+import com.ordermatch.main.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,11 +34,15 @@ public class SupplierFormController {
 	@Autowired
 	private SupplierFormService supplierFormService;
 	
+	@Autowired
+	private UserService userService;
+	
 	@CrossOrigin
 	@PostMapping("/supplierForm")
-	public ListResult<SupplierForm> findAllSupplierForm(@RequestHeader(value="user_id") int user_id, 
+	public ListResult<SupplierForm> findAllSupplierForm(@RequestHeader(value="username") String username, 
 			@Valid @RequestBody SupplierFormParam supplierFormParam) {
-		supplierFormParam.setUser_id(user_id);
+		User user = userService.findByTokenUsername(username).orElseThrow(CUserNotFoundException::new);
+		supplierFormParam.setUser_id(user.getUser_id());
 		
 		return responseService.getListResult(supplierFormService.findAllSupplierForm(supplierFormParam));
 	}

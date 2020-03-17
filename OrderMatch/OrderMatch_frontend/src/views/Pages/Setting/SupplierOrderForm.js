@@ -26,6 +26,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 
+import { supplierFormRequest } from 'actions/authentication'
+
 import styles from "assets/jss/material-dashboard-pro-react/views/supplierOrderFormStyle.js";
 
 class SupplierOrderForm extends Component {
@@ -47,27 +49,31 @@ class SupplierOrderForm extends Component {
         this.setState({ checked: newChecked })
         console.log(this.state.checked)
     };
+    componentDidMount() {
+        // axios.post("http://localhost:8080/api/supplierForm", {})
+        // .then(response => {
+        //     var result = response && response.data;
+            
+        //     console.log(result);
+        // })
+        this.props.supplierFormRequest().then(
+             () => {
+            console.log(this.props.status.list)
+        })
+    }
     render() {
         const { classes } = this.props;
         return (
             <GridContainer>
                 <GridItem xs={12}>
                     <MaterialTable
-                        title="Basic Selection Preview"
+                        title="발주 주문서 양식 리스트"
                         columns={[
-                            { title: 'Name', field: 'name' },
-                            { title: 'Surname', field: 'surname' },
-                            { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-                            {
-                                title: 'Birth Place',
-                                field: 'birthCity',
-                                lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-                            },
+                            { title: '양식명', field: 'form_name' },
+                            { title: '생성일', field: 'create_at' },
+                            { title: '사용여부', field: 'disable_time', type: 'numeric' },
                         ]}
-                        data={[
-                            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-                            { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
-                        ]}
+                        data={this.props.status.list}
                         options={{
                             selection: true
                         }}
@@ -80,14 +86,15 @@ class SupplierOrderForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        status: state.authentication.status,
-        token: state.authentication.status.token,
-        username: state.authentication.status.currentUser
+        status: state.supplierFormList.status
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        supplierFormRequest: () => {
+            return dispatch(supplierFormRequest());
+        }
     }
 };
 

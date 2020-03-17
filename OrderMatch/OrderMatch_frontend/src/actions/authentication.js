@@ -10,7 +10,54 @@ import {
     AUTH_GET_STATUS_SUCCESS,
     AUTH_GET_STATUS_FAILURE,
     AUTH_LOGOUT,
+    SUPPLIER_FORM_LIST,
+    SUPPLIER_FORM_LIST_FAILURE,
+    SUPPLIER_FORM_LIST_SUCCESS
 } from './ActionTypes';
+
+const enhanceAccessToken = () => {
+    if(!localStorage.accessToken) return
+    axios.defaults.headers.common['X-AUTH-TOKEN'] = localStorage.accessToken;
+    axios.defaults.headers.common['USERNAME'] = localStorage.username;
+} 
+enhanceAccessToken(); // 새로고침시 토큰 재설정
+
+/* SUPPLIER_FORM_LIST */
+export function supplierFormRequest() {
+    return (dispatch) => {
+        dispatch(supplierForm())
+
+        return axios.post("http://localhost:8080/api/supplierForm", {})
+        .then(response => {
+            var result = response && response.data;
+            
+            if(result.success == true) {
+                dispatch(supplierFormSuccess(result.list))
+            } else {
+                dispatch(supplierFormFailure())
+            }
+        })
+    }
+}
+
+export function supplierForm() {
+    return {
+        type: SUPPLIER_FORM_LIST
+    };
+}
+
+export function supplierFormSuccess(supplierForm) {
+    return {
+        type: SUPPLIER_FORM_LIST_SUCCESS,
+        supplierForm
+    }
+}
+
+export function supplierFormFailure() {
+    return {
+        type: SUPPLIER_FORM_LIST_FAILURE
+    }
+}
 
 /* LOGOUT */
 export function logoutRequest() {

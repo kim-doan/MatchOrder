@@ -82,7 +82,8 @@ const mapStateToProps = (state) => {
   return {
     status: state.authentication.login.status,
     token: state.authentication.status.token,
-    username: state.authentication.status.currentUser
+    username: state.authentication.status.currentUser,
+    userId: state.authentication.status.user
   };
 };
 
