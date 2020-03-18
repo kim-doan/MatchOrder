@@ -3,10 +3,15 @@ import {
     grayColor
   } from "assets/jss/material-dashboard-pro-react.js";
   import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.js";
+  import sweetAlertStyle from "assets/jss/material-dashboard-pro-react/views/sweetAlertStyle.js";
   
   const supplierOrderFormStyle = {
     cardTitle,
     ...customCheckboxRadioSwitch,
+    ...sweetAlertStyle,
+    inputAdornment: {
+      position: "relative"
+    },
     right: {
         textAlign: "right"
       },
