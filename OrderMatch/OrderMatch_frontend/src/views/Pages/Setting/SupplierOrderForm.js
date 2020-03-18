@@ -83,7 +83,7 @@ class SupplierOrderForm extends Component {
                         }}
                         actions={[
                             {
-                              icon: () => <Button>hi</Button>,
+                              icon: () => <Button/>,
                               position: 'row',
                               tooltip: 'Save User',
                               onClick: (event, rowData) => alert("You saved " + rowData.name)
