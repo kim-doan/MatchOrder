@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import CheckOut from './CheckOut';
 import Signin from './Signin';
 import CheckOut2 from './CheckOut2';
 import GridContainer from "../Grid/GridContainer.js";
 import GridItem from "../Grid/GridItem.js";
 import SweetAlert from "react-bootstrap-sweetalert";
+
 import CheckStep1 from "./CheckStep1.js";
 import CheckStep2 from "./CheckStep2.js";
+import CheckStep3 from "./CheckStep3.js";
+import { grayColor } from "assets/jss/material-dashboard-pro-react.js";
+
 import styles from "assets/jss/material-dashboard-pro-react/views/sweetAlertStyle.js";
+import { makeStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { blackColor } from 'assets/jss/material-dashboard-pro-react';
 
@@ -110,12 +117,12 @@ class Authentication extends Component {
                             <CheckOut2
                                 validate
                                 steps={[
-                                    { stepName: "About", stepComponent: CheckStep1, stepId: "about" },
-                                    { stepName: "Account", stepComponent: CheckStep2, stepId: "account" }
+                                    { stepName: "약관", stepComponent: CheckStep1, stepId: "about" },
+                                    { stepName: "회원정보", stepComponent: CheckStep2, stepId: "account" }
                                     // { stepName: "Address", stepComponent: CheckStep3, stepId: "address" }
                                 ]}
-                                title="Build Your Profile"
-                                subtitle="This information will let us know more about you."
+                                title="회원가입"
+                                subtitle="Build Your Profile."
                                 finishButtonClick={() => this.setState({ alert: true })}
                             />
                         </GridItem>

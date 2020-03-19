@@ -97,7 +97,7 @@ class CheckStep2 extends React.Component {
       passwordConfirmState: "",
       id: "",
       idState: "",
-      showPassword: "false"
+      showPassword: false
     };
   }
 
@@ -248,7 +248,7 @@ class CheckStep2 extends React.Component {
         this.setState({ idState: "error" });
       }
     }
-    return true;
+    return false;
   }
   render() {
     const { classes } = this.props;
