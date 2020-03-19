@@ -39,7 +39,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import SupplierColumn from "components/SupplierColumn/SupplierColumn.js"
 import CustomInput from "components/CustomInput/CustomInput.js";
 
-import { supplierFormRequest } from "actions/authentication";
+import { supplierFormRequest } from "actions/supplierForm";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/supplierOrderFormStyle.js";
 
@@ -55,7 +55,8 @@ class SupplierOrderForm extends Component {
       rows: [],
       nowRows: {},
       form_name: '',
-      disable_time: ''
+      disable_time: '',
+      column_name : []
     };
   }
 
@@ -179,7 +180,7 @@ class SupplierOrderForm extends Component {
                   error={this.state.form_name === undefined}
                   labelText={
                     <span>
-                      담당자 이름 <small>(필수)</small>
+                      양식명 <small>(필수)</small>
                     </span>
                   }
                   id="form_name"
@@ -270,7 +271,7 @@ class SupplierOrderForm extends Component {
                       </div>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
-                <SupplierColumn></SupplierColumn>
+                <SupplierColumn form_column = {this.state.nowRows.supplierFormColumn}></SupplierColumn>
               </GridItem>
             </GridContainer>
           </DialogContent>
