@@ -1,4 +1,10 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
+import { connect, useSelector } from "react-redux";
+import axios from 'axios';
+import { supplierFormColumnStatus, supplierFormColumnInfoRequest } from "actions/authentication";
+
+import supplierFormList from "reducers/supplierFormList"
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -41,15 +47,34 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-export default function SupplierColumn() {
+function SupplierColumn(props) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3]);
+  const [left, setLeft] = React.useState([4, 5, 6, 7]);
   const [right, setRight] = React.useState([4, 5, 6, 7]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/master/supplierColumnInfo")
+        .then(response => {
+            var result = response && response.data;
+
+            if(result.success == true) {
+                var tempArray = [];
+                for(var i=0;i< result.list.length;i++) {
+                  tempArray.push(result.list[i].supplier_column_name);
+
+                  setLeft(tempArray);
+                }
+            } else {
+                
+            }
+        })
+  },[])
+  
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -72,17 +97,20 @@ export default function SupplierColumn() {
       setChecked(union(checked, items));
     }
   };
-
   const handleCheckedRight = () => {
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
+
+    props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
   };
 
   const handleCheckedLeft = () => {
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
+
+    props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
   };
 
   const customList = (title, items) => (
@@ -116,7 +144,7 @@ export default function SupplierColumn() {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              <ListItemText id={labelId} primary={`${value}`} />
             </ListItem>
           );
         })}
@@ -156,3 +184,26 @@ export default function SupplierColumn() {
     </Grid>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    status: state.supplierFormList.status,
+    column: state.supplierFormList.column
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    supplierFormColumnStatus: (column) => {
+      return dispatch(supplierFormColumnStatus(column));
+    },
+    supplierFormColumnInfoRequest: () => {
+      return dispatch(supplierFormColumnInfoRequest());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)((SupplierColumn));

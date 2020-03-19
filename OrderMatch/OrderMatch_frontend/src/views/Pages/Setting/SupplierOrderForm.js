@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import MaterialTable from "material-table";
 
 // @material-ui/core components
@@ -311,7 +310,7 @@ class SupplierOrderForm extends Component {
                 ),
                 position: "row",
                 tooltip: "수정",
-                onClick: (event, rowData) => this.setState({ editModal: true, nowRows: rowData, form_name: rowData.form_name, disable_time: rowData.disable_time}, console.log(rowData))
+                onClick: (event, rowData) => this.setState({ editModal: true, nowRows: rowData, form_name: rowData.form_name, disable_time: rowData.disable_time})
               },
               {
                 icon: () => (
@@ -366,7 +365,8 @@ class SupplierOrderForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    status: state.supplierFormList.status
+    status: state.supplierFormList.status,
+    column: state.supplierFormList.column
   };
 };
 

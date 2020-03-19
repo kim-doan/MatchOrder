@@ -12,7 +12,11 @@ import {
     AUTH_LOGOUT,
     SUPPLIER_FORM_LIST,
     SUPPLIER_FORM_LIST_FAILURE,
-    SUPPLIER_FORM_LIST_SUCCESS
+    SUPPLIER_FORM_LIST_SUCCESS,
+    SUPPLIER_FORM_COLUMN_STATUS,
+    SUPPLIER_FORM_COLUMN_INFO,
+    SUPPLIER_FORM_COLUMN_INFO_SUCCESS,
+    SUPPLIER_FORM_COLUMN_INFO_FAILURE
 } from './ActionTypes';
 
 const enhanceAccessToken = () => {
@@ -22,7 +26,58 @@ const enhanceAccessToken = () => {
 } 
 enhanceAccessToken(); // 새로고침시 토큰 재설정
 
-/* SUPPLIER_FORM_LIST */
+/*공급사 주문서 엑셀양식 컬럼정보 (기준정보) 가져오기 */
+export function supplierFormColumnInfoRequest() {
+    return (dispatch) => {
+        dispatch(supplierFormColumnInfo())
+
+        return axios.get("http://localhost:8080/api/master/supplierColumnInfo")
+        .then(response => {
+            var result = response && response.data;
+
+            if(result.success == true) {
+                dispatch(supplierFormColumnInfoSuccess(result.list))
+            } else {
+                dispatch(supplierFormColumnInfoFailure())
+            }
+        })
+    }
+}
+
+export function supplierFormColumnInfo() {
+    return {
+        type: SUPPLIER_FORM_COLUMN_INFO,
+    }
+}
+
+export function supplierFormColumnInfoSuccess(columnInfo) {
+    return {
+        type: SUPPLIER_FORM_COLUMN_INFO_SUCCESS,
+        columnInfo
+    }
+}
+
+export function supplierFormColumnInfoFailure() {
+    return {
+        type: SUPPLIER_FORM_COLUMN_INFO_FAILURE
+    }
+}
+
+/*현재 리스트박스에 있는 상태값*/
+export function supplierFormColumnStatus(column) {
+    return (dispatch) => {
+        return dispatch(supplierFormColumn(column))
+    }
+}
+
+export function supplierFormColumn(column) {
+    return {
+        type: SUPPLIER_FORM_COLUMN_STATUS,
+        column
+    }
+}
+
+/* 공급사 주문서 양식 리스트 */
 export function supplierFormRequest() {
     return (dispatch) => {
         dispatch(supplierForm())
