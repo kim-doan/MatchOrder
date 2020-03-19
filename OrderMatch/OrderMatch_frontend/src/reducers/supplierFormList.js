@@ -16,32 +16,6 @@ const initialState = {
 
 export default function supplierFormList(state = initialState, action) {
   switch (action.type) {
-    /* SUPPLIER_FORM_COLUMN_INFO */
-    case types.SUPPLIER_FORM_COLUMN_INFO:
-      return {
-        ...state,
-        info: {
-          status: "WAITING"
-        }
-      };
-    case types.SUPPLIER_FORM_COLUMN_INFO_SUCCESS:
-      return {
-        ...state,
-        info: {
-          status: "SUCCESS"
-        },
-        status: {
-          ...state.status,
-          columnList: (state.status.columnList = action.columnInfo.slice())
-        }
-      };
-    case types.SUPPLIER_FORM_COLUMN_INFO_FAILURE:
-      return {
-        ...state,
-        info: {
-          status: "FAILURE"
-        }
-      };
     /* SUPPLIER_FORM_COLUMN_STATUS */
     case types.SUPPLIER_FORM_COLUMN_STATUS:
       return {

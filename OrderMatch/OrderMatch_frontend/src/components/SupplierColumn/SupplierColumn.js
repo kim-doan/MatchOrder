@@ -1,9 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { connect, useSelector } from "react-redux";
 import axios from 'axios';
-import { supplierFormColumnStatus, supplierFormColumnInfoRequest } from "actions/authentication";
-
-import supplierFormList from "reducers/supplierFormList"
+import { supplierFormColumnStatus } from "actions/supplierForm";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -50,8 +48,9 @@ function union(a, b) {
 function SupplierColumn(props) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([4, 5, 6, 7]);
-  const [right, setRight] = React.useState([4, 5, 6, 7]);
+  const [left, setLeft] = React.useState([]);
+  const [right, setRight] = React.useState([]);
+  const [formColumn, setFormColumn] = React.useState([]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -74,7 +73,17 @@ function SupplierColumn(props) {
             }
         })
   },[])
-  
+
+  useEffect(() => {
+    if(props.form_column != undefined) {
+      var tempArray= [];
+      for(var i=0;i<props.form_column.length;i++) {
+          tempArray.push(props.form_column[i].column_name);
+      }
+      setRight(tempArray);
+    }
+  },[props])
+
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -127,7 +136,7 @@ function SupplierColumn(props) {
           />
         }
         title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
+        subheader={`${numberOfChecked(items)} / ${items.length} 선택`}
       />
       <Divider />
       <List className={classes.list} dense component="div" role="list">
@@ -155,7 +164,7 @@ function SupplierColumn(props) {
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList('Choices', left)}</Grid>
+      <Grid item>{customList('선택 가능 헤더', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -180,7 +189,7 @@ function SupplierColumn(props) {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList('Chosen', right)}</Grid>
+      <Grid item>{customList('현재 양식 헤더', right)}</Grid>
     </Grid>
   );
 }
