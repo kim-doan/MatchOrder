@@ -70,11 +70,15 @@ class CheckStep1 extends React.Component {
       this.setState({ [name]: event.target.checked });
       if (event.target.checked === this.state.checkedC) {
         this.setState({ ["checkedA"]: event.target.checked });
+      } else {
+        this.setState({ ["checkedA"]: false });
       }
     } else if (name === "checkedC") {
       this.setState({ [name]: event.target.checked });
       if (event.target.checked === this.state.checkedB) {
         this.setState({ ["checkedA"]: event.target.checked });
+      } else {
+        this.setState({ ["checkedA"]: false });
       }
     }
   }

@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import CheckOut from './CheckOut';
 import Signin from './Signin';
 import CheckOut2 from './CheckOut2';
 import GridContainer from "../Grid/GridContainer.js";
 import GridItem from "../Grid/GridItem.js";
-
+import SweetAlert from "react-bootstrap-sweetalert";
 import CheckStep1 from "./CheckStep1.js";
 import CheckStep2 from "./CheckStep2.js";
-import CheckStep3 from "./CheckStep3.js";
+import styles from "assets/jss/material-dashboard-pro-react/views/sweetAlertStyle.js";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { blackColor } from 'assets/jss/material-dashboard-pro-react';
 
 class Authentication extends Component {
-    state = {
-        username: "",
-        password: ""
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: "",
+            password: "",
+            alert: false
+        }
     }
-
     handleChange = (e) => {
         let nextState = {};
         nextState[e.target.name] = e.target.value;
@@ -63,8 +66,11 @@ class Authentication extends Component {
             }
         }
     }
-
+    hideAlert = () => {
+        this.setState({ alert: false })
+    }
     render() {
+        const { classes } = this.props;
         const inputBoxes = (
             <div>
                 <div className="input-field col s12 username">
@@ -105,12 +111,12 @@ class Authentication extends Component {
                                 validate
                                 steps={[
                                     { stepName: "About", stepComponent: CheckStep1, stepId: "about" },
-                                    { stepName: "Account", stepComponent: CheckStep2, stepId: "account" },
-                                    { stepName: "Address", stepComponent: CheckStep3, stepId: "address" }
+                                    { stepName: "Account", stepComponent: CheckStep2, stepId: "account" }
+                                    // { stepName: "Address", stepComponent: CheckStep3, stepId: "address" }
                                 ]}
                                 title="Build Your Profile"
                                 subtitle="This information will let us know more about you."
-                                finishButtonClick={e => alert(e)}
+                                finishButtonClick={() => this.setState({ alert: true })}
                             />
                         </GridItem>
                     </GridContainer>
@@ -122,6 +128,17 @@ class Authentication extends Component {
                 <div className="card">
                     {this.props.mode ? loginView : registerView}
                 </div>
+                <SweetAlert
+                    success
+                    show={this.state.alert}
+                    style={{ display: "block", marginTop: "-100px", color: blackColor }}
+                    title="Good job!"
+                    onConfirm={() => this.hideAlert()}
+                    onCancel={() => this.hideAlert()}
+                    confirmBtnCssClass={classes.button + " " + classes.success}
+                >
+                    You clicked the button!
+                    </SweetAlert>
             </div>
         );
     }
@@ -139,4 +156,4 @@ Authentication.defaultProps = {
     onLogin: (id, pw) => { console.error("login function not defined"); }
 };
 
-export default Authentication;
+export default withStyles(styles)(Authentication);

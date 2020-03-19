@@ -247,10 +247,8 @@ class CheckStep2 extends React.Component {
       if (this.state.idState !== "success") {
         this.setState({ idState: "error" });
       }
-
-
     }
-    return false;
+    return true;
   }
   render() {
     const { classes } = this.props;
