@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,9 +50,11 @@ public class SupplierFormController {
 	
 	@CrossOrigin
 	@PostMapping("/supplierForm/insert")
-	public CommonResult insertSupplierForm(@RequestHeader(value="user_id") int user_id,
+	public CommonResult insertSupplierForm(@RequestHeader(value="username") String username,
 			@Valid @RequestBody SupplierFormParam supplierFormParam) {
-		supplierFormParam.setUser_id(user_id);
+		User user = userService.findByTokenUsername(username).orElseThrow(CUserNotFoundException::new);
+		
+		supplierFormParam.setUser_id(user.getUser_id());
 		
 		int result = supplierFormService.insertSupplierForm(supplierFormParam);
 		
@@ -64,9 +67,7 @@ public class SupplierFormController {
 	
 	@CrossOrigin
 	@PostMapping("/supplierForm/update")
-	public CommonResult updateSupplierForm(@RequestHeader(value = "user_id") int user_id,
-			@Valid @RequestBody SupplierFormParam supplierFormParam) {
-		
+	public CommonResult updateSupplierForm(@Valid @RequestBody SupplierFormParam supplierFormParam) {
 		int result = supplierFormService.updateSupplierFormColumn(supplierFormParam);
 		
 		if(result > 0) {
@@ -77,9 +78,23 @@ public class SupplierFormController {
 	}
 	
 	@CrossOrigin
+	@PostMapping("/supplierForm/delete")
+	public CommonResult deleteSupplierForm(@Valid @RequestBody SupplierFormParam[] supplierFormParam) {
+		boolean result = supplierFormService.deleteSupplierForm(supplierFormParam);
+		
+		if(result == true) {
+			return responseService.getSuccessResult();
+		} else {
+			return responseService.getFailResult(-2300, "삭제 실패");
+		}
+	}
+	
+	@CrossOrigin
 	@PostMapping("/supplierForm/column/insert")
-	public CommonResult insertSupplierFormColumn(@Valid @RequestBody SupplierFormParam[] supplierFormParam) {
-		boolean result = supplierFormService.insertSupplierFormColumn(supplierFormParam);
+	public CommonResult insertSupplierFormColumn(@RequestHeader(value= "form_id") int form_id,
+			@Valid @RequestBody SupplierFormParam[] supplierFormParam) {
+		
+		boolean result = supplierFormService.insertSupplierFormColumn(supplierFormParam, form_id);
 		
 		if(result == true) {
 			return responseService.getSuccessResult();
@@ -88,3 +103,4 @@ public class SupplierFormController {
 		}
 	}
 }
+

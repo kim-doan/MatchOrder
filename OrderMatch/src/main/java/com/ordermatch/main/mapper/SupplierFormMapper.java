@@ -16,4 +16,6 @@ public interface SupplierFormMapper {
 	boolean insertSupplierFormColumn(SupplierFormParam supplierFormParam);
 	
 	boolean deleteSupplierFormColumn(int form_id);
+	
+	boolean deleteSupplierForm(SupplierFormParam supplierFormParam);
 }

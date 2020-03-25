@@ -3,11 +3,9 @@ package com.ordermatch.main.supplierform.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ordermatch.main.supplierform.model.SupplierForm.SupplierFormBuilder;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +15,7 @@ import lombok.Setter;
 @Getter @Setter
 @RequiredArgsConstructor
 @Builder
-public class SupplierForm {
+public class SupplierFormDTO {
 
 	private int user_id;
 	
@@ -34,8 +32,8 @@ public class SupplierForm {
 
 	List<SupplierFormColumn> supplierFormColumn = new ArrayList<SupplierFormColumn>();
 
-	public SupplierForm(int user_id, int form_id, String form_name, Date create_at, Date modify_at, Date disable_time,
-			List<SupplierFormColumn> supplierFormColumn) {
+	public SupplierFormDTO(int user_id, int form_id, String form_name, Date create_at, Date modify_at,
+			Date disable_time, List<SupplierFormColumn> supplierFormColumn) {
 		super();
 		this.user_id = user_id;
 		this.form_id = form_id;

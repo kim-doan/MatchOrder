@@ -24,6 +24,12 @@ public class SupplierFormService {
 		
 		List<SupplierForm> supplierForm = supplierFormMapper.findAllSupplierForm(supplierFormParam);
 		
+		for(int i=0;i<supplierForm.size();i++) {
+			if(supplierForm.get(i).getSupplierFormColumn().get(0).getColumn_name() == null) {
+				supplierForm.get(i).getSupplierFormColumn().clear();
+			}
+		}
+		
 		return supplierForm;
 	}
 	
@@ -43,13 +49,25 @@ public class SupplierFormService {
 		return form_id;
 	}
 	
-	public boolean insertSupplierFormColumn(SupplierFormParam[] supplierFormParam) {
+	public boolean insertSupplierFormColumn(SupplierFormParam[] supplierFormParam, int form_id) {
 		boolean result = true;
 		
-		supplierFormMapper.deleteSupplierFormColumn(supplierFormParam[0].getForm_id());
+		supplierFormMapper.deleteSupplierFormColumn(form_id);
 		
-		for(int i=0;i<supplierFormParam.length;i++) {			
+		for(int i=0;i<supplierFormParam.length;i++) {		
+			supplierFormParam[i].setForm_id(form_id);
 			result = supplierFormMapper.insertSupplierFormColumn(supplierFormParam[i]);
+		}
+		
+		return result;
+	}
+	
+	@Transactional
+	public boolean deleteSupplierForm(SupplierFormParam[] supplierFormParam) {
+		boolean result = true;
+		
+		for(int i=0;i<supplierFormParam.length;i++) {
+			result = supplierFormMapper.deleteSupplierForm(supplierFormParam[i]);
 		}
 		
 		return result;

@@ -50,18 +50,23 @@
 		UPDATE TB_SUPPLIER_FORM
 		<trim prefix="SET" suffixOverrides=",">
 		<if test="form_name != null and form_name != ''">FORM_NAME = #{form_name},</if>
-		<if test="disable_time != null">DISABLE_TIME = #{disable_time},</if>		
+		<if test="disable_time != null">DISABLE_TIME = NULL,</if>
+		<if test="disable_time == null">DISABLE_TIME = sysdate(),</if>
 		MODIFY_AT = sysdate()
 		WHERE FORM_ID = #{form_id}
 		</trim>
 	</update>
 	
 	<insert id="insertSupplierFormColumn" parameterMap="supplierFormParam">
-		INSERT INTO TB_SUPPLIER_FORM_COLUMN 
-		SELECT #{form_id}, #{column_name}
-		FROM DUAL
-		WHERE NOT EXISTS(SELECT COLUMN_NAME FROM TB_SUPPLIER_FORM_COLUMN WHERE COLUMN_NAME = #{column_name})
+		INSERT INTO TB_SUPPLIER_FORM_COLUMN VALUES(#{form_id}, #{column_name})
 	</insert>
+	<delete id="deleteSupplierForm" parameterMap="supplierFormParam">
+		DELETE A, B
+		FROM TB_SUPPLIER_FORM A
+		LEFT JOIN TB_SUPPLIER_FORM_COLUMN B
+		ON B.FORM_ID = A.FORM_ID
+		WHERE A.FORM_ID = #{form_id}
+	</delete>
 	
 	<delete id="deleteSupplierFormColumn" parameterType="int">
 		DELETE FROM TB_SUPPLIER_FORM_COLUMN

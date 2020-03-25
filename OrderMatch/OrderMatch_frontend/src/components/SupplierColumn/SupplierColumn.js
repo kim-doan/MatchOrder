@@ -57,32 +57,50 @@ function SupplierColumn(props) {
 
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/master/supplierColumnInfo")
+    props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
+  }, [right])
+
+  useEffect(() => {
+    new Promise(function(resolve) {
+        if(props.form_column.supplierFormColumn != undefined) {
+            var tempArray= [];
+            for(var i=0;i<props.form_column.supplierFormColumn.length;i++) {
+               tempArray.push(props.form_column.supplierFormColumn[i].column_name);
+            }
+              setRight(tempArray);
+        }
+        resolve(tempArray);
+    }).then(res => {
+        var column = [];
+        if(res != undefined) {
+            column = column.concat(res);
+        }
+        axios.get("http://localhost:8080/api/master/supplierColumnInfo")
         .then(response => {
             var result = response && response.data;
-
+            
             if(result.success == true) {
                 var tempArray = [];
+                var list = JSON.parse(JSON.stringify(result.list));
                 for(var i=0;i< result.list.length;i++) {
-                  tempArray.push(result.list[i].supplier_column_name);
-
-                  setLeft(tempArray);
+                    for(var j=0;j< column.length;j++) {
+                        if(result.list[i].supplier_column_name == column[j]) {
+                            list.splice(list.indexOf(list[i], column[j]), 1);
+                            break;
+                        }
+                    }
                 }
+
+                for(var i=0;i<list.length;i++) {
+                    tempArray.push(list[i].supplier_column_name);
+                }
+                setLeft(tempArray);
             } else {
                 
             }
         })
-  },[])
-
-  useEffect(() => {
-    if(props.form_column != undefined) {
-      var tempArray= [];
-      for(var i=0;i<props.form_column.length;i++) {
-          tempArray.push(props.form_column[i].column_name);
-      }
-      setRight(tempArray);
-    }
-  },[props])
+    })
+  },[props.form_column])
 
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);
@@ -111,7 +129,7 @@ function SupplierColumn(props) {
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
 
-    props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
+    // props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
   };
 
   const handleCheckedLeft = () => {
@@ -119,7 +137,7 @@ function SupplierColumn(props) {
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
 
-    props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
+    // props.supplierFormColumnStatus(right); // redux에 상태 정보 저장
   };
 
   const customList = (title, items) => (
