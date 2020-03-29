@@ -359,7 +359,11 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={this.props.status.company.company_img !== undefined ? "http://localhost:8080/api/photo/" + this.props.status.company.company_img : avatar} className={classes.avatarImg} alt="..." />
+        {this.props.status.company.company_img !== undefined ?
+          <img src= {"http://localhost:8080/api/photo/" + this.props.status.company.company_img} className={classes.avatarImg} alt="..." />
+          :
+          <img src= {avatar} className={classes.avatarImg} alt="..." />
+        }
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>

@@ -37,7 +37,7 @@ import com.ordermatch.main.response.model.SingleResult;
 import com.ordermatch.main.response.service.ResponseService;
 import com.ordermatch.main.user.model.AuthenticationRequest;
 import com.ordermatch.main.user.model.User;
-import com.ordermatch.main.user.model.UserParam;
+import com.ordermatch.main.user.param.UserParam;
 import com.ordermatch.main.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -94,8 +94,8 @@ public class UserController {
 	//회원 가입
 	@CrossOrigin
 	@PostMapping("/user/register")
-	public CommonResult insertUser(@Valid @RequestBody User user) {
-		boolean success = userService.insertUser(user);
+	public CommonResult insertUser(@Valid @RequestBody UserParam userParam) {
+		boolean success = userService.insertUser(userParam);
 		
 		if(success == true) { // 성공
 			return responseService.getSuccessResult();

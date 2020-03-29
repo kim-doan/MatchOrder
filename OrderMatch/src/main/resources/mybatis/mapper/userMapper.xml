@@ -73,9 +73,16 @@
 		INSERT INTO
 		TB_USER
 		(USERNAME, PASSWORD, MANAGER_NAME, MANAGER_TEL, MANAGER_EMAIL,
-		CAL_MANAGER_NAME, CAL_MANAGER_TEL, CAL_MANAGER_EMAIL, CREATEAT, MODIFYAT, DISABLE_TIME) 
+		CAL_MANAGER_NAME, CAL_MANAGER_TEL, CAL_MANAGER_EMAIL, ZONECODE, JIBUN_ADDRESS,
+		ROAD_ADDRESS, DETAIL_ADDRESS, CREATEAT, MODIFYAT, DISABLE_TIME) 
 		VALUES
-		(#{username}, #{password}, #{manager_name}, #{manager_tel}, #{manager_email}, #{cal_manager_name}, #{cal_manager_tel}, #{cal_manager_email}, sysdate(), null, null);
+		(#{username}, #{password}, #{manager_name}, #{manager_tel}, #{manager_email}, #{cal_manager_name}, #{cal_manager_tel}, #{cal_manager_email},
+		#{zonecode}, #{jibunAddress}, #{roadAddress}, #{detailAddress}, sysdate(), NULL, NULL)
+	</insert>
+	
+	<insert id= "insertCompany" parameterType="com.ordermatch.main.user.param.UserParam">
+		INSERT INTO TB_COMPANY VALUES (#{user_id}, #{company_ein}, #{company_type}, #{company_name},
+		 #{company_category}, #{company_tel}, #{company_fax}, #{company_address}, #{ceo_name}, #{company_img})
 	</insert>
 
 	<insert id="insertRole" parameterType="hashmap">
@@ -83,7 +90,7 @@
 		roles) values(#{user_id}, #{roles})
 	</insert>
 
-	<update id="updateUser" parameterType="com.ordermatch.main.user.model.UserParam">
+	<update id="updateUser" parameterType="com.ordermatch.main.user.param.UserParam">
 		UPDATE TB_USER A
 		INNER JOIN TB_COMPANY B
 		ON A.USER_ID = B.USER_ID

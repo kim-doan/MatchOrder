@@ -23,7 +23,7 @@ import com.ordermatch.main.file.service.PhotoService;
 import com.ordermatch.main.mapper.UserMapper;
 import com.ordermatch.main.response.model.CommonResult;
 import com.ordermatch.main.response.service.ResponseService;
-import com.ordermatch.main.user.model.UserParam;
+import com.ordermatch.main.user.param.UserParam;
 import com.ordermatch.main.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;

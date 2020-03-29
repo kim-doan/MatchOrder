@@ -1,4 +1,4 @@
-package com.ordermatch.main.user.model;
+package com.ordermatch.main.user.param;
 
 import java.io.Serializable;
 import java.util.Date;

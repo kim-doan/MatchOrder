@@ -18,7 +18,7 @@ import com.ordermatch.main.jwt.JwtTokenProvider;
 import com.ordermatch.main.mapper.UserMapper;
 import com.ordermatch.main.user.model.AuthenticationRequest;
 import com.ordermatch.main.user.model.User;
-import com.ordermatch.main.user.model.UserParam;
+import com.ordermatch.main.user.param.UserParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -64,31 +64,36 @@ public class UserService {
 		}
 	}
 	
-	public boolean insertUser(User user) {
-		Optional<User> dbUser = userMapper.findByUsername(user.getUsername());
+	public boolean insertUser(UserParam userParam) {
+		boolean result = true;
+		Optional<User> dbUser = userMapper.findByUsername(userParam.getUsername());
 		
 		//아이디 중복체크
 		if(dbUser.isPresent() == false) { // 유저 아이디 검색 후 관련 아이디가 없을 경우 // null이면 false null이아니면 true임
 			//비밀번호 암호화
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			userParam.setPassword(passwordEncoder.encode(userParam.getPassword()));
 			//회원가입
-			userMapper.insertUser(user);
+			result = userMapper.insertUser(userParam);
 			
-			String keyId = Integer.toString(user.getUser_id());
+			String keyId = Integer.toString(userParam.getUser_id());
+			
+			//사업자 정보 추가
+			userParam.setUser_id(userParam.getUser_id());
+			result = userMapper.insertCompany(userParam);
 			
 			//권한설정
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("user_id", keyId);
 			map.put("roles", "ROLE_USER"); // 유저권한
-			userMapper.insertRole(map);
-			return true;
+			result = userMapper.insertRole(map);
+			return result;
 		} else { // 이미 존재하는 아이디
 			return false;
 		}
 	}
 	
 	public boolean updateUser(UserParam userParam) {
-		boolean success = true;
+		boolean result = true;
 		
 		Optional<User> dbUser = userMapper.findByUsername(userParam.getUsername());
 		//아이디 변경시 중복체크
@@ -97,12 +102,12 @@ public class UserService {
 				userParam.setPassword(passwordEncoder.encode(userParam.getPassword())); // 비밀번호 인코딩 설정
 			}
 			
-			success = userMapper.updateUser(userParam);
+			result = userMapper.updateUser(userParam);
 			
-			return success;
+			return result;
 		} else { 
-			success = false;
-			return success;
+			result = false;
+			return result;
 		}
 	}
 	
