@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ordermatch.main.exception.CSupplierFormColumnInsertException;
+import com.ordermatch.main.exception.CSupplierFormDeleteException;
+import com.ordermatch.main.exception.CSupplierFormInsertException;
+import com.ordermatch.main.exception.CSupplierFormUpdateException;
 import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.response.model.CommonResult;
 import com.ordermatch.main.response.model.ListResult;
@@ -61,7 +65,7 @@ public class SupplierFormController {
 		if(result > 0) {
 			return responseService.getSuccessResult(result);
 		} else {
-			return responseService.getFailResult(-2000, "발주서 엑셀 양식 저장에 실패하였습니다.");
+			throw new CSupplierFormInsertException();
 		}
 	}
 	
@@ -73,7 +77,7 @@ public class SupplierFormController {
 		if(result > 0) {
 			return responseService.getSuccessResult(result);
 		} else {
-			return responseService.getFailResult(-2100, "발주서 엑셀 양식 수정에 실패하였습니다.");
+			throw new CSupplierFormUpdateException();
 		}
 	}
 	
@@ -85,7 +89,7 @@ public class SupplierFormController {
 		if(result == true) {
 			return responseService.getSuccessResult();
 		} else {
-			return responseService.getFailResult(-2300, "삭제 실패");
+			throw new CSupplierFormDeleteException();
 		}
 	}
 	
@@ -99,7 +103,7 @@ public class SupplierFormController {
 		if(result == true) {
 			return responseService.getSuccessResult();
 		} else {
-			return responseService.getFailResult(-2001, "항목 설정 저장에 실패하였습니다.");
+			throw new CSupplierFormColumnInsertException();
 		}
 	}
 }

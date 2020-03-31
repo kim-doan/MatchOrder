@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ordermatch.main.exception.CSupplierColumnInfoInsertException;
+import com.ordermatch.main.exception.CSupplierColumnInfoUpdateException;
 import com.ordermatch.main.master.model.SupplierColumnInfo;
 import com.ordermatch.main.master.service.SupplierColumnInfoService;
 import com.ordermatch.main.response.model.CommonResult;
@@ -42,7 +44,7 @@ public class SupplierColumnInfoController {
 		if(result == true) {
 			return responseService.getSuccessResult();
 		} else {
-			return responseService.getFailResult(-2500, "(기준정보) 공급사 컬럼 정보 추가 실패");
+			throw new CSupplierColumnInfoInsertException();
 		}
 	}
 	
@@ -54,7 +56,7 @@ public class SupplierColumnInfoController {
 		if(result == true) {
 			return responseService.getSuccessResult();
 		} else {
-			return responseService.getFailResult(-2501, "(기준정보) 공급사 컬럼 정보 수정 실패");
+			throw new CSupplierColumnInfoUpdateException();
 		}
 	}
 }

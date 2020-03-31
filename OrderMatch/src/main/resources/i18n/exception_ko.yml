@@ -1,6 +1,9 @@
 unKnown:
   code: "-9999"
   msg: "알수 없는 오류가 발생하였습니다."
+sessionNotFound:
+  code: "-9998"
+  msg: "요청한 세션이 존재하지않습니다."
 userNotFound:
   code: "-1000"
   msg: "존재하지 않는 회원입니다."
@@ -31,6 +34,24 @@ userDuplicate:
 itemNotFound:
   code: "-1009"
   msg: "존재하지 않는 아이템입니다."
-sessionNotFound:
+logoSaveError:
+  code: "-1010"
+  msg: "로고 저장에 실패했습니다."
+supplierFormInsertError:
   code: "-2000"
-  msg: "요청한 세션이 존재하지않습니다."
+  msg: "공급사 주문서 양식 추가 실패"
+supplierFormUpdateError:
+  code: "-2001"
+  msg: "공급사 주문서 양식 수정 실패"
+supplierFormDeleteError:
+  code: "-2002"
+  msg: "공급사 주문서 양식 삭제 실패"
+supplierFormColumnInsertError:
+  code: "-2003"
+  msg: "공급사 주문서 컬럼 정보 추가 실패"
+supplierColumnInfoInsertError:
+  code: "-3000"
+  msg: "(기준정보) 공급사 컬럼 정보 추가 실패"
+supplierColumnInfoUpdateError:
+  code: "-3001"
+  msg: "(기준정보) 공급사 컬럼 정보 수정 실패"

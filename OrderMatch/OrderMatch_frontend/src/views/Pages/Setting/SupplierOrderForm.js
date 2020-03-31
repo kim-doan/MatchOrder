@@ -552,8 +552,8 @@ class SupplierOrderForm extends Component {
             title="발주 주문서 양식 리스트"
             columns={[
               { title: "양식명", field: "form_name", width: 850 },
-              { title: "생성일", field: "create_at" , defaultSort: 'desc'},
-              { title: "사용여부", field: "disable_time"}
+              { title: "생성일", field: "create_at" , defaultSort: 'desc', width: 200},
+              { title: "사용여부", field: "disable_time", width: 150}
             ]}
             data={this.state.form_list}
             options={{

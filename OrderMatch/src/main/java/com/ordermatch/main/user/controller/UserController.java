@@ -1,20 +1,8 @@
 package com.ordermatch.main.user.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
-import java.util.Optional;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ordermatch.main.config.CacheKey;
+import com.ordermatch.main.exception.CAuthenticationEntryPointException;
 import com.ordermatch.main.exception.CUserDuplicateException;
 import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.jwt.JwtTokenProvider;
@@ -65,7 +53,7 @@ public class UserController {
 			
 			return responseService.getSingleResult(user);
 		} else {
-			return null;
+			throw new CAuthenticationEntryPointException();
 		}
 
 	}
@@ -94,15 +82,15 @@ public class UserController {
 	//회원 가입
 	@CrossOrigin
 	@PostMapping("/user/register")
-	public CommonResult insertUser(@Valid @RequestBody UserParam userParam) {
+	public CommonResult insertUser(@Valid @RequestBody UserParam userParam) throws Exception {
 		boolean success = userService.insertUser(userParam);
 		
 		if(success == true) { // 성공
 			return responseService.getSuccessResult();
 		} else if(success == false) {
-			return responseService.getFailResult(-1005, "이미존재하는 회원입니다. 로그인해주세요.");
+			throw new CUserDuplicateException();
 		} else {
-			return responseService.getFailResult(-9999, "알수 없는 오류");
+			throw new Exception();
 		}
 	}
 	
@@ -116,7 +104,7 @@ public class UserController {
 		if(token != null) {
 			return responseService.getLoginResult(token);
 		} else {
-			return responseService.getLoginFailResult(-1000, "존재하지않는 회원입니다.");
+			throw new CUserNotFoundException();
 		}
 	}
 	
@@ -137,15 +125,15 @@ public class UserController {
 	/* delete문이 아닌 update문으로 바꿀필요있음.*/
 	@CrossOrigin
 	@DeleteMapping("/user/{id}")
-	public CommonResult deleteUser(@PathVariable(value = "id") int id) {
+	public CommonResult deleteUser(@PathVariable(value = "id") int id) throws Exception {
 		int state = userService.deleteUser(id);
 		
 		if(state == 1) {
 			return responseService.getSuccessResult();
 		} else if(state == 0) {
-			return responseService.getFailResult(-1000, "존재하지 않는 회원입니다.");
+			throw new CUserNotFoundException();
 		} else {
-			return responseService.getFailResult(-9999, "알수 없는 오류");
+			throw new Exception();
 		}
 	}
 }

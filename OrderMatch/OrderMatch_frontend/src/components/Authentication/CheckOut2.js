@@ -184,6 +184,8 @@ class CheckOut2 extends React.Component {
                 }
             );
         }
+
+        console.log(this.state.allStates);
     }
     refreshAnimation(index) {
         var total = this.props.steps.length;
