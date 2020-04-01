@@ -7,6 +7,7 @@ import java.util.Base64;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.google.common.io.ByteStreams;
+import com.ordermatch.main.exception.CLogoSaveErrorException;
 import com.ordermatch.main.file.model.Photo;
 import com.ordermatch.main.file.service.PhotoService;
 import com.ordermatch.main.mapper.UserMapper;
 import com.ordermatch.main.response.model.CommonResult;
 import com.ordermatch.main.response.service.ResponseService;
-import com.ordermatch.main.user.model.UserParam;
+import com.ordermatch.main.user.param.UserParam;
 import com.ordermatch.main.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -57,10 +58,14 @@ public class PhotoController {
 
 		String id = photoService.addPhoto(username, file);
 		
+		if(!StringUtils.isEmpty(id)) {
 		userParam.setUsername(username);
 		userParam.setCompany_img(id);
 		userService.updateUser(userParam);
 		return responseService.getSuccessResult();
+		} else {
+			throw new CLogoSaveErrorException();
+		}
 	}
 	
 	@CrossOrigin

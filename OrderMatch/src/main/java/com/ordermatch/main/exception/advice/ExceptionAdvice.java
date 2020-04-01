@@ -19,9 +19,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ordermatch.main.exception.CAuthenticationEntryPointException;
 import com.ordermatch.main.exception.CItemNotFoundException;
+import com.ordermatch.main.exception.CLogoSaveErrorException;
 import com.ordermatch.main.exception.CNotOwnerException;
 import com.ordermatch.main.exception.CResourceNotExistException;
 import com.ordermatch.main.exception.CSessionNotFoundException;
+import com.ordermatch.main.exception.CSupplierColumnInfoInsertException;
+import com.ordermatch.main.exception.CSupplierColumnInfoUpdateException;
+import com.ordermatch.main.exception.CSupplierFormColumnInsertException;
+import com.ordermatch.main.exception.CSupplierFormDeleteException;
+import com.ordermatch.main.exception.CSupplierFormInsertException;
+import com.ordermatch.main.exception.CSupplierFormUpdateException;
 import com.ordermatch.main.exception.CUserDuplicateException;
 import com.ordermatch.main.exception.CUserNotFoundException;
 import com.ordermatch.main.response.model.CommonResult;
@@ -37,6 +44,13 @@ public class ExceptionAdvice {
 	
 	private final MessageSource messageSource;
 	
+	private String getMessage(String code) {
+		return getMessage(code, null);
+	}
+	
+	private String getMessage(String code, Object[] args) {
+		return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+	}
 //	//알수없는 오류
 //	@ExceptionHandler(Exception.class)
 //	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -68,6 +82,12 @@ public class ExceptionAdvice {
 		return responseService.getFailResult(Integer.valueOf(getMessage("userDuplicate.code")), getMessage("userDuplicate.msg"));
 	}
 	
+	//로고 추가 실패
+	@ExceptionHandler(CLogoSaveErrorException.class)
+	public CommonResult clogoSaveErrorException(HttpServletRequest request, CLogoSaveErrorException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("logoSaveError.code")), getMessage("logoSaveError.msg"));
+	}
+	
 	//토큰 만료 및 없을 경우 오류 처리
 	@ExceptionHandler(CAuthenticationEntryPointException.class)
 	public CommonResult authenticationEntryPointException(HttpServletRequest request, CAuthenticationEntryPointException e) {
@@ -79,13 +99,7 @@ public class ExceptionAdvice {
 	public CommonResult AccessDeniedException(HttpServletRequest request, AccessDeniedException e) {
 		return responseService.getFailResult(Integer.valueOf(getMessage("accessDenied.code")), getMessage("accessDenied.msg"));
 	}
-	private String getMessage(String code) {
-		return getMessage(code, null);
-	}
-	
-	private String getMessage(String code, Object[] args) {
-		return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-	}
+
 	// 아이템 정보 조회 오류
 	@ExceptionHandler(CItemNotFoundException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -93,16 +107,34 @@ public class ExceptionAdvice {
 		//예외 처리 코드를 MessageSource에서 가져오도록 설정
 		return responseService.getFailResult(Integer.valueOf(getMessage("itemNotFound.code")), getMessage("itemNotFound.msg"));
 	}
-	// 게시판 수정 실패시
-	@ExceptionHandler(CNotOwnerException.class)
-	@ResponseStatus(HttpStatus.NON_AUTHORITATIVE_INFORMATION)
-	public CommonResult notOwnerException(HttpServletRequest request, CNotOwnerException e) {
-	    return responseService.getFailResult(Integer.valueOf(getMessage("notOwner.code")), getMessage("notOwner.msg"));
+	
+	//(기준정보) 공급사 주문서 칼럼 정보 양식 추가 실패
+	@ExceptionHandler(CSupplierColumnInfoInsertException.class)
+	public CommonResult supplierColumnInfoInsertException(HttpServletRequest request, CSupplierColumnInfoInsertException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("supplierColumnInfoInsertError.code")), getMessage("supplierColumnInfoInsertError.msg"));
 	}
-	// 해당 게시판이 없을 경우
-	@ExceptionHandler(CResourceNotExistException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public CommonResult resourceNotExistException(HttpServletRequest request, CResourceNotExistException e) {
-	    return responseService.getFailResult(Integer.valueOf(getMessage("resourceNotExist.code")), getMessage("resourceNotExist.msg"));
+	
+	//(기준정보) 공급사 주문서 칼럼 정보 양식 수정 실패
+	@ExceptionHandler(CSupplierColumnInfoUpdateException.class)
+	public CommonResult supplierColumnInfoUpdateException(HttpServletRequest request, CSupplierColumnInfoUpdateException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("supplierColumnInfoUpdateError.code")), getMessage("supplierColumnInfoUpdateError.msg"));
+	}
+	
+	//공급사 주문서 양식 추가 실패
+	@ExceptionHandler(CSupplierFormInsertException.class)
+	public CommonResult csupplierFormInsertException(HttpServletRequest request, CSupplierColumnInfoInsertException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("supplierFormInsertError.code")), getMessage("supplierFormInsertError.msg"));
+	}
+	
+	//공급사 주문서 양식 수정 실패
+	@ExceptionHandler(CSupplierFormDeleteException.class)
+	public CommonResult csupplierFormDeleteException(HttpServletRequest request, CSupplierFormDeleteException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("supplierFormDeleteError.code")), getMessage("supplierFormDeleteError.msg"));
+	}
+	
+	//공급사 주문서 컬럼 정보 추가 실패
+	@ExceptionHandler(CSupplierFormColumnInsertException.class)
+	public CommonResult csupplierFormColumnInsertException(HttpServletRequest request, CSupplierFormColumnInsertException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("supplierFormColumnInsertError.code")), getMessage("supplierFormColumnInsertError.msg"));
 	}
 }
