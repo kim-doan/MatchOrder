@@ -53,33 +53,33 @@ class CheckStep2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: localStorage.username,
-      managerName: "",
-      managerNameState: "",
-      managerTel: "",
-      managerTelState: "",
-      calManagerName: "",
-      calManagerNameState: "",
-      calManagerTel: "",
-      calManagerTelState: "",
-      managerEmail: "",
-      managerEmailState: "",
-      calManagerEmail: "",
-      calManagerEmailState: "",
-      companyEin: "",
-      companyEinState: "",
-      companyType: "0",
-      companyName: "",
-      companyNameState: "",
-      companyCategory: "",
-      companyCategoryState: "",
-      companyTel: "",
-      companyTelState: "",
-      companyFax: "",
-      companyFaxState: "",
-      ceoName: "",
-      ceoNameState: "",
-      companyImg: "",
+      username: "",
+      manager_name: "",
+      manager_nameState: "",
+      manager_tel: "",
+      manager_telState: "",
+      cal_manager_name: "",
+      cal_manager_nameState: "",
+      cal_manager_tel: "",
+      cal_manager_telState: "",
+      manager_email: "",
+      manager_emailState: "",
+      cal_manager_email: "",
+      cal_manager_emailState: "",
+      company_ein: "",
+      company_einState: "",
+      company_type: "0",
+      company_name: "",
+      company_nameState: "",
+      company_category: "",
+      company_categoryState: "",
+      company_tel: "",
+      company_telState: "",
+      company_fax: "",
+      company_faxState: "",
+      ceo_name: "",
+      ceo_nameState: "",
+      company_img: "",
       zonecode: "",
       zonecodeState: "",
       jibunAddress: "",
@@ -96,7 +96,7 @@ class CheckStep2 extends React.Component {
       passwordConfirm: "",
       passwordConfirmState: "",
       id: "",
-      idState: "",
+      usernameState: "",
       showPassword: "false"
     };
   }
@@ -147,7 +147,7 @@ class CheckStep2 extends React.Component {
     this.setState({ [stateName]: event.target.value });
   }
   handleChange = event => {
-    this.setState({ companyType: event.target.value })
+    this.setState({ company_type: event.target.value })
   };
   handleClickShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
@@ -172,59 +172,59 @@ class CheckStep2 extends React.Component {
   }
   isValidated() {
     if (
-      this.state.managerNameState === "success" &&
-      this.state.managerTelState === "success" &&
-      this.state.calManagerNameState === "success" &&
-      this.state.calManagerTelState === "success" &&
-      this.state.managerEmailState === "success" &&
-      this.state.calManagerEmailState === "success" &&
-      this.state.companyEinState === "success" &&
-      this.state.companyNameState === "success" &&
-      this.state.companyCategoryState === "success" &&
-      this.state.companyTelState === "success" &&
-      this.state.ceoNameState === "success" &&
+      this.state.manager_nameState === "success" &&
+      this.state.manager_telState === "success" &&
+      this.state.cal_manager_nameState === "success" &&
+      this.state.cal_manager_telState === "success" &&
+      this.state.manager_emailState === "success" &&
+      this.state.cal_manager_emailState === "success" &&
+      this.state.company_einState === "success" &&
+      this.state.company_nameState === "success" &&
+      this.state.company_categoryState === "success" &&
+      this.state.company_telState === "success" &&
+      this.state.ceo_nameState === "success" &&
       this.state.zonecodeState === "success" &&
       this.state.jibunAddressState === "success" &&
       this.state.roadAddressState === "success" &&
       this.state.detailAddressState === "success" &&
       this.state.passwordState === "success" &&
       this.state.passwordConfirmState === "success" &&
-      this.state.idState === "success"
+      this.state.usernameState === "success"
     ) {
       return true;
     } else {
-      if (this.state.managerNameState !== "success") {
-        this.setState({ managerNameState: "error" });
+      if (this.state.manager_nameState !== "success") {
+        this.setState({ manager_nameState: "error" });
       }
-      if (this.state.managerTelState !== "success") {
-        this.setState({ managerTelState: "error" });
+      if (this.state.manager_telState !== "success") {
+        this.setState({ manager_telState: "error" });
       }
-      if (this.state.calManagerNameState !== "success") {
-        this.setState({ calManagerNameState: "error" });
+      if (this.state.cal_manager_nameState !== "success") {
+        this.setState({ cal_manager_nameState: "error" });
       }
-      if (this.state.calManagerTelState !== "success") {
-        this.setState({ calManagerTelState: "error" });
+      if (this.state.cal_manager_telState !== "success") {
+        this.setState({ cal_manager_telState: "error" });
       }
-      if (this.state.managerEmailState !== "success") {
-        this.setState({ managerEmailState: "error" });
+      if (this.state.manager_emailState !== "success") {
+        this.setState({ manager_emailState: "error" });
       }
-      if (this.state.calManagerEmailState !== "success") {
-        this.setState({ calManagerEmailState: "error" });
+      if (this.state.cal_manager_emailState !== "success") {
+        this.setState({ cal_manager_emailState: "error" });
       }
-      if (this.state.companyEinState !== "success") {
-        this.setState({ companyEinState: "error" });
+      if (this.state.company_einState !== "success") {
+        this.setState({ company_einState: "error" });
       }
-      if (this.state.companyNameState !== "success") {
-        this.setState({ companyNameState: "error" });
+      if (this.state.company_nameState !== "success") {
+        this.setState({ company_nameState: "error" });
       }
-      if (this.state.companyCategoryState !== "success") {
-        this.setState({ companyCategoryState: "error" });
+      if (this.state.company_categoryState !== "success") {
+        this.setState({ company_categoryState: "error" });
       }
-      if (this.state.companyTelState !== "success") {
-        this.setState({ companyTelState: "error" });
+      if (this.state.company_telState !== "success") {
+        this.setState({ company_telState: "error" });
       }
-      if (this.state.ceoNameState !== "success") {
-        this.setState({ ceoNameState: "error" });
+      if (this.state.ceo_nameState !== "success") {
+        this.setState({ ceo_nameState: "error" });
       }
       if (this.state.zonecodeState !== "success") {
         this.setState({ zonecodeState: "error" });
@@ -244,8 +244,8 @@ class CheckStep2 extends React.Component {
       if (this.state.passwordConfirmState !== "success") {
         this.setState({ passwordConfirmState: "error" });
       }
-      if (this.state.idState !== "success") {
-        this.setState({ idState: "error" });
+      if (this.state.usernameState !== "success") {
+        this.setState({ usernameState: "error" });
       }
     }
     return true;
@@ -271,19 +271,19 @@ class CheckStep2 extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={10}>
                     <CustomInput
-                      success={this.state.idState === "success"}
-                      error={this.state.idState === "error"}
+                      success={this.state.usernameState === "success"}
+                      error={this.state.usernameState === "error"}
                       labelText={
                         <span>
                           아이디 <small>(필수)</small>
                         </span>
                       }
-                      id="id"
+                      id="username"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "id", "length", 4),
+                        onChange: event => this.change(event, "username", "length", 4),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -385,8 +385,8 @@ class CheckStep2 extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={10}>
                     <CustomInput
-                      success={this.state.managerNameState === "success"}
-                      error={this.state.managerNameState === "error"}
+                      success={this.state.manager_nameState === "success"}
+                      error={this.state.manager_nameState === "error"}
                       labelText={
                         <span>
                           담당자 이름 <small>(필수)</small>
@@ -415,20 +415,20 @@ class CheckStep2 extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={10}>
                     <CustomInput
-                      success={this.state.managerEmailState === "success"}
-                      error={this.state.managerEmailState === "error"}
+                      success={this.state.manager_emailState === "success"}
+                      error={this.state.manager_emailState === "error"}
                       labelText={
                         <span>
                           담당자 이메일 <small>(필수)</small>
                         </span>
                       }
-                      id="managerEmail"
-                      value={this.state.managerEmail}
+                      id="manager_email"
+                      value={this.state.manager_email}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "managerEmail", "email"),
+                        onChange: event => this.change(event, "manager_email", "email"),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -444,20 +444,20 @@ class CheckStep2 extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={10}>
                     <CustomInput
-                      success={this.state.managerTelState === "success"}
-                      error={this.state.managerTelState === "error"}
+                      success={this.state.manager_telState === "success"}
+                      error={this.state.manager_telState === "error"}
                       labelText={
                         <span>
                           담당자 연락처 <small>(필수)</small>
                         </span>
                       }
-                      id="managerTel"
+                      id="manager_tel"
                       formControlProps={{
                         fullWidth: true
                       }}
-                      value={this.state.managerTel}
+                      value={this.state.manager_tel}
                       inputProps={{
-                        onChange: event => this.change(event, "managerTel", "length", 10),
+                        onChange: event => this.change(event, "manager_tel", "length", 10),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -507,7 +507,7 @@ class CheckStep2 extends React.Component {
                   <GridItem xs={12} sm={12} md={2} ></GridItem>
                   <GridItem xs={12} sm={12} md={2} className={classes.topMargin50}>
                     <ImageUpload
-                      // nowImage={"http://localhost:8080/api/photo/" + this.state.companyImg}
+                      // nowImage={"http://localhost:8080/api/photo/" + this.state.company_img}
                       addButtonProps={{
                         color: "rose",
                         round: true
@@ -528,7 +528,7 @@ class CheckStep2 extends React.Component {
                       <FormControlLabel
                         control={
                           <Radio
-                            checked={this.state.companyType === "0"}
+                            checked={this.state.company_type === "0"}
                             onChange={this.handleChange}
                             value="0"
                             name="개인 사업자"
@@ -565,7 +565,7 @@ class CheckStep2 extends React.Component {
                         <FormControlLabel
                           control={
                             <Radio
-                              checked={this.state.companyType === "1"}
+                              checked={this.state.company_type === "1"}
                               onChange={this.handleChange}
                               value="1"
                               name="법인 사업자"
@@ -603,7 +603,7 @@ class CheckStep2 extends React.Component {
                         <FormControlLabel
                           control={
                             <Radio
-                              checked={this.state.companyType === "2"}
+                              checked={this.state.company_type === "2"}
                               onChange={this.handleChange}
                               value="2"
                               name="radio button demo"
@@ -633,20 +633,20 @@ class CheckStep2 extends React.Component {
                       </div>
                     </GridItem>
                     <CustomInput
-                      success={this.state.companyNameState === "success"}
-                      error={this.state.companyNameState === "error"}
+                      success={this.state.company_nameState === "success"}
+                      error={this.state.company_nameState === "error"}
                       labelText={
                         <span>
                           회사명 <small>(필수)</small>
                         </span>
                       }
-                      id="companyName"
-                      value={this.state.companyName}
+                      id="company_name"
+                      value={this.state.company_name}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "companyName", "length", 1),
+                        onChange: event => this.change(event, "company_name", "length", 1),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -658,20 +658,20 @@ class CheckStep2 extends React.Component {
                       }}
                     />
                     <CustomInput
-                      success={this.state.ceoNameState === "success"}
-                      error={this.state.ceoNameState === "error"}
+                      success={this.state.ceo_nameState === "success"}
+                      error={this.state.ceo_nameState === "error"}
                       labelText={
                         <span>
                           대표자명 <small>(필수)</small>
                         </span>
                       }
-                      id="ceoName"
-                      value={this.state.ceoName}
+                      id="ceo_name"
+                      value={this.state.ceo_name}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "ceoName", "length", 1),
+                        onChange: event => this.change(event, "ceo_name", "length", 1),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -688,20 +688,20 @@ class CheckStep2 extends React.Component {
                   <GridItem xs={12} sm={12} md={2}></GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      success={this.state.companyEinState === "success"}
-                      error={this.state.companyEinState === "error"}
+                      success={this.state.company_einState === "success"}
+                      error={this.state.company_einState === "error"}
                       labelText={
                         <span>
                           사업자등록번호 <small>(필수)</small>
                         </span>
                       }
-                      id="companyEin"
-                      value={this.state.companyEin}
+                      id="company_ein"
+                      value={this.state.company_ein}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "companyEin", "length", 9),
+                        onChange: event => this.change(event, "company_ein", "length", 9),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -715,20 +715,20 @@ class CheckStep2 extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      success={this.state.companyCategoryState === "success"}
-                      error={this.state.companyCategoryState === "error"}
+                      success={this.state.company_categoryState === "success"}
+                      error={this.state.company_categoryState === "error"}
                       labelText={
                         <span>
                           업종 <small>(필수)</small>
                         </span>
                       }
-                      id="companyCategory"
-                      value={this.state.companyCategory}
+                      id="company_category"
+                      value={this.state.company_category}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "companyCategory", "length", 2),
+                        onChange: event => this.change(event, "company_category", "length", 2),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -744,20 +744,20 @@ class CheckStep2 extends React.Component {
                   <GridItem xs={12} sm={12} md={2}></GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
-                      success={this.state.companyTelState === "success"}
-                      error={this.state.companyTelState === "error"}
+                      success={this.state.company_telState === "success"}
+                      error={this.state.company_telState === "error"}
                       labelText={
                         <span>
                           회사 대표 전화번호 <small>(필수)</small>
                         </span>
                       }
-                      id="companyTel"
-                      value={this.state.companyTel}
+                      id="company_tel"
+                      value={this.state.company_tel}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "companyTel", "length", 9),
+                        onChange: event => this.change(event, "company_tel", "length", 9),
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -774,13 +774,13 @@ class CheckStep2 extends React.Component {
                       labelText={
                         <span>회사 FAX번호</span>
                       }
-                      id="companyFax"
-                      value={this.state.companyFax}
+                      id="company_fax"
+                      value={this.state.company_fax}
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        onChange: event => this.change(event, "companyFax", "length", 8),
+                        onChange: event => this.change(event, "company_fax", "length", 8),
                         endAdornment: (
                           <InputAdornment
                             position="end"

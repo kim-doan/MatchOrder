@@ -13,10 +13,10 @@ import {
 } from './ActionTypes';
 
 const enhanceAccessToken = () => {
-    if(!localStorage.accessToken) return
+    if (!localStorage.accessToken) return
     axios.defaults.headers.common['X-AUTH-TOKEN'] = localStorage.accessToken;
     axios.defaults.headers.common['USERNAME'] = localStorage.username;
-} 
+}
 enhanceAccessToken(); // 새로고침시 토큰 재설정
 
 
@@ -28,12 +28,12 @@ export function logoutRequest() {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("username");
         dispatch(getStatusFailure()); // 상태 redux 전부 초기화
-    
-        document.cookie='key= ' + btoa(JSON.stringify("")) +";path=/";
+
+        document.cookie = 'key= ' + btoa(JSON.stringify("")) + ";path=/";
         window.location.reload();
     };
 }
- 
+
 export function logout() {
     return {
         type: AUTH_LOGOUT
@@ -47,21 +47,21 @@ export function getStatusRequest() {
         dispatch(getStatus());
         //토큰 만료 확인
         return axios.get('http://localhost:8080/api/user/validToken')
-        .then(response => {
-            var result = response && response.data;
-            if(result.success == true) { // 토큰이 만료되지 않았을경우
-                dispatch(getStatusSuccess(response.data.data, response.data.data.company)); // 유저데이터 찾아서 redux에 넣기
-            } else { // 토큰이 만료되었을경우
+            .then(response => {
+                var result = response && response.data;
+                if (result.success == true) { // 토큰이 만료되지 않았을경우
+                    dispatch(getStatusSuccess(response.data.data, response.data.data.company)); // 유저데이터 찾아서 redux에 넣기
+                } else { // 토큰이 만료되었을경우
+                    localStorage.removeItem("accessToken");
+                    localStorage.removeItem("username");
+                    dispatch(getStatusFailure()); // 상태 redux 전부 초기화
+                }
+            })
+            .catch(response => {
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("username");
                 dispatch(getStatusFailure()); // 상태 redux 전부 초기화
-            }
-        })
-        .catch(response => {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("username");
-            dispatch(getStatusFailure()); // 상태 redux 전부 초기화
-        })
+            })
     }
 }
 
@@ -90,20 +90,20 @@ export function loginRequest(username, password) {
         dispatch(login());
 
         //API
-        return axios.post('http://localhost:8080/api/user/login', {username, password})
-        .then(response => {
-            var result = response && response.data;
+        return axios.post('http://localhost:8080/api/user/login', { username, password })
+            .then(response => {
+                var result = response && response.data;
 
-            if(result.success == true) {
-                dispatch(loginSuccess(username, result.token));
-            } else {
-                dispatch(loginFailure());
-            }
-        })
-        .catch(response => {
-            //logging 처리 필요
-            console.log(response);
-        });
+                if (result.success == true) {
+                    dispatch(loginSuccess(username, result.token));
+                } else {
+                    dispatch(loginFailure());
+                }
+            })
+            .catch(response => {
+                //logging 처리 필요
+                console.log(response);
+            });
     };
 }
 
@@ -128,39 +128,41 @@ export function loginFailure() {
 }
 
 /* REGISTER */
-export function registerRequest(username, password) {
+export function registerRequest(registForm) {
     return (dispatch) => {
         // Inform Register API is starting
         dispatch(register());
- 
-        return axios.post('http://localhost:8080/api/user/register', { username, password })
-        .then(response => {
-            var result = response && response.data;
-            if(result.success == true) { // 회원가입 성공
-                dispatch(registerSuccess());
-            } else { // 회원가입 실패
-                dispatch(registerFailure(result.code)); // 실패 코드
-            }
-        })
-        .catch(response => {
-            //logging 처리 필요
-            console.log(response);
-        });
+
+        return axios.post('http://localhost:8080/api/user/register', registForm)
+            .then(response => {
+                var result = response && response.data;
+
+                if (result.success == true) { // 회원가입 성공
+                    dispatch(registerSuccess(result.msg));
+                } else { // 회원가입 실패
+                    dispatch(registerFailure(result.code)); // 실패 코드
+                }
+            })
+            .catch(response => {
+                //logging 처리 필요
+                console.log(response);
+            });
     };
 }
- 
+
 export function register() {
     return {
         type: AUTH_REGISTER
     };
 }
- 
-export function registerSuccess() {
+
+export function registerSuccess(msg) {
     return {
         type: AUTH_REGISTER_SUCCESS,
+        msg
     };
 }
- 
+
 export function registerFailure(error) {
     return {
         type: AUTH_REGISTER_FAILURE,

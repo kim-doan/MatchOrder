@@ -110,12 +110,12 @@ class Authentication extends Component {
                             <CheckOut2
                                 validate
                                 steps={[
-                                    { stepName: "About", stepComponent: CheckStep1, stepId: "about" },
-                                    { stepName: "Account", stepComponent: CheckStep2, stepId: "account" }
+                                    { stepName: "이용약관", stepComponent: CheckStep1, stepId: "about" },
+                                    { stepName: "회원정보", stepComponent: CheckStep2, stepId: "account" }
                                     // { stepName: "Address", stepComponent: CheckStep3, stepId: "address" }
                                 ]}
-                                title="Build Your Profile"
-                                subtitle="This information will let us know more about you."
+                                title="회원가입"
+                                subtitle="가입하든가 말든가"
                                 finishButtonClick={() => this.setState({ alert: true })}
                             />
                         </GridItem>

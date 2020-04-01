@@ -95,6 +95,10 @@ import OOptionSalesStatus from "views/Order/Order_list.js";
 //환경설정
 import AccountSetting from "views/Pages/Setting/AccountSetting.js"
 import SupplierOrderForm from "views/Pages/Setting/SupplierOrderForm.js"
+import ShipCostManage from "views/Pages/Setting/ShipCostManage.jsx"         // 배송비 관리
+import AddShipCostManage from "views/Pages/Setting/AddShipCostManage.js"   // 추가 배송비 관리(도서/산간)
+
+
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -199,7 +203,7 @@ var dashRoutes = [
         name: "발주처리(일반)",
         component: NomalOrderpro,
         layout: "/admin"
-      },{
+      }, {
         path: "/om_unknow3",
         name: "발주보류조회",
         component: PendingOrder,
@@ -224,17 +228,17 @@ var dashRoutes = [
         name: "발주서 생성",
         component: OrderCreate,
         layout: "/admin"
-      },{
+      }, {
         path: "/os_unkonw3",
         name: "메일 발송 중",
         component: MailSending,
         layout: "/admin"
-      },{
+      }, {
         path: "/os_unkonw4",
         name: "수신확인",
         component: MailApproved,
         layout: "/admin"
-      },{
+      }, {
         path: "/os_unkonw5",
         name: "휴지통",
         component: Trash,
@@ -363,7 +367,7 @@ var dashRoutes = [
         mini: "PL",
         component: BasicProductList,
         layout: "/admin"
-      },{
+      }, {
         path: "/product_seller_price",
         name: "판매사별 개별단가 설정",
         mini: "PSP",
@@ -415,7 +419,7 @@ var dashRoutes = [
           }
         ]
       },
-       {
+      {
         collapse: true,
         name: "판매사 정산",
         mini: "SS",
@@ -611,15 +615,15 @@ var dashRoutes = [
         layout: "/admin"
       },
       {
-        path: "/osts_unknow1",
+        path: "/shipCostManage",
         name: "배송비 관리",
-        component: OSalesStatus,
+        component: ShipCostManage,
         layout: "/admin"
       },
       {
-        path: "/osts_unknow1",
+        path: "/addShipCostManage",
         name: "추가 배송비 관리(도서/산간)",
-        component: OSalesStatus,
+        component: AddShipCostManage,
         layout: "/admin"
       },
       {
@@ -674,20 +678,20 @@ var dashRoutes = [
     icon: Image,
     state: "etcCollapse",
     views: [
-  {
-    path: "/login-page",
-    name: "Login Page",
-    mini: "L",
-    component: LoginPage,
-    layout: "/auth"
-  },
-  {
-    path: "/register-page",
-    name: "Register Page",
-    mini: "R",
-    component: RegisterPage,
-    layout: "/auth"
-  },
+      {
+        path: "/login-page",
+        name: "Login Page",
+        mini: "L",
+        component: LoginPage,
+        layout: "/auth"
+      },
+      {
+        path: "/register-page",
+        name: "Register Page",
+        mini: "R",
+        component: RegisterPage,
+        layout: "/auth"
+      },
       {
         path: "/google-maps",
         name: "Google Maps",
@@ -859,21 +863,21 @@ var dashRoutes = [
       }
     ]
   },
-//   {
-//     path: "/charts",
-//     name: "Charts",
-//     rtlName: "الرسوم البيانية",
-//     icon: Timeline,
-//     component: Charts,
-//     layout: "/admin"
-//   },
-//   {
-//     path: "/calendar",
-//     name: "Calendar",
-//     rtlName: "التقويم",
-//     icon: DateRange,
-//     component: Calendar,
-//     layout: "/admin"
-//   }
+  //   {
+  //     path: "/charts",
+  //     name: "Charts",
+  //     rtlName: "الرسوم البيانية",
+  //     icon: Timeline,
+  //     component: Charts,
+  //     layout: "/admin"
+  //   },
+  //   {
+  //     path: "/calendar",
+  //     name: "Calendar",
+  //     rtlName: "التقويم",
+  //     icon: DateRange,
+  //     component: Calendar,
+  //     layout: "/admin"
+  //   }
 ];
 export default dashRoutes;

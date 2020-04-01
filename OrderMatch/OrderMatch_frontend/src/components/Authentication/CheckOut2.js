@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
-
+import { connect } from "react-redux";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -9,6 +9,7 @@ import Button from "../CustomButtons/Button.js";
 import Card from "../Card/Card.js";
 
 import wizardStyle from "assets/jss/material-dashboard-pro-react/components/wizardStyle.js";
+import { registerRequest } from "actions/authentication";
 
 class CheckOut2 extends React.Component {
     constructor(props) {
@@ -181,6 +182,11 @@ class CheckOut2 extends React.Component {
                 },
                 () => {
                     this.props.finishButtonClick(this.state.allStates);
+                    console.log(this.state.allStates)
+                    this.props.registerRequest(this.state.allStates.account)
+                        .then(res => {
+                            console.log(this.props.register);
+                        })
                 }
             );
         }
@@ -365,4 +371,21 @@ CheckOut2.propTypes = {
     validate: PropTypes.bool
 };
 
-export default withStyles(wizardStyle)(CheckOut2);
+const mapStateToProps = state => {
+    return {
+        register: state.authentication.register
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        registerRequest: (registForm) => {
+            return dispatch(registerRequest(registForm));
+        }
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(wizardStyle)(CheckOut2));
