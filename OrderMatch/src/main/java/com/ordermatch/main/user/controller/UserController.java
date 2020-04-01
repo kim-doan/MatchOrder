@@ -83,15 +83,18 @@ public class UserController {
 	@CrossOrigin
 	@PostMapping("/user/register")
 	public CommonResult insertUser(@Valid @RequestBody UserParam userParam) throws Exception {
+		System.out.println("sadfasfasdfsadfadsfasdfsadfsadfsadfads");
 		boolean success = userService.insertUser(userParam);
 		
 		if(success == true) { // 성공
 			return responseService.getSuccessResult();
-		} else if(success == false) {
-			throw new CUserDuplicateException();
-		} else {
-			throw new Exception();
-		}
+		} 
+//		else if(success == false) {
+//			throw new CUserDuplicateException();
+//		} else {
+//			throw new Exception();
+//		}
+		return null;
 	}
 	
 	// 로그인

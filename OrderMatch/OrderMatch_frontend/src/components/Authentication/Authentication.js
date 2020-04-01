@@ -4,20 +4,20 @@ import Signin from './Signin';
 import CheckOut2 from './CheckOut2';
 import GridContainer from "../Grid/GridContainer.js";
 import GridItem from "../Grid/GridItem.js";
-import SweetAlert from "react-bootstrap-sweetalert";
+
 import CheckStep1 from "./CheckStep1.js";
 import CheckStep2 from "./CheckStep2.js";
 import styles from "assets/jss/material-dashboard-pro-react/views/sweetAlertStyle.js";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { blackColor } from 'assets/jss/material-dashboard-pro-react';
+
 
 class Authentication extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            password: "",
-            alert: false
+            password: ""
+
         }
     }
     handleChange = (e) => {
@@ -66,9 +66,7 @@ class Authentication extends Component {
             }
         }
     }
-    hideAlert = () => {
-        this.setState({ alert: false })
-    }
+
     render() {
         const { classes } = this.props;
         const inputBoxes = (
@@ -116,7 +114,7 @@ class Authentication extends Component {
                                 ]}
                                 title="회원가입"
                                 subtitle="가입하든가 말든가"
-                                finishButtonClick={() => this.setState({ alert: true })}
+                            // finishButtonClick={() => this.setState({ alert: true })}
                             />
                         </GridItem>
                     </GridContainer>
@@ -128,17 +126,7 @@ class Authentication extends Component {
                 <div className="card">
                     {this.props.mode ? loginView : registerView}
                 </div>
-                <SweetAlert
-                    success
-                    show={this.state.alert}
-                    style={{ display: "block", marginTop: "-100px", color: blackColor }}
-                    title="Good job!"
-                    onConfirm={() => this.hideAlert()}
-                    onCancel={() => this.hideAlert()}
-                    confirmBtnCssClass={classes.button + " " + classes.success}
-                >
-                    You clicked the button!
-                    </SweetAlert>
+
             </div>
         );
     }

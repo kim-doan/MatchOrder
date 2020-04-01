@@ -7,10 +7,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import Button from "../CustomButtons/Button.js";
 import Card from "../Card/Card.js";
-
-import wizardStyle from "assets/jss/material-dashboard-pro-react/components/wizardStyle.js";
+import SweetAlert from "react-bootstrap-sweetalert";
+import styles from "assets/jss/material-dashboard-pro-react/views/checkOut2Style.js";
 import { registerRequest } from "actions/authentication";
-
+import { blackColor } from 'assets/jss/material-dashboard-pro-react';
 class CheckOut2 extends React.Component {
     constructor(props) {
         super(props);
@@ -42,7 +42,8 @@ class CheckOut2 extends React.Component {
             movingTabStyle: {
                 transition: "transform 0s"
             },
-            allStates: {}
+            allStates: {},
+            alert: false
         };
         this.navigationStepChange = this.navigationStepChange.bind(this);
         this.refreshAnimation = this.refreshAnimation.bind(this);
@@ -158,19 +159,7 @@ class CheckOut2 extends React.Component {
         }
     }
     finishButtonClick() {
-        if (
-            (this.props.validate === false &&
-                this.props.finishButtonClick !== undefined) ||
-            (this.props.validate &&
-                ((this[this.props.steps[this.state.currentStep].stepId].isValidated !==
-                    undefined &&
-                    this[
-                        this.props.steps[this.state.currentStep].stepId
-                    ].isValidated()) ||
-                    this[this.props.steps[this.state.currentStep].stepId].isValidated ===
-                    undefined) &&
-                this.props.finishButtonClick !== undefined)
-        ) {
+        if (this[this.props.steps[this.state.currentStep].stepId].isValidated()) {
             this.setState(
                 {
                     allStates: {
@@ -181,17 +170,14 @@ class CheckOut2 extends React.Component {
                     }
                 },
                 () => {
-                    this.props.finishButtonClick(this.state.allStates);
-                    console.log(this.state.allStates)
                     this.props.registerRequest(this.state.allStates.account)
                         .then(res => {
                             console.log(this.props.register);
+                            this.state.alert = true
                         })
                 }
             );
         }
-
-        console.log(this.state.allStates);
     }
     refreshAnimation(index) {
         var total = this.props.steps.length;
@@ -237,6 +223,9 @@ class CheckOut2 extends React.Component {
             transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
         };
         this.setState({ movingTabStyle: movingTabStyle });
+    }
+    hideAlert = () => {
+        this.setState({ alert: false })
     }
     render() {
         const { classes, title, subtitle, color, steps } = this.props;
@@ -327,6 +316,17 @@ class CheckOut2 extends React.Component {
                         <div className={classes.clearfix} />
                     </div>
                 </Card>
+                <SweetAlert
+                    success
+                    show={this.state.alert}
+                    style={{ display: "block", marginTop: "-100px", color: blackColor }}
+                    title="Good job!"
+                    onConfirm={() => this.hideAlert()}
+                    onCancel={() => this.hideAlert()}
+                    confirmBtnCssClass={classes.button + " " + classes.success}
+                >
+                    You clicked the button!
+                    </SweetAlert>
             </div>
         );
     }
@@ -390,4 +390,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withStyles(wizardStyle)(CheckOut2));
+)(withStyles(styles)(CheckOut2));

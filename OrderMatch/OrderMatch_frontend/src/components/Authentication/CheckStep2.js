@@ -58,14 +58,11 @@ class CheckStep2 extends React.Component {
       manager_nameState: "",
       manager_tel: "",
       manager_telState: "",
-      cal_manager_name: "",
-      cal_manager_nameState: "",
-      cal_manager_tel: "",
-      cal_manager_telState: "",
       manager_email: "",
       manager_emailState: "",
+      cal_manager_name: "",
+      cal_manager_tel: "",
       cal_manager_email: "",
-      cal_manager_emailState: "",
       company_ein: "",
       company_einState: "",
       company_type: "0",
@@ -95,7 +92,6 @@ class CheckStep2 extends React.Component {
       passwordState: "",
       passwordConfirm: "",
       passwordConfirmState: "",
-      id: "",
       usernameState: "",
       showPassword: "false"
     };
@@ -174,10 +170,7 @@ class CheckStep2 extends React.Component {
     if (
       this.state.manager_nameState === "success" &&
       this.state.manager_telState === "success" &&
-      this.state.cal_manager_nameState === "success" &&
-      this.state.cal_manager_telState === "success" &&
       this.state.manager_emailState === "success" &&
-      this.state.cal_manager_emailState === "success" &&
       this.state.company_einState === "success" &&
       this.state.company_nameState === "success" &&
       this.state.company_categoryState === "success" &&
@@ -199,17 +192,8 @@ class CheckStep2 extends React.Component {
       if (this.state.manager_telState !== "success") {
         this.setState({ manager_telState: "error" });
       }
-      if (this.state.cal_manager_nameState !== "success") {
-        this.setState({ cal_manager_nameState: "error" });
-      }
-      if (this.state.cal_manager_telState !== "success") {
-        this.setState({ cal_manager_telState: "error" });
-      }
       if (this.state.manager_emailState !== "success") {
         this.setState({ manager_emailState: "error" });
-      }
-      if (this.state.cal_manager_emailState !== "success") {
-        this.setState({ cal_manager_emailState: "error" });
       }
       if (this.state.company_einState !== "success") {
         this.setState({ company_einState: "error" });
@@ -248,7 +232,7 @@ class CheckStep2 extends React.Component {
         this.setState({ usernameState: "error" });
       }
     }
-    return true;
+    return false;
   }
   render() {
     const { classes } = this.props;
@@ -392,14 +376,14 @@ class CheckStep2 extends React.Component {
                           담당자 이름 <small>(필수)</small>
                         </span>
                       }
-                      id="managerName"
-                      value={this.state.managerName}
+                      id="manager_name"
+                      value={this.state.manager_name}
                       formControlProps={{
                         fullWidth: true
                       }}
-                      value={this.state.managerName}
+                      value={this.state.manager_name}
                       inputProps={{
-                        onChange: event => this.change(event, "managerName", "length", 3),
+                        onChange: event => this.change(event, "manager_name", "length", 2),
                         endAdornment: (
                           <InputAdornment
                             position="end"
