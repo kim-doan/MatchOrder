@@ -4,8 +4,10 @@
 	<resultMap type="com.ordermatch.main.delivery.model.DeliveryCostInfo"
 		id="deliveryCostInfoResult">
 		<result property="form_id" column="FORM_ID"></result>	
+		<result property="user_id" column="USER_ID"></result>	
 		<result property="form_name" column="FORM_NAME"></result>	
 		<result property="seller_def_yn" column="SELLER_DEF_YN"></result>	
+		<result property="supplier_def_yn" column="SELLER_DEF_YN"></result>	
 		<result property="delivery_cost_type" column="DELIVERY_COST_TYPE"></result>	
 		<result property="bundle_delivery_yn" column="BUNDLE_DELIVERY_YN"></result>	
 		<result property="add_cost_jeju" column="ADD_COST_JEJU"></result>	
@@ -34,20 +36,20 @@
 		<result property="regional_delivery_cost" column="REGIONAL_DELIVERY_COST"/>
 	</resultMap>
 	
-	<select id="findAllDeliveryForm" parameterType="String" resultMap="deliveryCostInfoResult">
-		SELECT * 
+	<select id="findAllDeliveryForm" parameterType="com.ordermatch.main.delivery.model.DeliveryCostInfo" resultMap="deliveryCostInfoResult">
+		SELECT a.*
 		FROM TB_DELIVERYCOST_INFO a 
-		where a.used != 1 and 
-		<if test="form_name != null and form_name !=''">a.form_name LIKE '%#{form_name}%'</if>
+		WHERE a.used != 1 AND a.user_id = #{user_id}
+		<if test="form_name != null and form_name !=''">AND a.form_name LIKE '%#{form_name}%'</if>
 	</select>
 
 	<insert id="insertDeliveryForm" parameterType="com.ordermatch.main.delivery.model.DeliveryCostInfo">
 		INSERT INTO
-		FROM TB_DELIVERYCOST_INFO
-		(FORM_NAME, SELLER_DEF_YN, DELIVERY_COST_TYPE, BUNDLE_DELIVERY_YN, ADD_COST_JEJU, ADD_COST_MOUNT, COST_FREE_PRICE, 
+		TB_DELIVERYCOST_INFO
+		(FORM_NAME, USER_ID, SELLER_DEF_YN, SUPPLIER_DEF_YN, DELIVERY_COST_TYPE, BUNDLE_DELIVERY_YN, ADD_COST_JEJU, ADD_COST_MOUNT, COST_FREE_PRICE, 
 		COST_FREE_NUM_REPEAT, COST_FREE_NUM, CREATE_AT, MODIFY_AT, USED)
 		VALUES
-		(#{form_name}, #{seller_def_yn}, #{delivery_cost_type}, #{bundle_delivery_yn}, #{add_cost_jeju}, #{add_cost_mount}, #{add_free_price}, 
+		(#{form_name}, #{user_id}, #{seller_def_yn}, #{supplier_def_yn}, #{delivery_cost_type}, #{bundle_delivery_yn}, #{add_cost_jeju}, #{add_cost_mount}, #{cost_free_price}, 
 		#{cost_free_num_repeat}, #{cost_free_num}, sysdate(), NULL, 0)
 	</insert>
 	
@@ -56,11 +58,12 @@
 		<trim prefix="SET" suffixOverrides=",">
 		<if test="form_name != null and form_name != ''">FORM_NAME = #{form_name},</if>
 		<if test="seller_def_yn != null and seller_def_yn != ''">SELLER_DEF_YN = #{seller_def_yn},</if>
+		<if test="supplier_def_yn != null and supplier_def_yn != ''">SUPPLIER_DEF_YN = #{supplier_def_yn},</if>
 		<if test="delivery_cost_type != null and delivery_cost_type != ''">DELIVERY_COST_TYPE = #{delivery_cost_type},</if>
 		<if test="bundle_delivery_yn != null and bundle_delivery_yn != ''">BUNDLE_DELIVERY_YN = #{bundle_delivery_yn},</if>
 		<if test="add_cost_jeju != null and add_cost_jeju != ''">ADD_COST_JEJU = #{add_cost_jeju},</if>
 		<if test="add_cost_mount != null and add_cost_mount != ''">ADD_COST_MOUNT = #{add_cost_mount},</if>
-		<if test="add_free_price != null and add_free_price != ''">COST_FREE_PRICE = #{add_free_price},</if>
+		<if test="cost_free_price != null and cost_free_price != ''">COST_FREE_PRICE = #{cost_free_price},</if>
 		<if test="cost_free_num_repeat != null and cost_free_num_repeat != ''">COST_FREE_NUM_REPEAT = #{cost_free_num_repeat},</if>
 		<if test="cost_free_num != null and cost_free_num != ''">COST_FREE_NUM = #{cost_free_num},</if>
 		<if test="used != null and used != ''">USED = #{used},</if>

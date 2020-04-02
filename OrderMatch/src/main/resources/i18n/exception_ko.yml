@@ -49,6 +49,15 @@ supplierFormDeleteError:
 supplierFormColumnInsertError:
   code: "-2003"
   msg: "공급사 주문서 컬럼 정보 추가 실패"
+deliveryCostInfoInsertError:
+  code: "-2500"
+  msg: "배송비 양식 추가 실패"
+deliveryCostInfoUpdateError:
+  code: "-2500"
+  msg: "배송비 양식 수정 실패"
+deliveryCostInfoDeleteError:
+  code: "-2500"
+  msg: "배송비 양식 추가 실패"
 supplierColumnInfoInsertError:
   code: "-3000"
   msg: "(기준정보) 공급사 컬럼 정보 추가 실패"

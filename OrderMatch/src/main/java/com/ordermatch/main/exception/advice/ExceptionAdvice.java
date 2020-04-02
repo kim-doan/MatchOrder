@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ordermatch.main.exception.CAuthenticationEntryPointException;
+import com.ordermatch.main.exception.CDeliveryCostFormDeleteException;
+import com.ordermatch.main.exception.CDeliveryCostFormInsertException;
+import com.ordermatch.main.exception.CDeliveryCostFormUpdateException;
 import com.ordermatch.main.exception.CItemNotFoundException;
 import com.ordermatch.main.exception.CLogoSaveErrorException;
 import com.ordermatch.main.exception.CNotOwnerException;
@@ -136,5 +139,23 @@ public class ExceptionAdvice {
 	@ExceptionHandler(CSupplierFormColumnInsertException.class)
 	public CommonResult csupplierFormColumnInsertException(HttpServletRequest request, CSupplierFormColumnInsertException e) {
 		return responseService.getFailResult(Integer.valueOf(getMessage("supplierFormColumnInsertError.code")), getMessage("supplierFormColumnInsertError.msg"));
+	}
+	
+	//배송비 양식 정보 추가 실패
+	@ExceptionHandler(CDeliveryCostFormInsertException.class)
+	public CommonResult cdeliveryCostFormInsertException(HttpServletRequest request, CDeliveryCostFormInsertException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("deliveryCostInfoInsertError.code")), getMessage("deliveryCostInfoInsertError.msg"));
+	}
+	
+	//배송비 양식 정보 수정 실패
+	@ExceptionHandler(CDeliveryCostFormUpdateException.class)
+	public CommonResult cdeliveryCostFormUpdateException(HttpServletRequest request, CDeliveryCostFormUpdateException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("deliveryCostInfoUpdateError.code")), getMessage("deliveryCostInfoUpdateError.msg"));
+	}
+	
+	//배송비 양식 정보 삭제 실패
+	@ExceptionHandler(CDeliveryCostFormDeleteException.class)
+	public CommonResult cdeliveryCostFormDeleteException(HttpServletRequest request, CDeliveryCostFormDeleteException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("deliveryCostInfoDeleteError.code")), getMessage("deliveryCostInfoDeleteError.msg"));
 	}
 }
