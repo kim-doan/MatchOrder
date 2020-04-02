@@ -5,16 +5,16 @@
 	<resultMap type="String" id="rolesResult">
 		<result property="roles" column="roles"></result>
 	</resultMap>
-	
+
 	<resultMap type="com.ordermatch.main.user.model.Company"
 		id="companyResult">
-		<result property="company_ein" column="COMPANY_EIN"></result>	
-		<result property="company_type" column="COMPANY_TYPE"></result>	
-		<result property="company_name" column="COMPANY_NAME"></result>	
-		<result property="company_category" column="COMPANY_CATEGORY"></result>	
-		<result property="company_tel" column="COMPANY_TEL"></result>	
-		<result property="company_fax" column="COMPANY_FAX"></result>	
-		<result property="company_address" column="COMPANY_ADDRESS"></result>	
+		<result property="company_ein" column="COMPANY_EIN"></result>
+		<result property="company_type" column="COMPANY_TYPE"></result>
+		<result property="company_name" column="COMPANY_NAME"></result>
+		<result property="company_category" column="COMPANY_CATEGORY"></result>
+		<result property="company_tel" column="COMPANY_TEL"></result>
+		<result property="company_fax" column="COMPANY_FAX"></result>
+		<result property="company_address" column="COMPANY_ADDRESS"></result>
 		<result property="company_img" column="COMPANY_IMG"></result>
 		<result property="ceo_name" column="CEO_NAME"></result>
 	</resultMap>
@@ -47,29 +47,34 @@
 		from
 		TB_USER a
 		left join ROLES b on a.user_id = b.user_id
-		left join TB_COMPANY c on a.user_id = c.user_id
+		left join
+		TB_COMPANY c on a.user_id = c.user_id
 		order by a.user_id desc
 	</select>
 
 	<select id="findById" parameterType="int" resultMap="userResult">
-		select a.*, b.roles, c.*
+		select a.*,
+		b.roles, c.*
 		from TB_USER a
 		left join ROLES b on a.user_id = b.user_id
 		left join TB_COMPANY c on a.user_id = c.user_id
 		where a.user_id = #{id}
 	</select>
 
-	<select id="findByUsername" parameterType="String" resultMap="userResult">
+	<select id="findByUsername" parameterType="String"
+		resultMap="userResult">
 		select a.*, b.roles, c.*
 		from TB_USER a
-		left join ROLES b on a.user_id = b.user_id
+		left join ROLES b on
+		a.user_id = b.user_id
 		left join TB_COMPANY c on a.user_id = c.user_id
 		where a.username = #{username}
 	</select>
 
 	<!-- useGeneratedKeys="true" keyProperty="id" insert 성공하면 id 값 반환하도록 설정 -->
 	<insert id="insertUser"
-		parameterType="com.ordermatch.main.user.model.User" useGeneratedKeys="true" keyProperty="user_id">
+		parameterType="com.ordermatch.main.user.model.User"
+		useGeneratedKeys="true" keyProperty="user_id">
 		INSERT INTO
 		TB_USER
 		(USERNAME, PASSWORD, MANAGER_NAME, MANAGER_TEL, MANAGER_EMAIL,
@@ -84,7 +89,6 @@
 		INSERT INTO TB_COMPANY VALUES (#{user_id}, #{company_ein}, #{company_type}, #{company_name},
 		 #{company_category}, #{company_tel}, #{company_fax}, #{company_address}, #{ceo_name}, #{company_img})
 	</insert>
-
 	<insert id="insertRole" parameterType="hashmap">
 		insert into ROLES(user_id,
 		roles) values(#{user_id}, #{roles})
@@ -95,29 +99,29 @@
 		INNER JOIN TB_COMPANY B
 		ON A.USER_ID = B.USER_ID
 		<trim prefix="SET" suffixOverrides=",">
-		<if test="username != null">A.USERNAME = #{username},</if>
-		<if test="password != null">A.PASSWORD = #{password},</if>
-		<if test="manager_name != null">A.MANAGER_NAME = #{manager_name},</if>
-		<if test="manager_tel != null">A.MANAGER_TEL = #{manager_tel},</if>
-		<if test="manager_email != null">A.MANAGER_EMAIL = #{manager_email},</if>
-		<if test="cal_manager_name != null">A.CAL_MANAGER_NAME = #{cal_manager_name},</if>
-		<if test="cal_manager_tel != null">A.CAL_MANAGER_TEL = #{cal_manager_tel},</if>
-		<if test="cal_manager_email != null">A.CAL_MANAGER_EMAIL = #{cal_manager_email},</if>
-		<if test="zonecode != null">A.ZONECODE = #{zonecode},</if>
-		<if test="jibunAddress != null">A.JIBUN_ADDRESS = #{jibunAddress},</if>
-		<if test="roadAddress != null">A.ROAD_ADDRESS = #{roadAddress},</if>
-		<if test="detailAddress != null">A.DETAIL_ADDRESS = #{detailAddress},</if>
-		<if test="modifyAt != null">A.MODIFYAT = sysdate(),</if>
-		<if test="disable_time != null">A.DISABLE_TIME = #{disable_time},</if>
-		<if test="company_ein != null">B.COMPANY_EIN = #{company_ein},</if>
-		<if test="company_type != null">B.COMPANY_TYPE = #{company_type},</if>
-		<if test="company_name != null">B.COMPANY_NAME = #{company_name},</if>
-		<if test="company_category != null">B.COMPANY_CATEGORY = #{company_category},</if>
-		<if test="company_tel != null">B.COMPANY_TEL = #{company_tel},</if>
-		<if test="company_fax != null">B.COMPANY_FAX = #{company_fax},</if>
-		<if test="company_address != null">B.COMPANY_ADDRESS = #{company_address},</if>
-		<if test="company_img != null">B.COMPANY_IMG = #{company_img},</if>
-		<if test="ceo_name != null">B.CEO_NAME = #{ceo_name},</if>
+			<if test="username != null">A.USERNAME = #{username},</if>
+			<if test="password != null">A.PASSWORD = #{password},</if>
+			<if test="manager_name != null">A.MANAGER_NAME = #{manager_name},</if>
+			<if test="manager_tel != null">A.MANAGER_TEL = #{manager_tel},</if>
+			<if test="manager_email != null">A.MANAGER_EMAIL = #{manager_email},</if>
+			<if test="cal_manager_name != null">A.CAL_MANAGER_NAME = #{cal_manager_name},</if>
+			<if test="cal_manager_tel != null">A.CAL_MANAGER_TEL = #{cal_manager_tel},</if>
+			<if test="cal_manager_email != null">A.CAL_MANAGER_EMAIL = #{cal_manager_email},</if>
+			<if test="zonecode != null">A.ZONECODE = #{zonecode},</if>
+			<if test="jibunAddress != null">A.JIBUN_ADDRESS = #{jibunAddress},</if>
+			<if test="roadAddress != null">A.ROAD_ADDRESS = #{roadAddress},</if>
+			<if test="detailAddress != null">A.DETAIL_ADDRESS = #{detailAddress},</if>
+			<if test="modifyAt != null">A.MODIFYAT = sysdate(),</if>
+			<if test="disable_time != null">A.DISABLE_TIME = #{disable_time},</if>
+			<if test="company_ein != null">B.COMPANY_EIN = #{company_ein},</if>
+			<if test="company_type != null">B.COMPANY_TYPE = #{company_type},</if>
+			<if test="company_name != null">B.COMPANY_NAME = #{company_name},</if>
+			<if test="company_category != null">B.COMPANY_CATEGORY = #{company_category},</if>
+			<if test="company_tel != null">B.COMPANY_TEL = #{company_tel},</if>
+			<if test="company_fax != null">B.COMPANY_FAX = #{company_fax},</if>
+			<if test="company_address != null">B.COMPANY_ADDRESS = #{company_address},</if>
+			<if test="company_img != null">B.COMPANY_IMG = #{company_img},</if>
+			<if test="ceo_name != null">B.CEO_NAME = #{ceo_name},</if>
 		</trim>
 		WHERE A.USERNAME = #{username}
 	</update>

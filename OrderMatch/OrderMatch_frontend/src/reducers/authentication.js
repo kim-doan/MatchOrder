@@ -1,35 +1,36 @@
 import * as types from 'actions/ActionTypes';
- 
+
 const initialState = {
-    login: {
-        status: 'INIT',
-    },
-    register: {
-        status: 'INIT',
-        error: -1
-    },
-    status: {
-        valid: false,
-        isLoggedIn: false,
-        currentUser: '',
-        user: {},
-        company: {},
-        token: ''
-    }
+  login: {
+    status: 'INIT',
+  },
+  register: {
+    status: 'INIT',
+    error: -1,
+    msg: ''
+  },
+  status: {
+    valid: false,
+    isLoggedIn: false,
+    currentUser: '',
+    user: {},
+    company: {},
+    token: ''
+  }
 };
- 
+
 export default function authentication(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     /* LOGOUT */
     case types.AUTH_LOGOUT:
-        return {
-          ...state,
-          status: {
-            ...state.status,
-            isLoggedIn: false,
-            currentUser: ''
-          }
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          isLoggedIn: false,
+          currentUser: ''
         }
+      }
     /* CHECK SESSION */
     case types.AUTH_GET_STATUS:
       return {
@@ -75,13 +76,14 @@ export default function authentication(state = initialState, action) {
         ...state,
         register: {
           ...state.register,
-          status: 'SUCCESS'
+          status: 'SUCCESS',
+          msg: action.msg
         }
       }
     case types.AUTH_REGISTER_FAILURE:
       return {
         ...state,
-        register:{
+        register: {
           status: 'FAILURE',
           error: action.error
         }
@@ -104,7 +106,7 @@ export default function authentication(state = initialState, action) {
           ...state.status,
           isLoggedIn: true,
           currentUser: action.username,
-          token : action.token
+          token: action.token
         }
       }
     case types.AUTH_LOGIN_FAILURE:
