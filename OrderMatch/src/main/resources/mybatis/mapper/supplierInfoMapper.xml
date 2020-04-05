@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ordermatch.main.mapper.SupplierInfoMapper">
+	
+	<resultMap type="com.ordermatch.main.master.model.SupplierInfo"
+		id="supplierInfoResult">
+		<result property="supplier_id" column="SUPPLIER_ID"></result>	
+		<result property="supplier_ein" column="SUPPLIER_EIN"></result>	
+		<result property="manager_name" column="MANAGER_NAME"></result>	
+		<result property="manager_tel" column="MANAGER_TEL"></result>	
+		<result property="email" column="EMAIL"></result>	
+		<result property="cs_email" column="CS_EMAIL"></result>
+		<result property="settle_email" column="SATTLE_EMAIL"></result>
+		<result property="supplier_name" column="SUPPLIER_NAME"></result>
+		<result property="user_id" column="USER_ID"></result>
+		<result property="order_grp_id" column="ORDER_GRP_ID"></result>
+		<result property="caculate_grp_id" column="CACULATE_GRP_ID"></result>
+		<result property="memo" column="MEMO"></result>
+		<result property="delevery_cost_form_id" column="DELIVERY_COST_FORM_ID"></result>
+		<result property="form_id" column="FORM_ID"></result>
+		<result property="excel_cret_system" column="EXCEL_CRET_SYSTEM"></result>
+		<result property="disable_time" column="DISABLE_TIME"></result>
+		<collection property="supplierForm" resultMap="supplierFormResult"></collection>
+		<collection property="deliveryCostInfo" resultMap="deliveryCostInfoResult"></collection>
+	</resultMap>
+	
+	<resultMap type="com.ordermatch.main.delivery.model.DeliveryCostInfo"
+		id="deliveryCostInfoResult">
+		<result property="form_id" column="FORM_ID"></result>	
+		<result property="user_id" column="USER_ID"></result>	
+		<result property="form_name" column="FORM_NAME"></result>	
+		<result property="seller_def_yn" column="SELLER_DEF_YN"></result>	
+		<result property="supplier_def_yn" column="SELLER_DEF_YN"></result>	
+		<result property="delivery_cost_type" column="DELIVERY_COST_TYPE"></result>	
+		<result property="bundle_delivery_yn" column="BUNDLE_DELIVERY_YN"></result>	
+		<result property="add_cost_jeju" column="ADD_COST_JEJU"></result>	
+		<result property="add_cost_mount" column="ADD_COST_MOUNT"></result>
+		<result property="cost_free_price" column="COST_FREE_PRICE"></result>
+		<result property="cost_free_num_repeat" column="COST_FREE_NUM_REPEAT"></result>
+		<result property="cost_free_num" column="COST_FREE_NUM"></result>
+		<result property="create_at" column="CREATE_AT"></result>
+		<result property="modify_at" column="MODIFY_AT"></result>
+		<result property="used" column="USED"></result>
+	</resultMap>
+
+	<resultMap type="com.ordermatch.main.supplierform.model.SupplierForm"
+		id="supplierFormResult">
+		<result property="user_id" column="USER_ID"></result>	
+		<result property="form_id" column="FORM_ID"></result>	
+		<result property="form_name" column="FORM_NAME"></result>	
+		<result property="create_at" column="CREATE_AT"></result>	
+		<result property="modify_at" column="MODIFY_AT"></result>	
+		<result property="disable_time" column="DISABLE_TIME"></result>
+		<collection property="supplierFormColumn" resultMap="supplierFormColumnResult"></collection>
+	</resultMap>
+	
+	<select id="findAllSupplierInfo" resultMap="supplierInfoResult" parameterType="com.ordermatch.main.master.model.SupplierInfo">
+		SELECT a.*, b.*
+		FROM TB_SUPPLIER_FORM a
+		LEFT JOIN TB_SUPPLIER_FORM_COLUMN b on a.form_id = b.form_id
+		WHERE a.user_id = #{user_id}
+		<if test="form_id != null and form_id !=''">AND a.form_id LIKE '%#{form_id}%'</if>
+		<if test="form_name != null and form_name !=''">AND a.form_name LIKE '%#{form_name}%'</if>
+		<if test="create_at != null">AND a.create_at LIKE '%#{create_at}%'</if>
+		<if test="modify_at != null">AND a.modify_at LIKE '%#{modify_at}%'</if>
+		<if test="disable_time != null">AND a.disable_time = #{disable_time}</if>
+	</select>
+</mapper>
